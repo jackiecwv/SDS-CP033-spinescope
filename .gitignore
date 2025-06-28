@@ -1,0 +1,10 @@
+# Include any files you want to ignore (do not want to push to GitHub)
+.ipynb_checkpoints
+.DS_Store
+.env
+
+# virtual environments
+venv/
+.venv/
+env/
+ENV/
