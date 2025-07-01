@@ -1,0 +1,43 @@
+Dataset 1: biomechanical-features-of-orthopedic-patients
+--------------------------------------------------------------------------------
+Shape: (310, 7)
+--------------------------------------------------------------------------------
+Info:
+None
+--------------------------------------------------------------------------------
+Description:
+       pelvic_incidence  pelvic_tilt numeric  lumbar_lordosis_angle  sacral_slope  pelvic_radius  degree_spondylolisthesis
+count        310.000000           310.000000             310.000000    310.000000     310.000000                310.000000
+mean          60.496653            17.542822              51.930930     42.953831     117.920655                 26.296694
+std           17.236520            10.008330              18.554064     13.423102      13.317377                 37.559027
+min           26.147921            -6.554948              14.000000     13.366931      70.082575                -11.058179
+25%           46.430294            10.667069              37.000000     33.347122     110.709196                  1.603727
+50%           58.691038            16.357689              49.562398     42.404912     118.268178                 11.767934
+75%           72.877696            22.120395              63.000000     52.695888     125.467674                 41.287352
+max          129.834041            49.431864             125.742385    121.429566     163.071041                418.543082
+--------------------------------------------------------------------------------
+Missing values:
+pelvic_incidence            0
+pelvic_tilt numeric         0
+lumbar_lordosis_angle       0
+sacral_slope                0
+pelvic_radius               0
+degree_spondylolisthesis    0
+class                       0
+dtype: int64
+--------------------------------------------------------------------------------
+Unique values:
+pelvic_incidence            310
+pelvic_tilt numeric         310
+lumbar_lordosis_angle       280
+sacral_slope                281
+pelvic_radius               310
+degree_spondylolisthesis    310
+class                         2
+dtype: int64
+--------------------------------------------------------------------------------
+Columns:
+['pelvic_incidence', 'pelvic_tilt numeric', 'lumbar_lordosis_angle', 'sacral_slope', 'pelvic_radius', 'degree_spondylolisthesis', 'class']
+--------------------------------------------------------------------------------
+Duplicated rows: 0
+--------------------------------------------------------------------------------
