@@ -1,0 +1,238 @@
+================================================================================
+COMPREHENSIVE EXPLORATORY DATA ANALYSIS
+Biomechanical Features of Orthopedic Patients
+================================================================================
+Path to dataset files: /Users/cholponzhakshylykova/.cache/kagglehub/datasets/uciml/biomechanical-features-of-orthopedic-patients/versions/1
+
+==================================================
+1. DATASET OVERVIEW
+==================================================
+Dataset Shape: (310, 7)
+Memory Usage: 0.03 MB
+
+Column Information:
+----------------------------------------
+pelvic_incidence          | float64    | Nulls:   0 (  0.0%) | Unique:  310
+pelvic_tilt               | float64    | Nulls:   0 (  0.0%) | Unique:  310
+lumbar_lordosis_angle     | float64    | Nulls:   0 (  0.0%) | Unique:  280
+sacral_slope              | float64    | Nulls:   0 (  0.0%) | Unique:  281
+pelvic_radius             | float64    | Nulls:   0 (  0.0%) | Unique:  310
+degree_spondylolisthesis  | float64    | Nulls:   0 (  0.0%) | Unique:  310
+class                     | object     | Nulls:   0 (  0.0%) | Unique:    3
+
+Data Types Summary:
+float64    6
+object     1
+Name: count, dtype: int64
+
+✓ No missing values found in the dataset
+
+==================================================
+2. TARGET VARIABLE ANALYSIS
+==================================================
+Class Distribution:
+--------------------
+Spondylolisthesis:  150 ( 48.4%)
+Normal         :  100 ( 32.3%)
+Hernia         :   60 ( 19.4%)
+
+Class Imbalance Analysis:
+Imbalance Ratio: 2.50
+⚠️  Dataset shows class imbalance - consider balancing techniques
+
+==================================================
+3. NUMERICAL FEATURES ANALYSIS
+==================================================
+Descriptive Statistics:
+-------------------------
+       pelvic_incidence  pelvic_tilt  lumbar_lordosis_angle  sacral_slope  pelvic_radius  degree_spondylolisthesis
+count           310.000      310.000                310.000       310.000        310.000                   310.000
+mean             60.497       17.543                 51.931        42.954        117.921                    26.297
+std              17.237       10.008                 18.554        13.423         13.317                    37.559
+min              26.148       -6.555                 14.000        13.367         70.083                   -11.058
+25%              46.430       10.667                 37.000        33.347        110.709                     1.604
+50%              58.691       16.358                 49.562        42.405        118.268                    11.768
+75%              72.878       22.120                 63.000        52.696        125.468                    41.287
+max             129.834       49.432                125.742       121.430        163.071                   418.543
+
+Distribution Analysis:
+-------------------------
+                                           Feature  Skewness  Kurtosis    Range     IQR
+pelvic_incidence                  pelvic_incidence     0.520     0.224  103.686  26.447
+pelvic_tilt                            pelvic_tilt     0.677     0.676   55.987  11.453
+lumbar_lordosis_angle        lumbar_lordosis_angle     0.599     0.162  111.742  26.000
+sacral_slope                          sacral_slope     0.793     3.007  108.063  19.349
+pelvic_radius                        pelvic_radius    -0.177     0.935   92.988  14.758
+degree_spondylolisthesis  degree_spondylolisthesis     4.318    38.069  429.601  39.684
+
+Normality Tests (Shapiro-Wilk p-values):
+-----------------------------------
+pelvic_incidence         : p=0.000007 (Non-normal)
+pelvic_tilt              : p=0.000001 (Non-normal)
+lumbar_lordosis_angle    : p=0.000009 (Non-normal)
+sacral_slope             : p=0.000001 (Non-normal)
+pelvic_radius            : p=0.016610 (Non-normal)
+degree_spondylolisthesis : p=0.000000 (Non-normal)
+
+==================================================
+4. OUTLIER DETECTION AND ANALYSIS
+==================================================
+Outlier Detection Summary:
+------------------------------
+                    Feature  IQR_Outliers  Z_Score_Outliers  ...  IQR_Percentage  Lower_Bound  Upper_Bound
+0          pelvic_incidence             3                 3  ...           0.968        6.759      112.549
+1               pelvic_tilt            13                 3  ...           4.194       -6.513       39.300
+2     lumbar_lordosis_angle             1                 1  ...           0.323       -2.000      102.000
+3              sacral_slope             1                 1  ...           0.323        4.324       81.719
+4             pelvic_radius            11                 3  ...           3.548       88.571      147.605
+5  degree_spondylolisthesis            10                 3  ...           3.226      -57.922      100.813
+
+[6 rows x 7 columns]
+
+==================================================
+5. CORRELATION AND MULTICOLLINEARITY ANALYSIS
+==================================================
+Correlation Matrix:
+--------------------
+                          pelvic_incidence  pelvic_tilt  ...  pelvic_radius  degree_spondylolisthesis
+pelvic_incidence                     1.000        0.629  ...         -0.247                     0.639
+pelvic_tilt                          0.629        1.000  ...          0.033                     0.398
+lumbar_lordosis_angle                0.717        0.433  ...         -0.080                     0.534
+sacral_slope                         0.815        0.062  ...         -0.342                     0.524
+pelvic_radius                       -0.247        0.033  ...          1.000                    -0.026
+degree_spondylolisthesis             0.639        0.398  ...         -0.026                     1.000
+
+[6 rows x 6 columns]
+
+Highly Correlated Pairs (|r| > 0.7):
+-----------------------------------
+pelvic_incidence <-> lumbar_lordosis_angle: r = 0.717
+pelvic_incidence <-> sacral_slope: r = 0.815
+
+Variance Inflation Factor (VIF) Analysis:
+----------------------------------------
+                    Feature     VIF
+0          pelvic_incidence     inf
+1               pelvic_tilt     inf
+2     lumbar_lordosis_angle  18.943
+3              sacral_slope     inf
+4             pelvic_radius  12.283
+5  degree_spondylolisthesis   2.362
+
+⚠️  Features with high VIF (>10) indicating multicollinearity:
+                 Feature        VIF
+0       pelvic_incidence        inf
+1            pelvic_tilt        inf
+2  lumbar_lordosis_angle  18.942994
+3           sacral_slope        inf
+4          pelvic_radius  12.282573
+
+==================================================
+6. FEATURE RELATIONSHIPS AND INTERACTIONS
+==================================================
+Generating pair plot for feature relationships...
+
+Feature Interactions Analysis:
+-----------------------------------
+                    Feature  F_Statistic  P_Value  Effect_Size  Significant
+0          pelvic_incidence    98.539709      0.0     0.242984         True
+1               pelvic_tilt    21.299194      0.0     0.064877         True
+2     lumbar_lordosis_angle   114.982840      0.0     0.272482         True
+3              sacral_slope    89.643953      0.0     0.226006         True
+4             pelvic_radius    16.866935      0.0     0.052080         True
+5  degree_spondylolisthesis   119.122881      0.0     0.279551         True
+
+==================================================
+7. DIMENSIONALITY REDUCTION ANALYSIS
+==================================================
+PCA Analysis:
+---------------
+Explained Variance Ratio: [0.541  0.1991 0.1268 0.0788 0.0543 0.    ]
+Cumulative Explained Variance: [0.541  0.7401 0.8669 0.9457 1.     1.    ]
+Components needed for 95% variance: 5
+
+Performing t-SNE analysis...
+
+==================================================
+8. CLUSTERING ANALYSIS
+==================================================
+Optimal number of clusters (silhouette): 2
+Best silhouette score: 0.363
+
+Cluster vs True Labels Cross-tabulation:
+class    Hernia  Normal  Spondylolisthesis
+Cluster                                   
+0             2      10                114
+1            58      90                 36
+
+==================================================
+9. STATISTICAL TESTS
+==================================================
+
+Feature: pelvic_incidence
+--------------------
+  Hernia: Shapiro p=0.4391 (Normal)
+  Normal: Shapiro p=0.0026 (Non-normal)
+  Spondylolisthesis: Shapiro p=0.0034 (Non-normal)
+  Levene’s p=0.0210 (Unequal variances)
+  Kruskal-Wallis H=127.496, p=2.0636e-28
+
+Feature: pelvic_tilt
+--------------------
+  Hernia: Shapiro p=0.2371 (Normal)
+  Normal: Shapiro p=0.7920 (Normal)
+  Spondylolisthesis: Shapiro p=0.0287 (Non-normal)
+  Levene’s p=0.0000 (Unequal variances)
+  Kruskal-Wallis H=34.395, p=3.3976e-08
+
+Feature: lumbar_lordosis_angle
+--------------------
+  Hernia: Shapiro p=0.6849 (Normal)
+  Normal: Shapiro p=0.0165 (Non-normal)
+  Spondylolisthesis: Shapiro p=0.0709 (Normal)
+  Levene’s p=0.0001 (Unequal variances)
+  Kruskal-Wallis H=145.891, p=2.0898e-32
+
+Feature: sacral_slope
+--------------------
+  Hernia: Shapiro p=0.8043 (Normal)
+  Normal: Shapiro p=0.2554 (Normal)
+  Spondylolisthesis: Shapiro p=0.0000 (Non-normal)
+  Levene’s p=0.0252 (Unequal variances)
+  Kruskal-Wallis H=128.965, p=9.9008e-29
+
+Feature: pelvic_radius
+--------------------
+  Hernia: Shapiro p=0.1364 (Normal)
+  Normal: Shapiro p=0.9361 (Normal)
+  Spondylolisthesis: Shapiro p=0.3220 (Normal)
+  Levene’s p=0.0000 (Unequal variances)
+  Kruskal-Wallis H=40.590, p=1.5344e-09
+
+Feature: degree_spondylolisthesis
+--------------------
+  Hernia: Shapiro p=0.6437 (Normal)
+  Normal: Shapiro p=0.0000 (Non-normal)
+  Spondylolisthesis: Shapiro p=0.0000 (Non-normal)
+  Levene’s p=0.0000 (Unequal variances)
+  Kruskal-Wallis H=224.345, p=1.9236e-49
+
+Summary Table:
+                    Feature            Test  Test Statistic  p-value  Significant
+0          pelvic_incidence  Kruskal-Wallis       127.49583      0.0         True
+1               pelvic_tilt  Kruskal-Wallis        34.39524      0.0         True
+2     lumbar_lordosis_angle  Kruskal-Wallis       145.89132      0.0         True
+3              sacral_slope  Kruskal-Wallis       128.96471      0.0         True
+4             pelvic_radius  Kruskal-Wallis        40.59027      0.0         True
+5  degree_spondylolisthesis  Kruskal-Wallis       224.34491      0.0         True
+
+Features with significant class differences (p < 0.05):
+                    Feature            Test       p-value
+0          pelvic_incidence  Kruskal-Wallis  2.063629e-28
+1               pelvic_tilt  Kruskal-Wallis  3.397568e-08
+2     lumbar_lordosis_angle  Kruskal-Wallis  2.089792e-32
+3              sacral_slope  Kruskal-Wallis  9.900789e-29
+4             pelvic_radius  Kruskal-Wallis  1.534389e-09
+5  degree_spondylolisthesis  Kruskal-Wallis  1.923634e-49
+
+Boxplots for features with significant class differences:
