@@ -92,4 +92,3 @@ Link to dataset: https://www.kaggle.com/datasets/uciml/biomechanical-features-of
 | **2 · Model Development** | Train, tune, and evaluate ML/DL models; track with MLflow                | **Weeks 2–4** |
 | **3 · Deployment**        | Build and deploy Streamlit app                                           | **Week 5**    |
 
-Thank you
