@@ -1,0 +1,14 @@
+{"time":"2025-07-10T13:03:40.1738527-05:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"c:\\Users\\Another1\\Documents\\Machine_Learning\\SDS-CP033-spinescope\\submissions\\team-members\\doebi-alale\\wandb\\run-20250710_130339-hmixi21r\\logs\\debug-core.log"}
+{"time":"2025-07-10T13:03:40.9965906-05:00","level":"INFO","msg":"stream: created new stream","id":"hmixi21r"}
+{"time":"2025-07-10T13:03:40.9965906-05:00","level":"INFO","msg":"stream: started","id":"hmixi21r"}
+{"time":"2025-07-10T13:03:40.9965906-05:00","level":"INFO","msg":"writer: Do: started","stream_id":"hmixi21r"}
+{"time":"2025-07-10T13:03:40.9965906-05:00","level":"INFO","msg":"sender: started","stream_id":"hmixi21r"}
+{"time":"2025-07-10T13:03:40.9965906-05:00","level":"INFO","msg":"handler: started","stream_id":"hmixi21r"}
+{"time":"2025-07-10T13:03:41.1798114-05:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-10T13:03:56.1968968-05:00","level":"ERROR","msg":"monitor: error sampling metrics: Incorrect function."}
+{"time":"2025-07-10T13:04:11.1972338-05:00","level":"ERROR","msg":"monitor: error sampling metrics: Incorrect function."}
+{"time":"2025-07-10T13:04:26.1970195-05:00","level":"ERROR","msg":"monitor: error sampling metrics: Incorrect function."}
+{"time":"2025-07-10T13:04:41.198235-05:00","level":"ERROR","msg":"monitor: error sampling metrics: Incorrect function."}
+{"time":"2025-07-10T13:04:56.1980801-05:00","level":"ERROR","msg":"monitor: error sampling metrics: Incorrect function."}
+{"time":"2025-07-10T13:05:11.1981555-05:00","level":"ERROR","msg":"monitor: error sampling metrics: Incorrect function."}
+{"time":"2025-07-10T13:05:26.2022243-05:00","level":"ERROR","msg":"monitor: error sampling metrics: Incorrect function."}
