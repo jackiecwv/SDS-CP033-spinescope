@@ -1,0 +1,21 @@
+----------- NUMERICAL data Distribution -----------------
+# Skewness of the data (looking into symmetry of  Distribution) and Kurtosis the degree of the assymetry: 
+- the degree_spondylolisthesis shows high Skewness: if I will use some linear models that i have to transform it. 
+- all the other numberical columns show the moderate values for the Skewness
+- in general for the normal Distribution Skewness not more then abs(0.5) is considered as normal distribution 
+- the Kurtosis values tells about the potential outliers, the degree_spondylolisthesis has the highes value for the kurtosis. 
+- and all the other columns might also have outliers
+
+
+---- Multicollinearity------------
+all features except 5  degree_spondylolisthesis show high collinearity
+⚠️  Features with high VIF (>10) indicating multicollinearity:
+                 Feature        VIF
+0       pelvic_incidence        inf
+1            pelvic_tilt        inf
+2  lumbar_lordosis_angle  18.942994
+3           sacral_slope        inf
+4          pelvic_radius  12.282573
+
+
+

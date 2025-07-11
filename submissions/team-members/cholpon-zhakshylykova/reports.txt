@@ -79,30 +79,26 @@ degree_spondylolisthesis : p=0.000000 (Non-normal)
 ==================================================
 Outlier Detection Summary:
 ------------------------------
-                    Feature  IQR_Outliers  Z_Score_Outliers  ...  IQR_Percentage  Lower_Bound  Upper_Bound
-0          pelvic_incidence             3                 3  ...           0.968        6.759      112.549
-1               pelvic_tilt            13                 3  ...           4.194       -6.513       39.300
-2     lumbar_lordosis_angle             1                 1  ...           0.323       -2.000      102.000
-3              sacral_slope             1                 1  ...           0.323        4.324       81.719
-4             pelvic_radius            11                 3  ...           3.548       88.571      147.605
-5  degree_spondylolisthesis            10                 3  ...           3.226      -57.922      100.813
-
-[6 rows x 7 columns]
+                    Feature  IQR_Outliers  Z_Score_Outliers  Modified_Z_Outliers  IQR_Percentage  Lower_Bound  Upper_Bound
+0          pelvic_incidence             3                 3                    1           0.968        6.759      112.549
+1               pelvic_tilt            13                 3                    4           4.194       -6.513       39.300
+2     lumbar_lordosis_angle             1                 1                    1           0.323       -2.000      102.000
+3              sacral_slope             1                 1                    1           0.323        4.324       81.719
+4             pelvic_radius            11                 3                    4           3.548       88.571      147.605
+5  degree_spondylolisthesis            10                 3                   14           3.226      -57.922      100.813
 
 ==================================================
 5. CORRELATION AND MULTICOLLINEARITY ANALYSIS
 ==================================================
 Correlation Matrix:
 --------------------
-                          pelvic_incidence  pelvic_tilt  ...  pelvic_radius  degree_spondylolisthesis
-pelvic_incidence                     1.000        0.629  ...         -0.247                     0.639
-pelvic_tilt                          0.629        1.000  ...          0.033                     0.398
-lumbar_lordosis_angle                0.717        0.433  ...         -0.080                     0.534
-sacral_slope                         0.815        0.062  ...         -0.342                     0.524
-pelvic_radius                       -0.247        0.033  ...          1.000                    -0.026
-degree_spondylolisthesis             0.639        0.398  ...         -0.026                     1.000
-
-[6 rows x 6 columns]
+                          pelvic_incidence  pelvic_tilt  lumbar_lordosis_angle  sacral_slope  pelvic_radius  degree_spondylolisthesis
+pelvic_incidence                     1.000        0.629                  0.717         0.815         -0.247                     0.639
+pelvic_tilt                          0.629        1.000                  0.433         0.062          0.033                     0.398
+lumbar_lordosis_angle                0.717        0.433                  1.000         0.598         -0.080                     0.534
+sacral_slope                         0.815        0.062                  0.598         1.000         -0.342                     0.524
+pelvic_radius                       -0.247        0.033                 -0.080        -0.342          1.000                    -0.026
+degree_spondylolisthesis             0.639        0.398                  0.534         0.524         -0.026                     1.000
 
 Highly Correlated Pairs (|r| > 0.7):
 -----------------------------------
