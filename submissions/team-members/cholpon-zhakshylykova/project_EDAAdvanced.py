@@ -513,11 +513,21 @@ def dimensionality_analysis(df, target_col='class'):
     print(f"Cumulative Explained Variance: {pca.explained_variance_ratio_.cumsum().round(4)}")
     
     # Find number of components needed for 95% variance
+    '''This calculates the cumulative sum of those values.
+        It tells you how much total variance is explained
+        if you include 1, 2, 3... components.'''
     cumsum_var = pca.explained_variance_ratio_.cumsum()
+    '''Give me the smallest number of components that together explain
+      at least 95% of the total variance. In the code below we add 1 just to find the correct number 
+      of features, because the index starts at 0.'''
     n_components_95 = np.argmax(cumsum_var >= 0.95) + 1
     print(f"Components needed for 95% variance: {n_components_95}")
     
     # Perform t-SNE for non-linear dimensionality reduction
+    '''Initialize t-SNE to reduce high-dimensional data to 2D for visualization
+    n_components=2 → project to 2D
+    perplexity=30 → controls the balance between local and global structure
+    random_state=42 → ensures reproducibility'''
     print("\nPerforming t-SNE analysis...")
     tsne = TSNE(n_components=2, random_state=42, perplexity=30)
     tsne_result = tsne.fit_transform(X_scaled)
@@ -536,11 +546,11 @@ def dimensionality_analysis(df, target_col='class'):
     axes[0, 0].grid(True, alpha=0.3)
     
     # PCA 2D projection
-    colors = plt.cm.Set1(np.linspace(0, 1, len(df[target_col].unique())))
-    for i, target_class in enumerate(df[target_col].unique()):
-        mask = df[target_col] == target_class
+    colors = plt.cm.Set1(np.linspace(0, 1, len(df[target_col].unique()))) #create a list of colors for each class from the Set1 colormap
+    for i, target_class in enumerate(df[target_col].unique()): # get unique target classes, is the index of the class
+        mask = df[target_col] == target_class #  create a mask for the current target class, bolean array where True if the row belongs to the target class
         axes[0, 1].scatter(pca_result[mask, 0], pca_result[mask, 1], c=[colors[i]], label=target_class, alpha=0.6)
-    axes[0, 1].set_xlabel(f'PC1 ({pca.explained_variance_ratio_[0]:.2%} variance)')
+    axes[0, 1].set_xlabel(f'PC1 ({pca.explained_variance_ratio_[0]:.2%} variance)') # pca.explained_variance_ratio_[0] gives the percentage of variance explained by the first principal component (it is from the list)
     axes[0, 1].set_ylabel(f'PC2 ({pca.explained_variance_ratio_[1]:.2%} variance)')
     axes[0, 1].set_title('PCA 2D Projection')
     axes[0, 1].legend()
