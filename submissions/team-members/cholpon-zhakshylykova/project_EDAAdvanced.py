@@ -21,7 +21,11 @@ class MultiOut:
     def flush(self):
         """Flush all streams"""
         for s in self.streams:
-            s.flush()
+            try:
+                s.flush()
+            except (ValueError, AttributeError):
+                # Stream already closed or missing flush method
+                pass
 
 # Set up dual output: both console and file
 report_file = open("reports.txt", "w")
@@ -61,6 +65,12 @@ print("Path to dataset files:", path)
 # Load the dataset
 os.listdir(path)  # List files in the downloaded directory
 df = pd.read_csv(os.path.join(path, 'column_3C_weka.csv'))
+
+df['binary_class'] = df['class'].replace({
+    'Hernia': 'Abnormal',
+    'Spondylolisthesis': 'Abnormal',
+    'Normal': 'Normal'
+})
 
 def dataset_overview(df):
     """
@@ -153,7 +163,7 @@ def target_analysis(df, target_col='class'):
     axes[1].set_title('Class Distribution (Proportion)')
     
     plt.tight_layout()
-    plt.savefig(f"{plots_folder}/target_class_distribution.png", bbox_inches="tight")
+    plt.savefig(f"{plots_folder}/target_class_distribution_{target_col}.png", bbox_inches="tight")
     plt.show()
 
 def numerical_features_analysis(df, target_col='class'):
@@ -220,7 +230,7 @@ def numerical_features_analysis(df, target_col='class'):
         axes[i].set_visible(False)
     
     plt.tight_layout()
-    plt.savefig(f"{plots_folder}/numerical_features_distribution.png", bbox_inches="tight")
+    plt.savefig(f"{plots_folder}/numerical_features_distribution_{target_col}.png", bbox_inches="tight")
     plt.show()
     
     # Create a grid of subplots with 'n_rows' rows and 3 columns
@@ -235,15 +245,15 @@ def numerical_features_analysis(df, target_col='class'):
         axes[i].set_title(f'Box Plot: {col} by Class')         # Set a meaningful title
         axes[i].tick_params(axis='x', rotation=45)             # Rotate x-axis labels for better readability
     
-        # Hide unused subplots
-        for i in range(len(numerical_cols), len(axes)):
-            axes[i].set_visible(False)
-        
-        plt.tight_layout()
-        plt.savefig(f"{plots_folder}/numerical_features_boxplots.png", bbox_inches="tight")
-        plt.show()
+    # Hide unused subplots
+    for i in range(len(numerical_cols), len(axes)):
+        axes[i].set_visible(False)
+    
+    plt.tight_layout()
+    plt.savefig(f"{plots_folder}/numerical_features_boxplots_{target_col}.png", bbox_inches="tight")
+    plt.show()
 
-def outlier_analysis(df, target_col='class'):
+def outlier_analysis(df):
     """
     Comprehensive outlier detection using multiple methods:
     - IQR method (Interquartile Range)
@@ -315,7 +325,7 @@ def outlier_analysis(df, target_col='class'):
     plt.savefig(f"{plots_folder}/outlier_detection_summary.png", bbox_inches="tight")
     plt.show()
 
-def correlation_analysis(df, target_col='class'):
+def correlation_analysis(df):
     """
     Analyze correlations and multicollinearity:
     - Correlation matrix calculation
@@ -371,33 +381,33 @@ def correlation_analysis(df, target_col='class'):
         print("\n✓ No severe multicollinearity detected (all VIF < 10)")
     
     # Create correlation visualizations
-    fig, axes = plt.subplots(2, 2, figsize=(16, 12))
-    
-    # Correlation heatmap
-    sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', center=0, square=True, ax=axes[0, 0], fmt='.2f')
-    axes[0, 0].set_title('Correlation Matrix')
-    
-    # Correlation with target (if target is numeric)
-    if target_col in numerical_cols:
-        target_corr = corr_matrix[target_col].drop(target_col).sort_values(key=abs, ascending=False)
-        sns.barplot(x=target_corr.values, y=target_corr.index, ax=axes[0, 1])
-        axes[0, 1].set_title(f'Correlation with {target_col}')
-        axes[0, 1].set_xlabel('Correlation Coefficient')
-    
-    # VIF visualization
-    sns.barplot(data=vif_data, x='VIF', y='Feature', ax=axes[1, 0])
-    axes[1, 0].set_title('Variance Inflation Factor (VIF)')
-    axes[1, 0].axvline(x=10, color='red', linestyle='--', alpha=0.7, label='VIF=10')
-    axes[1, 0].legend()
-    
-    plt.savefig(f"{plots_folder}/correlation_multicollinearity_matrix.png", bbox_inches="tight")
-    
-    # Create hierarchical clustering of correlation matrix
-    sns.clustermap(corr_matrix, annot=True, cmap='coolwarm', center=0, square=True, figsize=(8, 8))
-    plt.savefig(f"{plots_folder}/correlation_clustermap.png", bbox_inches="tight")
-    plt.show()
-    plt.tight_layout()
-    plt.show()
+    #fig, axes = plt.subplots(2, 2, figsize=(16, 12))
+    #
+    ## Correlation heatmap
+    #sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', center=0, square=True, ax=axes[0, 0], fmt='.2f')
+    #axes[0, 0].set_title('Correlation Matrix')
+    #
+    ## Correlation with target (if target is numeric)
+    #if target_col in numerical_cols:
+    #    target_corr = corr_matrix[target_col].drop(target_col).sort_values(key=abs, ascending=False)
+    #    sns.barplot(x=target_corr.values, y=target_corr.index, ax=axes[0, 1])
+    #    axes[0, 1].set_title(f'Correlation with {target_col}')
+    #    axes[0, 1].set_xlabel('Correlation Coefficient')
+    #
+    ## VIF visualization
+    #sns.barplot(data=vif_data, x='VIF', y='Feature', ax=axes[1, 0])
+    #axes[1, 0].set_title('Variance Inflation Factor (VIF)')
+    #axes[1, 0].axvline(x=10, color='red', linestyle='--', alpha=0.7, label='VIF=10')
+    #axes[1, 0].legend()
+    #
+    #plt.savefig(f"{plots_folder}/correlation_multicollinearity_matrix.png", bbox_inches="tight")
+    #
+    ## Create hierarchical clustering of correlation matrix
+    #sns.clustermap(corr_matrix, annot=True, cmap='coolwarm', center=0, square=True, figsize=(8, 8))
+    #plt.savefig(f"{plots_folder}/correlation_clustermap.png", bbox_inches="tight")
+    #plt.show()
+    #plt.tight_layout()
+    #plt.show()
 
 def feature_relationships(df, target_col='class'):
     """
@@ -481,7 +491,7 @@ def feature_relationships(df, target_col='class'):
                 axes[i].set_visible(False)
             
             plt.tight_layout()
-            plt.savefig(f"{plots_folder}/feature_interactions_violin.png", bbox_inches="tight")
+            plt.savefig(f"{plots_folder}/feature_interactions_violin_{target_col}.png", bbox_inches="tight")
             plt.show()
 
 def dimensionality_analysis(df, target_col='class'):
@@ -583,7 +593,7 @@ def dimensionality_analysis(df, target_col='class'):
         axes[1, 1].grid(True, alpha=0.3)
     
     plt.tight_layout()
-    plt.savefig(f"{plots_folder}/dimensionality_reduction.png", bbox_inches="tight")
+    plt.savefig(f"{plots_folder}/dimensionality_reduction_{target_col}.png", bbox_inches="tight")
     plt.show()
 
 def clustering_analysis(df, target_col='class'):
@@ -658,7 +668,7 @@ def clustering_analysis(df, target_col='class'):
     axes[1, 1].set_xlabel('True Labels')
     axes[1, 1].set_ylabel('Clusters')
     plt.tight_layout()
-    plt.savefig(f"{plots_folder}/clustering_analysis.png", bbox_inches="tight")
+    plt.savefig(f"{plots_folder}/clustering_analysis_{target_col}.png", bbox_inches="tight")
     plt.show()
     print("\nCluster vs True Labels Cross-tabulation:")
     print(cluster_crosstab)
@@ -725,7 +735,7 @@ def statistical_tests(df, target_col='class'):
             sns.boxplot(data=df, x=target_col, y=col)
             plt.title(f'{col} by {target_col}')
             plt.tight_layout()
-            plt.savefig(f"{plots_folder}/statistical_test_{col}_boxplot.png", bbox_inches="tight")
+            plt.savefig(f"{plots_folder}/statistical_test_{col}_boxplot_{target_col}.png", bbox_inches="tight")
             plt.show()
 
 # End of script: close the report file properly
@@ -734,15 +744,22 @@ def statistical_tests(df, target_col='class'):
 
 
 # RUN THE ANALYSIS
+# Only ONCE for overall dataset info and multicollinearity:
 dataset_overview(df)
-target_analysis(df, target_col='class')
-numerical_features_analysis(df, target_col='class')
-outlier_analysis(df, target_col='class')
-correlation_analysis(df, target_col='class')
-feature_relationships(df, target_col='class')
-dimensionality_analysis(df, target_col='class')
-clustering_analysis(df, target_col='class')
-statistical_tests(df, target_col='class')
+correlation_analysis(df)
+outlier_analysis(df)
+
+# Do ONCE for each target variable:
+for tgt in ['class', 'binary_class']:
+    print(f"\n===== EDA for {tgt} =====")
+    target_analysis(df, target_col=tgt)
+    numerical_features_analysis(df, target_col=tgt)
+    feature_relationships(df, target_col=tgt)
+    dimensionality_analysis(df, target_col=tgt)
+    clustering_analysis(df, target_col=tgt)
+    statistical_tests(df, target_col=tgt)
+    
+
 
 report_file.close()
 
