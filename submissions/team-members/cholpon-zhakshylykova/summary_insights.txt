@@ -1,0 +1,125 @@
+----------- NUMERICAL data Distribution -----------------
+# Skewness of the data (looking into symmetry of  Distribution) and Kurtosis the degree of the assymetry: 
+- the degree_spondylolisthesis shows high Skewness: if I will use some linear models that i have to transform it. 
+- all the other numberical columns show the moderate values for the Skewness
+- in general for the normal Distribution Skewness not more then abs(0.5) is considered as normal distribution 
+- the Kurtosis values tells about the potential outliers, the degree_spondylolisthesis has the highes value for the kurtosis. 
+- and all the other columns might also have outliers
+
+
+
+1. Dataset Basics & Quality
+No missing values. Data is complete, no imputation needed.
+
+310 samples, 8 columns: 6 numerical, 2 categorical (class, binary_class).
+
+All numerical features are continuous and unique across almost all rows.
+
+Class labels: ‘Normal’, ‘Hernia’, ‘Spondylolisthesis’ (binary_class: Normal vs. Abnormal).
+
+2. Correlation & Multicollinearity
+Correlation Matrix Highlights
+pelvic_incidence & sacral_slope: r = 0.815 (very strong)
+
+pelvic_incidence & lumbar_lordosis_angle: r = 0.717 (strong)
+
+These pairs are highly correlated (|r| > 0.7).
+→ Interpretation:
+
+These features contain redundant information.
+
+Sacral slope and pelvic incidence are biomechanically linked (which makes sense anatomically).
+
+Implication: Multicollinearity is very high and could destabilize linear models (regression, logistic regression).
+
+Variance Inflation Factor (VIF)
+Multiple features have VIF > 10 (even infinite!): pelvic_incidence, pelvic_tilt, sacral_slope, lumbar_lordosis_angle, pelvic_radius.
+
+Interpretation: Severe multicollinearity; strongly consider:
+
+Dimensionality reduction (PCA).
+
+Feature selection/removal.
+
+Use tree-based models or regularization techniques.
+
+3. Outlier Detection
+Most features have few outliers (<5%), except:
+
+pelvic_tilt (4%), pelvic_radius (3.5%), degree_spondylolisthesis (3.2%).
+
+degree_spondylolisthesis is highly skewed (skewness = 4.3, kurtosis = 38.07), suggesting heavy-tailed distribution and extreme values.
+
+4. Target Distribution & Imbalance
+Class imbalance:
+
+For class: Spondylolisthesis (48.4%), Normal (32.3%), Hernia (19.4%). Imbalance ratio = 2.5.
+
+For binary_class: Abnormal (67.7%), Normal (32.3%).
+
+⚠️ Warning: Downsampling, upsampling, or class weighting may be needed.
+
+5. Distribution, Normality, and Feature Differences
+All features are non-normal (Shapiro p < 0.05).
+
+Strongly non-Gaussian: Non-parametric tests are appropriate.
+
+Kruskal-Wallis test: All features are significantly different across both class and binary_class (p < 1e-8).
+
+Effect sizes are moderate-to-large (e.g., lumbar_lordosis_angle effect size = 0.27 for 3-class).
+
+Interpretation:
+
+All features are informative for distinguishing class.
+
+Non-linear/non-parametric models may better capture underlying patterns.
+
+6. Feature Relationships
+All features show significant interaction with class (ANOVA F, Kruskal-Wallis H, effect size).
+
+Visualizations (pairplots, boxplots) will show clear separation in distributions between normal and abnormal classes.
+
+7. Dimensionality Reduction
+PCA:
+
+2 components explain ~74% variance; 5 explain >95%.
+
+Interpretation: Most of the info in 5D space; high redundancy among features.
+
+PCA plot and t-SNE plots likely show clear separation between classes, but some overlap.
+
+8. Clustering
+Optimal clusters: 2 (via silhouette score).
+
+Clusters vs True Labels:
+
+Cluster 0: Mostly Spondylolisthesis; Cluster 1: Most Normal and Hernia.
+
+For binary_class, clusters correspond well to Normal vs Abnormal.
+
+Interpretation: Biomechanical features do cluster by disease status, but imperfectly.
+
+9. Statistical Tests
+All features show statistically significant differences between Normal/Abnormal, and among all three classes.
+
+Visualizations: Boxplots support statistical test results, with obvious differences in medians and spread.
+
+KEY TAKEAWAYS & MODELING IMPLICATIONS
+All features are predictive; none can be dropped without testing, but redundancy/multicollinearity is severe.
+
+Tree-based models (RF, XGBoost) or regularized models (LASSO/Ridge) will handle multicollinearity better than plain logistic regression.
+
+Feature engineering: Consider combining or removing highly collinear features, or using PCA for dimensionality reduction.
+
+Non-linearity:
+
+Data is non-normal and likely contains non-linear feature relationships.
+
+Non-linear models are favored.
+
+Class imbalance must be addressed for reliable predictive performance.
+
+Outliers exist, especially in degree_spondylolisthesis; robust scalers or transformation may help.
+
+
+
