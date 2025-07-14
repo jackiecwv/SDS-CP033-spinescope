@@ -760,7 +760,7 @@ for tgt in ['class', 'binary_class']:
     feature_relationships(df, target_col=tgt)
     dimensionality_analysis(df, target_col=tgt)
     clustering_analysis(df, target_col=tgt)
-    statistical_tests(df, target_col=tgt)
+    statistical_tests(df, target_col=tgt) 
     
 
 
