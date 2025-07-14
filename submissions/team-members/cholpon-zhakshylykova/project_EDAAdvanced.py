@@ -3,7 +3,7 @@ import os
 # Create plots folder if it does not exist
 # This ensures we have a dedicated directory for saving all generated plots
 plots_folder = "plots"
-os.makedirs(plots_folder, exist_ok=True)
+os.makedirs(plots_folder, exist_ok=True) # exist_ok=True allows the directory to be created only if it does not already exist
 
 # Helper: redirect print to both console and file
 # This custom class allows us to simultaneously output to console and save to a report file
@@ -95,11 +95,11 @@ def dataset_overview(df):
         null_count = df[col].isnull().sum()
         null_pct = (null_count / len(df)) * 100
         unique_vals = df[col].nunique()
-        print(f"{col:25} | {str(dtype):10} | Nulls: {null_count:3} ({null_pct:5.1f}%) | Unique: {unique_vals:4}")
+        print(f"{col:25} | {str(dtype):10} | Nulls: {null_count:3} ({null_pct:5.1f}%) | Unique: {unique_vals:4}") # # Print column name, data type, null count, null percentage, and unique values
     
     # Summary of data types
     print(f"\nData Types Summary:")
-    print(df.dtypes.value_counts())
+    print(df.dtypes.value_counts()) # Print the count of each data type in the dataset
     
     # Missing values analysis
     if df.isnull().sum().sum() > 0:
@@ -126,7 +126,9 @@ def target_analysis(df, target_col='class'):
     
     # Calculate class distribution
     class_counts = df[target_col].value_counts()
-    class_props = df[target_col].value_counts(normalize=True)
+    
+     #The argument normalize=True tells value_counts() to return proportions (relative frequencies) rather than raw counts.
+    class_props = df[target_col].value_counts(normalize=True) # Normalize counts to get proportions
     
     print("Class Distribution:")
     print("-" * 20)
@@ -363,6 +365,7 @@ def correlation_analysis(df):
     
     # Variance Inflation Factor (VIF) analysis
     # VIF measures how much the variance of a coefficient increases due to collinearity
+    # It is calculated as VIF = 1 / (1 - R²), where R² is the coefficient of determination of a linear regression model, checking how much the variance of a feature is inflated by other features.
     print("\nVariance Inflation Factor (VIF) Analysis:")
     print("-" * 40)
     X_numeric = df[numerical_cols].dropna()
@@ -427,7 +430,7 @@ def feature_relationships(df, target_col='class'):
     print("Generating pair plot for feature relationships...")
     if len(numerical_cols) <= 6:
         g = sns.pairplot(df, hue=target_col, diag_kind='hist', plot_kws={'alpha': 0.6})
-        g.savefig(f"{plots_folder}/feature_pairplot.png", bbox_inches="tight")
+        g.savefig(f"{plots_folder}/feature_pairplot_{target_col}.png", bbox_inches="tight")
         plt.show()
     else:
         print("Too many features for pair plot. Showing correlation matrix instead.")
@@ -437,10 +440,10 @@ def feature_relationships(df, target_col='class'):
     print("-" * 35)
     
     # Encode target variable if categorical
-    le = LabelEncoder()
-    df_encoded = df.copy()
-    if df[target_col].dtype == 'object':
-        df_encoded[target_col] = le.fit_transform(df[target_col])
+    #le = LabelEncoder()
+    #df_encoded = df.copy()
+    #if df[target_col].dtype == 'object':
+    #    df_encoded[target_col] = le.fit_transform(df[target_col])
     
     interaction_results = []
     
