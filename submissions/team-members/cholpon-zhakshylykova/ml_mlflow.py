@@ -34,7 +34,15 @@ import pickle
 from typing import Dict, List, Tuple, Any
 import shap
 from sklearn.model_selection import learning_curve
-from imblearn.over_sampling import SMOTE   #
+from imblearn.over_sampling import SMOTE
+from imblearn.under_sampling import RandomUnderSampler
+from imblearn.combine import SMOTEENN
+from sklearn.preprocessing import PowerTransformer, RobustScaler
+from sklearn.feature_selection import SelectKBest, f_classif
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+from statsmodels.stats.stattools import durbin_watson
+from scipy import stats
+from sklearn.pipeline import Pipeline
 
 # Configuration
 class Config:
@@ -46,6 +54,14 @@ class Config:
     VALIDATION_SIZE = 0.2  # From training set
     CV_FOLDS = 5
     MAX_EVALS = 50  # For hyperparameter tuning
+    
+    # Class imbalance handling
+    IMBALANCE_STRATEGY = "SMOTE"  # Options: "SMOTE", "UNDERSAMPLING", "SMOTEENN", "WEIGHTED"
+    
+    # Linear model preprocessing
+    POWER_TRANSFORM = True  # Apply Yeo-Johnson transformation
+    VIF_THRESHOLD = 5.0  # Variance Inflation Factor threshold
+    OUTLIER_REMOVAL = True  # Remove outliers for linear models
     
     # MLflow tracking
     TRACKING_URI = "sqlite:///mlflow.db"  # Use SQLite for local tracking
@@ -64,9 +80,14 @@ class ModelDevelopmentPipeline:
         self.y_val = None
         self.y_test = None
         self.scaler = None
+        self.robust_scaler = None
+        self.power_transformer = None
         self.label_encoder = None
         self.feature_names = None
+        self.selected_features = None
         self.models_performance = {}
+        self.smote = None
+        self.outlier_mask = None
         
         # Setup MLflow
         self.setup_mlflow()
@@ -131,6 +152,159 @@ class ModelDevelopmentPipeline:
             mlflow.log_artifact("dataset_info.json")
             os.remove("dataset_info.json")
     
+    def check_linear_model_assumptions(self, X, y):
+        """Check and address linear model assumptions"""
+        print("Checking linear model assumptions...")
+        
+        assumptions_results = {}
+        
+        # 1. Check for multicollinearity using VIF
+        print("  Checking multicollinearity...")
+        vif_data = pd.DataFrame()
+        vif_data["Feature"] = X.columns
+        vif_data["VIF"] = [variance_inflation_factor(X.values, i) 
+                          for i in range(X.shape[1])]
+        
+        high_vif_features = vif_data[vif_data["VIF"] > self.config.VIF_THRESHOLD]["Feature"].tolist()
+        assumptions_results["high_vif_features"] = high_vif_features
+        assumptions_results["vif_data"] = vif_data
+        
+        print(f"    Features with VIF > {self.config.VIF_THRESHOLD}: {len(high_vif_features)}")
+        
+        # 2. Check normality of features
+        print("  Checking feature normality...")
+        normality_results = {}
+        for col in X.columns:
+            stat, p_value = stats.shapiro(X[col])
+            normality_results[col] = {"statistic": stat, "p_value": p_value, "is_normal": p_value > 0.05}
+        
+        non_normal_features = [col for col, result in normality_results.items() 
+                             if not result["is_normal"]]
+        assumptions_results["non_normal_features"] = non_normal_features
+        assumptions_results["normality_results"] = normality_results
+        
+        print(f"    Non-normal features: {len(non_normal_features)}")
+        
+        # 3. Check for outliers using IQR method
+        print("  Checking for outliers...")
+        outlier_counts = {}
+        for col in X.columns:
+            Q1 = X[col].quantile(0.25)
+            Q3 = X[col].quantile(0.75)
+            IQR = Q3 - Q1
+            lower_bound = Q1 - 1.5 * IQR
+            upper_bound = Q3 + 1.5 * IQR
+            outliers = ((X[col] < lower_bound) | (X[col] > upper_bound)).sum()
+            outlier_counts[col] = outliers
+        
+        assumptions_results["outlier_counts"] = outlier_counts
+        total_outliers = sum(outlier_counts.values())
+        print(f"    Total outliers detected: {total_outliers}")
+        
+        return assumptions_results
+    
+    def apply_transformations(self, X_train, X_val, X_test, for_linear_models=False):
+        """Apply transformations to meet linear model assumptions"""
+        print("Applying data transformations...")
+        
+        X_train_transformed = X_train.copy()
+        X_val_transformed = X_val.copy()
+        X_test_transformed = X_test.copy()
+        
+        if for_linear_models:
+            # 1. Apply power transformation for normality
+            if self.config.POWER_TRANSFORM:
+                print("  Applying power transformation...")
+                self.power_transformer = PowerTransformer(method='yeo-johnson', standardize=False)
+                X_train_transformed = pd.DataFrame(
+                    self.power_transformer.fit_transform(X_train_transformed),
+                    columns=X_train_transformed.columns,
+                    index=X_train_transformed.index
+                )
+                X_val_transformed = pd.DataFrame(
+                    self.power_transformer.transform(X_val_transformed),
+                    columns=X_val_transformed.columns,
+                    index=X_val_transformed.index
+                )
+                X_test_transformed = pd.DataFrame(
+                    self.power_transformer.transform(X_test_transformed),
+                    columns=X_test_transformed.columns,
+                    index=X_test_transformed.index
+                )
+            
+            # 2. Use robust scaling instead of standard scaling
+            print("  Applying robust scaling...")
+            self.robust_scaler = RobustScaler()
+            X_train_transformed = pd.DataFrame(
+                self.robust_scaler.fit_transform(X_train_transformed),
+                columns=X_train_transformed.columns,
+                index=X_train_transformed.index
+            )
+            X_val_transformed = pd.DataFrame(
+                self.robust_scaler.transform(X_val_transformed),
+                columns=X_val_transformed.columns,
+                index=X_val_transformed.index
+            )
+            X_test_transformed = pd.DataFrame(
+                self.robust_scaler.transform(X_test_transformed),
+                columns=X_test_transformed.columns,
+                index=X_test_transformed.index
+            )
+            
+            # 3. Feature selection to address multicollinearity
+            print("  Applying feature selection...")
+            # Use SelectKBest with f_classif to select most informative features
+            k_best = min(len(X_train_transformed.columns) - 1, 4)  # Select top 4 features
+            selector = SelectKBest(score_func=f_classif, k=k_best)
+            X_train_transformed = selector.fit_transform(X_train_transformed, self.y_train)
+            X_val_transformed = selector.transform(X_val_transformed)
+            X_test_transformed = selector.transform(X_test_transformed)
+            
+            # Update feature names
+            self.selected_features = [self.feature_names[i] for i in selector.get_support(indices=True)]
+            print(f"    Selected features: {self.selected_features}")
+        
+        else:
+            # Standard scaling for non-linear models
+            print("  Applying standard scaling...")
+            self.scaler = StandardScaler()
+            X_train_transformed = self.scaler.fit_transform(X_train_transformed)
+            X_val_transformed = self.scaler.transform(X_val_transformed)
+            X_test_transformed = self.scaler.transform(X_test_transformed)
+        
+        return X_train_transformed, X_val_transformed, X_test_transformed
+    
+    def handle_class_imbalance(self, X_train, y_train):
+        """Handle class imbalance using various techniques"""
+        print(f"Handling class imbalance using {self.config.IMBALANCE_STRATEGY}...")
+        
+        original_distribution = pd.Series(y_train).value_counts().sort_index()
+        print(f"  Original distribution: {dict(original_distribution)}")
+        
+        X_resampled, y_resampled = X_train, y_train
+        
+        if self.config.IMBALANCE_STRATEGY == "SMOTE":
+            self.smote = SMOTE(random_state=self.config.RANDOM_STATE)
+            X_resampled, y_resampled = self.smote.fit_resample(X_train, y_train)
+            
+        elif self.config.IMBALANCE_STRATEGY == "UNDERSAMPLING":
+            undersampler = RandomUnderSampler(random_state=self.config.RANDOM_STATE)
+            X_resampled, y_resampled = undersampler.fit_resample(X_train, y_train)
+            
+        elif self.config.IMBALANCE_STRATEGY == "SMOTEENN":
+            smote_enn = SMOTEENN(random_state=self.config.RANDOM_STATE)
+            X_resampled, y_resampled = smote_enn.fit_resample(X_train, y_train)
+        
+        # If using weighted approach, return original data
+        elif self.config.IMBALANCE_STRATEGY == "WEIGHTED":
+            print("  Using class weights in models...")
+            return X_train, y_train
+        
+        new_distribution = pd.Series(y_resampled).value_counts().sort_index()
+        print(f"  New distribution: {dict(new_distribution)}")
+        
+        return X_resampled, y_resampled
+    
     def split_and_scale_data(self, target_col='binary_class'):
         """Split data into train/validation/test sets and scale features"""
         print("Splitting and scaling data...")
@@ -158,15 +332,32 @@ class ModelDevelopmentPipeline:
             random_state=self.config.RANDOM_STATE, stratify=y_temp
         )
         
-        # Scale features
-        self.scaler = StandardScaler()
-        self.X_train_scaled = self.scaler.fit_transform(self.X_train)
-        self.X_val_scaled = self.scaler.transform(self.X_val)
-        self.X_test_scaled = self.scaler.transform(self.X_test)
-        
         print(f"Training set: {self.X_train.shape}")
         print(f"Validation set: {self.X_val.shape}")
         print(f"Test set: {self.X_test.shape}")
+        
+        # Check linear model assumptions
+        assumptions = self.check_linear_model_assumptions(self.X_train, self.y_train)
+        
+        # Apply transformations for linear models
+        self.X_train_linear, self.X_val_linear, self.X_test_linear = self.apply_transformations(
+            self.X_train, self.X_val, self.X_test, for_linear_models=True
+        )
+        
+        # Standard scaling for non-linear models
+        self.X_train_scaled, self.X_val_scaled, self.X_test_scaled = self.apply_transformations(
+            self.X_train, self.X_val, self.X_test, for_linear_models=False
+        )
+        
+        # Handle class imbalance
+        self.X_train_balanced, self.y_train_balanced = self.handle_class_imbalance(
+            self.X_train_scaled, self.y_train
+        )
+        
+        # For linear models, also balance the transformed data
+        self.X_train_linear_balanced, self.y_train_linear_balanced = self.handle_class_imbalance(
+            self.X_train_linear, self.y_train
+        )
         
         # Log data split info
         with mlflow.start_run(run_name="data_splitting"):
@@ -177,40 +368,58 @@ class ModelDevelopmentPipeline:
             mlflow.log_param("feature_names", self.feature_names)
             mlflow.log_param("target_encoding", dict(zip(self.label_encoder.classes_, 
                                                        self.label_encoder.transform(self.label_encoder.classes_))))
+            mlflow.log_param("imbalance_strategy", self.config.IMBALANCE_STRATEGY)
+            mlflow.log_param("power_transform", self.config.POWER_TRANSFORM)
+            mlflow.log_param("vif_threshold", self.config.VIF_THRESHOLD)
+            
+            # Log assumption check results
+            mlflow.log_param("high_vif_features", assumptions["high_vif_features"])
+            mlflow.log_param("non_normal_features", assumptions["non_normal_features"])
+            mlflow.log_metric("total_outliers", sum(assumptions["outlier_counts"].values()))
+            mlflow.log_metric("balanced_train_size", len(self.X_train_balanced))
+            
+            if self.selected_features:
+                mlflow.log_param("selected_features", self.selected_features)
     
     def get_model_configurations(self) -> Dict[str, Dict]:
         """Define model configurations with hyperparameter grids"""
+        # Determine if we should use class weights
+        use_class_weights = self.config.IMBALANCE_STRATEGY == "WEIGHTED"
+        
         return {
             'logistic_regression': {
-                'model': LogisticRegression(random_state=self.config.RANDOM_STATE, max_iter=1000),
+                'model': LogisticRegression(random_state=self.config.RANDOM_STATE, max_iter=2000),
                 'params': {
                     'C': [0.001, 0.01, 0.1, 1, 10, 100],
                     'penalty': ['l1', 'l2', 'elasticnet'],
                     'solver': ['liblinear', 'saga'],
-                    'class_weight': [None, 'balanced']
-                }
+                    'class_weight': ['balanced'] if use_class_weights else [None, 'balanced']
+                },
+                'is_linear': True
             },
             'random_forest': {
                 'model': RandomForestClassifier(random_state=self.config.RANDOM_STATE),
                 'params': {
-                    'n_estimators': [50, 100, 200, 300],
+                    'n_estimators': [100, 200, 300],
                     'max_depth': [None, 10, 20, 30],
                     'min_samples_split': [2, 5, 10],
                     'min_samples_leaf': [1, 2, 4],
                     'max_features': ['sqrt', 'log2', None],
-                    'class_weight': [None, 'balanced']
-                }
+                    'class_weight': ['balanced'] if use_class_weights else [None, 'balanced']
+                },
+                'is_linear': False
             },
             'gradient_boosting': {
                 'model': GradientBoostingClassifier(random_state=self.config.RANDOM_STATE),
                 'params': {
-                    'n_estimators': [50, 100, 200],
+                    'n_estimators': [100, 200, 300],
                     'learning_rate': [0.01, 0.1, 0.2],
                     'max_depth': [3, 5, 7],
                     'min_samples_split': [2, 5, 10],
                     'min_samples_leaf': [1, 2, 4],
                     'subsample': [0.8, 0.9, 1.0]
-                }
+                },
+                'is_linear': False
             },
             'svm': {
                 'model': SVC(random_state=self.config.RANDOM_STATE, probability=True),
@@ -218,14 +427,16 @@ class ModelDevelopmentPipeline:
                     'C': [0.1, 1, 10, 100],
                     'kernel': ['rbf', 'poly', 'linear'],
                     'gamma': ['scale', 'auto', 0.001, 0.01, 0.1, 1],
-                    'class_weight': [None, 'balanced']
-                }
+                    'class_weight': ['balanced'] if use_class_weights else [None, 'balanced']
+                },
+                'is_linear': True  # Can be linear with linear kernel
             },
             'naive_bayes': {
                 'model': GaussianNB(),
                 'params': {
                     'var_smoothing': np.logspace(-10, -6, 10)
-                }
+                },
+                'is_linear': True
             },
             'decision_tree': {
                 'model': DecisionTreeClassifier(random_state=self.config.RANDOM_STATE),
@@ -234,8 +445,9 @@ class ModelDevelopmentPipeline:
                     'min_samples_split': [2, 5, 10, 20],
                     'min_samples_leaf': [1, 2, 5, 10],
                     'max_features': ['sqrt', 'log2', None],
-                    'class_weight': [None, 'balanced']
-                }
+                    'class_weight': ['balanced'] if use_class_weights else [None, 'balanced']
+                },
+                'is_linear': False
             },
             'knn': {
                 'model': KNeighborsClassifier(),
@@ -243,17 +455,19 @@ class ModelDevelopmentPipeline:
                     'n_neighbors': [3, 5, 7, 9, 11, 15],
                     'weights': ['uniform', 'distance'],
                     'metric': ['euclidean', 'manhattan', 'minkowski']
-                }
+                },
+                'is_linear': False
             },
             'mlp': {
-                'model': MLPClassifier(random_state=self.config.RANDOM_STATE, max_iter=1000),
+                'model': MLPClassifier(random_state=self.config.RANDOM_STATE, max_iter=2000),
                 'params': {
                     'hidden_layer_sizes': [(50,), (100,), (50, 50), (100, 50)],
                     'activation': ['relu', 'tanh'],
                     'solver': ['adam', 'lbfgs'],
                     'alpha': [0.0001, 0.001, 0.01],
                     'learning_rate': ['constant', 'adaptive']
-                }
+                },
+                'is_linear': False
             }
         }
     
@@ -286,7 +500,7 @@ class ModelDevelopmentPipeline:
         
         return metrics
     
-    def create_evaluation_plots(self, model, X_test, y_test, model_name: str):
+    def create_evaluation_plots(self, model, X_test, y_test, model_name: str, feature_names: List[str]):
         """Create comprehensive evaluation plots"""
         y_pred = model.predict(X_test)
         y_prob = model.predict_proba(X_test)[:, 1] if hasattr(model, 'predict_proba') else None
@@ -324,7 +538,7 @@ class ModelDevelopmentPipeline:
         # Feature Importance (if available)
         if hasattr(model, 'feature_importances_'):
             feature_importance = pd.DataFrame({
-                'feature': self.feature_names,
+                'feature': feature_names,
                 'importance': model.feature_importances_
             }).sort_values('importance', ascending=True)
             
@@ -333,7 +547,7 @@ class ModelDevelopmentPipeline:
             axes[1, 1].set_xlabel('Importance')
         elif hasattr(model, 'coef_'):
             coef_importance = pd.DataFrame({
-                'feature': self.feature_names,
+                'feature': feature_names,
                 'coefficient': np.abs(model.coef_[0])
             }).sort_values('coefficient', ascending=True)
             
@@ -363,14 +577,40 @@ class ModelDevelopmentPipeline:
                     # Log model configuration
                     mlflow.log_param("model_type", model_name)
                     mlflow.log_param("random_state", self.config.RANDOM_STATE)
+                    mlflow.log_param("is_linear_model", config.get('is_linear', False))
                     
-                    # Determine if model needs scaled features
-                    use_scaled = model_name in ['logistic_regression', 'svm', 'knn', 'mlp']
-                    X_train_use = self.X_train_scaled if use_scaled else self.X_train
-                    X_val_use = self.X_val_scaled if use_scaled else self.X_val
-                    X_test_use = self.X_test_scaled if use_scaled else self.X_test
+                    # Determine which dataset to use based on model type
+                    is_linear = config.get('is_linear', False)
                     
-                    mlflow.log_param("features_scaled", use_scaled)
+                    if is_linear:
+                        # Use transformed data for linear models
+                        if self.config.IMBALANCE_STRATEGY == "WEIGHTED":
+                            X_train_use = self.X_train_linear
+                            y_train_use = self.y_train
+                        else:
+                            X_train_use = self.X_train_linear_balanced
+                            y_train_use = self.y_train_linear_balanced
+                        
+                        X_val_use = self.X_val_linear
+                        X_test_use = self.X_test_linear
+                        feature_names = self.selected_features if self.selected_features else self.feature_names
+                        
+                    else:
+                        # Use standard scaled data for non-linear models
+                        if self.config.IMBALANCE_STRATEGY == "WEIGHTED":
+                            X_train_use = self.X_train_scaled
+                            y_train_use = self.y_train
+                        else:
+                            X_train_use = self.X_train_balanced
+                            y_train_use = self.y_train_balanced
+                        
+                        X_val_use = self.X_val_scaled
+                        X_test_use = self.X_test_scaled
+                        feature_names = self.feature_names
+                    
+                    mlflow.log_param("data_preprocessing", "linear_transformed" if is_linear else "standard_scaled")
+                    mlflow.log_param("train_samples", len(X_train_use))
+                    mlflow.log_param("features_used", feature_names)
                     
                     # Hyperparameter tuning
                     print("Performing hyperparameter tuning...")
@@ -390,7 +630,7 @@ class ModelDevelopmentPipeline:
                     )
                     
                     # Fit on training data
-                    search.fit(X_train_use, self.y_train)
+                    search.fit(X_train_use, y_train_use)
                     
                     # Best model
                     best_model = search.best_estimator_
@@ -419,16 +659,18 @@ class ModelDevelopmentPipeline:
                         'best_params': search.best_params_,
                         'val_metrics': val_metrics,
                         'test_metrics': test_metrics,
-                        'use_scaled': use_scaled
+                        'is_linear': is_linear,
+                        'X_test_use': X_test_use,
+                        'feature_names': feature_names
                     }
                     
                     # Create evaluation plots
-                    plot_path = self.create_evaluation_plots(best_model, X_test_use, self.y_test, model_name)
+                    plot_path = self.create_evaluation_plots(best_model, X_test_use, self.y_test, model_name, feature_names)
                     mlflow.log_artifact(plot_path)
                     os.remove(plot_path)
                     
                     # Log model
-                    signature = infer_signature(X_train_use, self.y_train)
+                    signature = infer_signature(X_train_use, y_train_use)
                     mlflow.sklearn.log_model(
                         sk_model=best_model,
                         artifact_path=f"model_{model_name}",
@@ -439,7 +681,7 @@ class ModelDevelopmentPipeline:
                     # Feature importance analysis
                     if hasattr(best_model, 'feature_importances_'):
                         feature_importance = pd.DataFrame({
-                            'feature': self.feature_names,
+                            'feature': feature_names,
                             'importance': best_model.feature_importances_
                         }).sort_values('importance', ascending=False)
                         
@@ -548,9 +790,9 @@ class ModelDevelopmentPipeline:
         
         best_model_info = self.models_performance[best_model_name]
         best_model = best_model_info['model']
-        use_scaled = best_model_info['use_scaled']
-        
-        X_test_use = self.X_test_scaled if use_scaled else self.X_test
+        is_linear = best_model_info['is_linear']
+        X_test_use = best_model_info['X_test_use']
+        feature_names = best_model_info['feature_names']
         
         with mlflow.start_run(run_name=f"{best_model_name}_advanced_analysis"):
             
@@ -585,7 +827,7 @@ class ModelDevelopmentPipeline:
             )
             
             perm_df = pd.DataFrame({
-                'feature': self.feature_names,
+                'feature': feature_names,
                 'importance_mean': perm_importance.importances_mean,
                 'importance_std': perm_importance.importances_std
             }).sort_values('importance_mean', ascending=False)
@@ -623,18 +865,77 @@ class ModelDevelopmentPipeline:
                 plt.savefig('calibration_plot.png', dpi=300, bbox_inches='tight')
                 mlflow.log_artifact('calibration_plot.png')
                 plt.close()
+            
             # 4. SHAP values (if supported)
             try:
                 print("Computing SHAP values...")
                 explainer = shap.Explainer(best_model, X_test_use)
                 shap_values = explainer(X_test_use)
-                shap.summary_plot(shap_values, X_test_use, feature_names=self.feature_names, show=False)
+                shap.summary_plot(shap_values, X_test_use, feature_names=feature_names, show=False)
                 plt.tight_layout()
                 plt.savefig('shap_summary.png', dpi=300, bbox_inches='tight')
                 mlflow.log_artifact('shap_summary.png')
                 plt.close()
             except Exception as e:
                 print(f"SHAP analysis skipped: {e}")
+            
+            # 5. Linear model assumptions validation (for linear models)
+            if is_linear:
+                print("Validating linear model assumptions...")
+                try:
+                    # Check linearity assumption with residual plots
+                    y_pred = best_model.predict(X_test_use)
+                    residuals = self.y_test - y_pred
+                    
+                    plt.figure(figsize=(12, 8))
+                    
+                    # Residuals vs Fitted
+                    plt.subplot(2, 2, 1)
+                    plt.scatter(y_pred, residuals, alpha=0.6)
+                    plt.axhline(y=0, color='r', linestyle='--')
+                    plt.xlabel('Fitted Values')
+                    plt.ylabel('Residuals')
+                    plt.title('Residuals vs Fitted Values')
+                    
+                    # Q-Q plot for normality of residuals
+                    plt.subplot(2, 2, 2)
+                    stats.probplot(residuals, dist="norm", plot=plt)
+                    plt.title('Q-Q Plot of Residuals')
+                    
+                    # Histogram of residuals
+                    plt.subplot(2, 2, 3)
+                    plt.hist(residuals, bins=20, density=True, alpha=0.7)
+                    plt.xlabel('Residuals')
+                    plt.ylabel('Density')
+                    plt.title('Distribution of Residuals')
+                    
+                    # Scale-Location plot
+                    plt.subplot(2, 2, 4)
+                    standardized_residuals = np.sqrt(np.abs(residuals))
+                    plt.scatter(y_pred, standardized_residuals, alpha=0.6)
+                    plt.xlabel('Fitted Values')
+                    plt.ylabel('√|Residuals|')
+                    plt.title('Scale-Location Plot')
+                    
+                    plt.tight_layout()
+                    plt.savefig('linear_assumptions_validation.png', dpi=300, bbox_inches='tight')
+                    mlflow.log_artifact('linear_assumptions_validation.png')
+                    plt.close()
+                    
+                    # Log assumption validation metrics
+                    mlflow.log_metric("residuals_mean", np.mean(residuals))
+                    mlflow.log_metric("residuals_std", np.std(residuals))
+                    
+                    # Durbin-Watson test for autocorrelation
+                    dw_stat = durbin_watson(residuals)
+                    mlflow.log_metric("durbin_watson_stat", dw_stat)
+                    
+                    print(f"    Residuals mean: {np.mean(residuals):.4f}")
+                    print(f"    Residuals std: {np.std(residuals):.4f}")
+                    print(f"    Durbin-Watson: {dw_stat:.4f}")
+                    
+                except Exception as e:
+                    print(f"Linear assumption validation skipped: {e}")
 
             print("Advanced analysis complete.\n")
 
