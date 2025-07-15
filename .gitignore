@@ -8,3 +8,7 @@ venv/
 .venv/
 env/
 ENV/
+
+# Folders
+wandb/
+images/
