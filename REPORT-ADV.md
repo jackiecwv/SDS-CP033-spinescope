@@ -9,13 +9,13 @@ Use this file to answer the key reflection questions for each phase of the proje
 
 > Answer the EDA questions provided in the project materials here. Focus on data quality, trends, anomalies, and relationships.
 
-### 🔑 Question 1: What roles or experience levels yield the highest average salary?
+### 🔑 Question 1: Which features are most strongly correlated with spinal abnormalities?
 
-### 🔑 Question 2: Does remote work correlate with higher or lower salaries?
+### 🔑 Question 2: Are any features linearly dependent on others (e.g., sacral slope and pelvic incidence)?
 
-### 🔑 Question 3: Are there differences in salary based on company size or location?
+### 🔑 Question 3: Do biomechanical measurements cluster differently for normal vs. abnormal cases?
 
-### 🔑 Question 4: How consistent are salaries across similar job titles?
+### 🔑 Question 4: Are there multicollinearity issues that impact modeling?
 
 ---
 
