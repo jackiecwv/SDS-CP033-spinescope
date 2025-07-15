@@ -1,0 +1,43 @@
+{
+  "os":  "Windows-10-10.0.26100-SP0",
+  "python":  "CPython 3.11.0",
+  "startedAt":  "2025-07-15T17:35:53.097738Z",
+  "program":  "c:\\Users\\Another1\\Documents\\Machine_Learning\\SDS-CP033-spinescope\\submissions\\team-members\\doebi-alale\\EDA.ipynb",
+  "codePath":  "submissions\\team-members\\doebi-alale\\EDA.ipynb",
+  "git":  {
+    "remote":  "https://github.com/doebialale/SDS-CP033-spinescope.git",
+    "commit":  "445c9b7a58575266d6fdb83f1a50542a4f03b41e"
+  },
+  "email":  "doebialale@yahoo.com",
+  "root":  "c:\\Users\\Another1\\Documents\\Machine_Learning\\SDS-CP033-spinescope\\submissions\\team-members\\doebi-alale",
+  "host":  "laptop",
+  "executable":  "c:\\Users\\Another1\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+  "codePathLocal":  "EDA.ipynb",
+  "cpu_count":  8,
+  "cpu_count_logical":  16,
+  "gpu":  "NVIDIA RTX A2000 Laptop GPU",
+  "gpu_count":  1,
+  "disk":  {
+    "/":  {
+      "total":  "1022309167104",
+      "used":  "526938951680"
+    }
+  },
+  "memory":  {
+    "total":  "68425691136"
+  },
+  "cpu":  {
+    "count":  8,
+    "countLogical":  16
+  },
+  "gpu_nvidia":  [
+    {
+      "name":  "NVIDIA RTX A2000 Laptop GPU",
+      "memoryTotal":  "4294967296",
+      "cudaCores":  2560,
+      "architecture":  "Ampere",
+      "uuid":  "GPU-cba7ea36-6658-2b67-2c4b-dd79f6b201da"
+    }
+  ],
+  "cudaVersion":  "12.8"
+}

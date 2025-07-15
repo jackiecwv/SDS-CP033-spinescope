@@ -1,0 +1,37 @@
+{"time":"2025-07-13T12:29:41.764447-05:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"c:\\Users\\Another1\\Documents\\Machine_Learning\\SDS-CP033-spinescope\\submissions\\team-members\\doebi-alale\\wandb\\run-20250713_122940-s8qornvf\\logs\\debug-core.log"}
+{"time":"2025-07-13T12:29:43.5816006-05:00","level":"INFO","msg":"stream: created new stream","id":"s8qornvf"}
+{"time":"2025-07-13T12:29:43.5821277-05:00","level":"INFO","msg":"stream: started","id":"s8qornvf"}
+{"time":"2025-07-13T12:29:43.5821277-05:00","level":"INFO","msg":"writer: Do: started","stream_id":"s8qornvf"}
+{"time":"2025-07-13T12:29:43.5821277-05:00","level":"INFO","msg":"sender: started","stream_id":"s8qornvf"}
+{"time":"2025-07-13T12:29:43.5821277-05:00","level":"INFO","msg":"handler: started","stream_id":"s8qornvf"}
+{"time":"2025-07-13T12:29:43.8167127-05:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-13T12:29:44.3716973-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-13T12:29:44.432949-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-13T12:29:44.4469175-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-13T12:29:44.4768774-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-13T12:29:44.4886509-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-13T12:29:44.4927551-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-13T12:29:44.5114908-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-13T12:29:44.7720831-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-13T12:29:44.7821669-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-13T12:29:44.7917339-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-13T12:29:44.8060247-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-13T12:29:44.8115367-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-13T12:29:44.822382-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-13T12:29:45.2004926-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-13T12:29:45.2137316-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-13T12:29:45.6377607-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-13T12:29:45.6547341-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-13T12:29:48.5788932-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-13T12:29:48.5884695-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-13T12:29:49.4027954-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-13T12:29:49.4486264-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-13T12:29:50.4318294-05:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-13T12:29:50.4318294-05:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-13T12:29:50.7855539-05:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-13T12:29:50.9293943-05:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-07-13T12:29:50.935172-05:00","level":"INFO","msg":"stream: closing","id":"s8qornvf"}
+{"time":"2025-07-13T12:29:50.935172-05:00","level":"INFO","msg":"writer: Close: closed","stream_id":"s8qornvf"}
+{"time":"2025-07-13T12:29:50.935172-05:00","level":"INFO","msg":"handler: closed","stream_id":"s8qornvf"}
+{"time":"2025-07-13T12:29:50.935172-05:00","level":"INFO","msg":"sender: closed","stream_id":"s8qornvf"}
+{"time":"2025-07-13T12:29:50.9362358-05:00","level":"INFO","msg":"stream: closed","id":"s8qornvf"}

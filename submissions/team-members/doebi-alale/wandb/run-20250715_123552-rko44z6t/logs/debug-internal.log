@@ -1,0 +1,20 @@
+{"time":"2025-07-15T12:35:53.0992923-05:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"c:\\Users\\Another1\\Documents\\Machine_Learning\\SDS-CP033-spinescope\\submissions\\team-members\\doebi-alale\\wandb\\run-20250715_123552-rko44z6t\\logs\\debug-core.log"}
+{"time":"2025-07-15T12:35:53.9098767-05:00","level":"INFO","msg":"stream: created new stream","id":"rko44z6t"}
+{"time":"2025-07-15T12:35:53.9104007-05:00","level":"INFO","msg":"stream: started","id":"rko44z6t"}
+{"time":"2025-07-15T12:35:53.9104007-05:00","level":"INFO","msg":"handler: started","stream_id":"rko44z6t"}
+{"time":"2025-07-15T12:35:53.9104007-05:00","level":"INFO","msg":"writer: Do: started","stream_id":"rko44z6t"}
+{"time":"2025-07-15T12:35:53.9104007-05:00","level":"INFO","msg":"sender: started","stream_id":"rko44z6t"}
+{"time":"2025-07-15T12:35:54.1350495-05:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-15T12:36:09.158123-05:00","level":"ERROR","msg":"monitor: error sampling metrics: Incorrect function."}
+{"time":"2025-07-15T12:36:24.1532926-05:00","level":"ERROR","msg":"monitor: error sampling metrics: Incorrect function."}
+{"time":"2025-07-15T12:36:39.1557856-05:00","level":"ERROR","msg":"monitor: error sampling metrics: Incorrect function."}
+{"time":"2025-07-15T12:36:54.1565275-05:00","level":"ERROR","msg":"monitor: error sampling metrics: Incorrect function."}
+{"time":"2025-07-15T12:37:06.7829922-05:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-15T12:37:06.7829922-05:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-15T12:37:07.1114958-05:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-15T12:37:07.2653696-05:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-07-15T12:37:07.272171-05:00","level":"INFO","msg":"stream: closing","id":"rko44z6t"}
+{"time":"2025-07-15T12:37:07.272171-05:00","level":"INFO","msg":"handler: closed","stream_id":"rko44z6t"}
+{"time":"2025-07-15T12:37:07.272171-05:00","level":"INFO","msg":"writer: Close: closed","stream_id":"rko44z6t"}
+{"time":"2025-07-15T12:37:07.272171-05:00","level":"INFO","msg":"sender: closed","stream_id":"rko44z6t"}
+{"time":"2025-07-15T12:37:07.2726759-05:00","level":"INFO","msg":"stream: closed","id":"rko44z6t"}

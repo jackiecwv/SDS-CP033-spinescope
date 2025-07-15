@@ -1,0 +1,43 @@
+{"time":"2025-07-15T17:44:38.2625867-05:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"c:\\Users\\Another1\\Documents\\Machine_Learning\\SDS-CP033-spinescope\\submissions\\team-members\\doebi-alale\\wandb\\run-20250715_174438-ilbcme51\\logs\\debug-core.log"}
+{"time":"2025-07-15T17:44:39.7178231-05:00","level":"INFO","msg":"stream: created new stream","id":"ilbcme51"}
+{"time":"2025-07-15T17:44:39.7178231-05:00","level":"INFO","msg":"stream: started","id":"ilbcme51"}
+{"time":"2025-07-15T17:44:39.7178231-05:00","level":"INFO","msg":"writer: Do: started","stream_id":"ilbcme51"}
+{"time":"2025-07-15T17:44:39.7178231-05:00","level":"INFO","msg":"handler: started","stream_id":"ilbcme51"}
+{"time":"2025-07-15T17:44:39.7178231-05:00","level":"INFO","msg":"sender: started","stream_id":"ilbcme51"}
+{"time":"2025-07-15T17:44:39.9167889-05:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-15T17:44:40.3552335-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-15T17:44:40.3597461-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-15T17:44:40.3687295-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-15T17:44:40.36975-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-15T17:44:40.3774925-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-15T17:44:40.3820689-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-15T17:44:40.3880185-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-15T17:44:40.538628-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-15T17:44:40.5467828-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-15T17:44:40.55323-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-15T17:44:40.560927-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-15T17:44:40.5649373-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-15T17:44:40.5732324-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-15T17:44:40.7572902-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-15T17:44:40.7675122-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-15T17:44:40.9680922-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-15T17:44:40.9756695-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-15T17:44:43.675747-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-15T17:44:43.6878634-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-15T17:44:45.147392-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-15T17:44:45.1687552-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-15T17:44:45.1702613-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-15T17:44:45.1848346-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-15T17:44:49.9825968-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-15T17:44:49.9896505-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-15T17:44:50.4367676-05:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-15T17:44:50.4431282-05:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-15T17:44:51.1552797-05:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-15T17:44:51.1552797-05:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-15T17:44:51.6978674-05:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-15T17:44:51.8324373-05:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-07-15T17:44:51.8396544-05:00","level":"INFO","msg":"stream: closing","id":"ilbcme51"}
+{"time":"2025-07-15T17:44:51.8396544-05:00","level":"INFO","msg":"handler: closed","stream_id":"ilbcme51"}
+{"time":"2025-07-15T17:44:51.8396544-05:00","level":"INFO","msg":"writer: Close: closed","stream_id":"ilbcme51"}
+{"time":"2025-07-15T17:44:51.8396544-05:00","level":"INFO","msg":"sender: closed","stream_id":"ilbcme51"}
+{"time":"2025-07-15T17:44:51.8402469-05:00","level":"INFO","msg":"stream: closed","id":"ilbcme51"}
