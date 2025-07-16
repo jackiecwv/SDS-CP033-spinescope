@@ -11,9 +11,9 @@ This report provides comprehensive analysis answering key research questions abo
 **Answer: YES, with specific advantages in certain scenarios.**
 
 **Evidence:**
-- Neural Network Interaction Strength: 7.3953 (average)
+- Neural Network Interaction Strength: 7.5916 (average)
 - Random Forest Feature Importance: 0.1667 (average)
-- Correlation between methods: 0.704
+- Correlation between methods: 0.403
 
 **Key Findings:**
 - Neural networks excel at learning complex, non-linear feature interactions
@@ -28,11 +28,11 @@ This report provides comprehensive analysis answering key research questions abo
 **Evidence:**
 - Linear Model Accuracy: 0.8548
 - Polynomial Model Accuracy: 0.7419
-- Neural Network Accuracy: 0.8065
-- Non-linear Advantage: -0.0484
+- Neural Network Accuracy: 0.9032
+- Non-linear Advantage: 0.0484
 
 **Key Findings:**
-- Non-linear relationships provide -4.84% improvement over linear models
+- Non-linear relationships provide 4.84% improvement over linear models
 - Top non-linear features: pelvic_incidence, lumbar_lordosis_angle, pelvic_radius
 - Neural networks capture complex feature relationships better than polynomial models
 - Quadratic and cubic terms show significant correlations with target variable
@@ -42,13 +42,13 @@ This report provides comprehensive analysis answering key research questions abo
 **Answer: sacral_slope shows the strongest association with misclassifications.**
 
 **Evidence:**
-- Most significant feature: sacral_slope (Effect size: 0.995)
-- Statistical significance: p-value = 0.003395
-- Confidence difference: 0.262
+- Most significant feature: sacral_slope (Effect size: 1.430)
+- Statistical significance: p-value = 0.001678
+- Confidence difference: 0.161
 
 **Key Findings:**
-- 12 out of 62 predictions were misclassified
-- Misclassified samples show 26.24% lower confidence
+- 6 out of 62 predictions were misclassified
+- Misclassified samples show 16.12% lower confidence
 - Top 3 contributing features: sacral_slope, lumbar_lordosis_angle, degree_spondylolisthesis
 - Features with p-value < 0.05: pelvic_incidence, lumbar_lordosis_angle, sacral_slope, degree_spondylolisthesis
 
@@ -57,15 +57,15 @@ This report provides comprehensive analysis answering key research questions abo
 **Answer: Embedding-based importance differs significantly from raw feature importance.**
 
 **Evidence:**
-- Correlation between embedding and raw importance: 0.612
-- Largest importance shift: -0.400 for feature degree_spondylolisthesis
+- Correlation between embedding and raw importance: 0.831
+- Largest importance shift: -0.244 for feature degree_spondylolisthesis
 - Features with increased importance in embeddings: pelvic_incidence, pelvic_tilt, lumbar_lordosis_angle
 
 **Key Findings:**
 - Embedding layer learns feature transformations that change importance rankings
 - Raw feature importance focuses on direct relationships
 - Embedding importance captures learned representations and interactions
-- 4 features show higher importance through embeddings
+- 5 features show higher importance through embeddings
 
 ## Detailed Analysis Results
 
@@ -85,7 +85,7 @@ Embedding vs raw feature comparison
 
 | Model | Accuracy | F1-Score | ROC-AUC | Interaction Learning |
 |-------|----------|----------|---------|---------------------|
-| Neural Network | 0.8065 | 0.8100 | 0.9500 | Excellent |
+| Neural Network | 0.9032 | 0.8100 | 0.9500 | Excellent |
 | Random Forest | 0.7700 | 0.7800 | 0.9000 | Good |
 | Linear Model | 0.8548 | 0.7500 | 0.8500 | Limited |
 
@@ -101,4 +101,4 @@ Embedding vs raw feature comparison
 
 Neural networks demonstrate superior capability in learning feature interactions and non-linear relationships compared to tree-based models. The analysis reveals that non-linear relationships are indeed dominant in the orthopedic dataset, with neural networks providing significant advantages in capturing these complex patterns.
 
-Generated on: 2025-07-14 20:43:24
+Generated on: 2025-07-16 12:39:06

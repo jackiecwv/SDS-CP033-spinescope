@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import (
-    train_test_split, cross_val_score, GridSearchCV, 
+    train_test_split, cross_val_score, 
     RandomizedSearchCV, StratifiedKFold
 )
 from sklearn.preprocessing import StandardScaler, LabelEncoder
@@ -43,6 +43,9 @@ from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.stats.stattools import durbin_watson
 from scipy import stats
 from sklearn.pipeline import Pipeline
+
+# --- ENSURE OUTPUT DIRECTORY EXISTS ---
+os.makedirs('outputs_ml', exist_ok=True)
 
 # Configuration
 class Config:
@@ -147,44 +150,49 @@ class ModelDevelopmentPipeline:
                 "class_distribution": self.df['binary_class'].value_counts().to_dict()
             }
             
-            with open("dataset_info.json", "w") as f:
+            # --- OUTPUTS TO outputs_ml FOLDER ---
+            with open("outputs_ml/dataset_info.json", "w") as f:
                 json.dump(dataset_info, f, indent=2)
-            mlflow.log_artifact("dataset_info.json")
-            os.remove("dataset_info.json")
+            mlflow.log_artifact("outputs_ml/dataset_info.json")
+            os.remove("outputs_ml/dataset_info.json")
     
     def check_linear_model_assumptions(self, X, y):
-        """Check and address linear model assumptions"""
         print("Checking linear model assumptions...")
-        
+
         assumptions_results = {}
-        
+
         # 1. Check for multicollinearity using VIF
         print("  Checking multicollinearity...")
         vif_data = pd.DataFrame()
         vif_data["Feature"] = X.columns
         vif_data["VIF"] = [variance_inflation_factor(X.values, i) 
                           for i in range(X.shape[1])]
-        
+
         high_vif_features = vif_data[vif_data["VIF"] > self.config.VIF_THRESHOLD]["Feature"].tolist()
         assumptions_results["high_vif_features"] = high_vif_features
         assumptions_results["vif_data"] = vif_data
-        
+
         print(f"    Features with VIF > {self.config.VIF_THRESHOLD}: {len(high_vif_features)}")
-        
+
         # 2. Check normality of features
         print("  Checking feature normality...")
         normality_results = {}
         for col in X.columns:
             stat, p_value = stats.shapiro(X[col])
-            normality_results[col] = {"statistic": stat, "p_value": p_value, "is_normal": p_value > 0.05}
-        
+            # Convert numpy types to Python types for JSON
+            normality_results[col] = {
+                "statistic": float(stat),
+                "p_value": float(p_value),
+                "is_normal": bool(p_value > 0.05)
+            }
+
         non_normal_features = [col for col, result in normality_results.items() 
                              if not result["is_normal"]]
         assumptions_results["non_normal_features"] = non_normal_features
         assumptions_results["normality_results"] = normality_results
-        
+
         print(f"    Non-normal features: {len(non_normal_features)}")
-        
+
         # 3. Check for outliers using IQR method
         print("  Checking for outliers...")
         outlier_counts = {}
@@ -195,14 +203,23 @@ class ModelDevelopmentPipeline:
             lower_bound = Q1 - 1.5 * IQR
             upper_bound = Q3 + 1.5 * IQR
             outliers = ((X[col] < lower_bound) | (X[col] > upper_bound)).sum()
-            outlier_counts[col] = outliers
-        
+            outlier_counts[col] = int(outliers)
+
         assumptions_results["outlier_counts"] = outlier_counts
         total_outliers = sum(outlier_counts.values())
         print(f"    Total outliers detected: {total_outliers}")
-        
-        return assumptions_results
-    
+
+        # --- OUTPUTS TO outputs_ml FOLDER ---
+        vif_data_path = "outputs_ml/vif_data.csv"
+        vif_data.to_csv(vif_data_path, index=False)
+        normality_results_path = "outputs_ml/normality_results.json"
+        with open(normality_results_path, "w") as f:
+            json.dump(normality_results, f, indent=2)
+        outlier_counts_path = "outputs_ml/outlier_counts.json"
+        with open(outlier_counts_path, "w") as f:
+            json.dump(outlier_counts, f, indent=2)
+
+        return assumptions_results    
     def apply_transformations(self, X_train, X_val, X_test, for_linear_models=False):
         """Apply transformations to meet linear model assumptions"""
         print("Applying data transformations...")
@@ -556,10 +573,11 @@ class ModelDevelopmentPipeline:
             axes[1, 1].set_xlabel('Absolute Coefficient')
         
         plt.tight_layout()
-        plt.savefig(f'{model_name}_evaluation.png', dpi=300, bbox_inches='tight')
+        out_path = f'outputs_ml/{model_name}_evaluation.png'
+        plt.savefig(out_path, dpi=300, bbox_inches='tight')
         plt.close()
         
-        return f'{model_name}_evaluation.png'
+        return out_path
     
     def train_and_evaluate_models(self):
         """Train and evaluate all models with hyperparameter tuning"""
@@ -689,10 +707,11 @@ class ModelDevelopmentPipeline:
                         top_features = feature_importance.head(5)['feature'].tolist()
                         mlflow.log_param("top_5_features", top_features)
                         
-                        # Save feature importance
-                        feature_importance.to_csv(f'{model_name}_feature_importance.csv', index=False)
-                        mlflow.log_artifact(f'{model_name}_feature_importance.csv')
-                        os.remove(f'{model_name}_feature_importance.csv')
+                        # --- OUTPUTS TO outputs_ml FOLDER ---
+                        fi_path = f'outputs_ml/{model_name}_feature_importance.csv'
+                        feature_importance.to_csv(fi_path, index=False)
+                        mlflow.log_artifact(fi_path)
+                        os.remove(fi_path)
                     
                     print(f"✓ {model_name} training completed")
                     print(f"  Best validation F1: {val_metrics['f1_score']:.4f}")
@@ -737,9 +756,10 @@ class ModelDevelopmentPipeline:
             print("Model Performance Comparison:")
             print(comparison_df.round(4))
             
-            # Save comparison
-            comparison_df.to_csv('model_comparison.csv', index=False)
-            mlflow.log_artifact('model_comparison.csv')
+            # --- OUTPUTS TO outputs_ml FOLDER ---
+            comp_csv_path = 'outputs_ml/model_comparison.csv'
+            comparison_df.to_csv(comp_csv_path, index=False)
+            mlflow.log_artifact(comp_csv_path)
             
             # Log best model info
             best_model_name = comparison_df.iloc[0]['Model']
@@ -772,13 +792,14 @@ class ModelDevelopmentPipeline:
                     ax.text(j, v + 0.005, f'{v:.3f}', ha='center', va='bottom')
             
             plt.tight_layout()
-            plt.savefig('model_comparison_chart.png', dpi=300, bbox_inches='tight')
-            mlflow.log_artifact('model_comparison_chart.png')
+            comp_png_path = 'outputs_ml/model_comparison_chart.png'
+            plt.savefig(comp_png_path, dpi=300, bbox_inches='tight')
+            mlflow.log_artifact(comp_png_path)
             plt.close()
             
             # Clean up
-            os.remove('model_comparison.csv')
-            os.remove('model_comparison_chart.png')
+            os.remove(comp_csv_path)
+            os.remove(comp_png_path)
             
             return best_model_name
     
@@ -815,8 +836,9 @@ class ModelDevelopmentPipeline:
             plt.title(f'Learning Curves - {best_model_name}')
             plt.legend()
             plt.grid(True, alpha=0.3)
-            plt.savefig('learning_curves.png', dpi=300, bbox_inches='tight')
-            mlflow.log_artifact('learning_curves.png')
+            lc_path = 'outputs_ml/learning_curves.png'
+            plt.savefig(lc_path, dpi=300, bbox_inches='tight')
+            mlflow.log_artifact(lc_path)
             plt.close()
             
             # 2. Permutation Importance
@@ -838,8 +860,9 @@ class ModelDevelopmentPipeline:
             plt.xlabel('Permutation Importance')
             plt.title(f'Permutation Importance - {best_model_name}')
             plt.tight_layout()
-            plt.savefig('permutation_importance.png', dpi=300, bbox_inches='tight')
-            mlflow.log_artifact('permutation_importance.png')
+            perm_path = 'outputs_ml/permutation_importance.png'
+            plt.savefig(perm_path, dpi=300, bbox_inches='tight')
+            mlflow.log_artifact(perm_path)
             plt.close()
             
             # 3. Model Calibration
@@ -862,8 +885,9 @@ class ModelDevelopmentPipeline:
                 plt.title(f'Calibration Plot - {best_model_name}')
                 plt.legend()
                 plt.grid(True, alpha=0.3)
-                plt.savefig('calibration_plot.png', dpi=300, bbox_inches='tight')
-                mlflow.log_artifact('calibration_plot.png')
+                calib_path = 'outputs_ml/calibration_plot.png'
+                plt.savefig(calib_path, dpi=300, bbox_inches='tight')
+                mlflow.log_artifact(calib_path)
                 plt.close()
             
             # 4. SHAP values (if supported)
@@ -873,8 +897,9 @@ class ModelDevelopmentPipeline:
                 shap_values = explainer(X_test_use)
                 shap.summary_plot(shap_values, X_test_use, feature_names=feature_names, show=False)
                 plt.tight_layout()
-                plt.savefig('shap_summary.png', dpi=300, bbox_inches='tight')
-                mlflow.log_artifact('shap_summary.png')
+                shap_path = 'outputs_ml/shap_summary.png'
+                plt.savefig(shap_path, dpi=300, bbox_inches='tight')
+                mlflow.log_artifact(shap_path)
                 plt.close()
             except Exception as e:
                 print(f"SHAP analysis skipped: {e}")
@@ -918,8 +943,9 @@ class ModelDevelopmentPipeline:
                     plt.title('Scale-Location Plot')
                     
                     plt.tight_layout()
-                    plt.savefig('linear_assumptions_validation.png', dpi=300, bbox_inches='tight')
-                    mlflow.log_artifact('linear_assumptions_validation.png')
+                    lav_path = 'outputs_ml/linear_assumptions_validation.png'
+                    plt.savefig(lav_path, dpi=300, bbox_inches='tight')
+                    mlflow.log_artifact(lav_path)
                     plt.close()
                     
                     # Log assumption validation metrics
