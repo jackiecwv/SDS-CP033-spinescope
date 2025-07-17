@@ -45,13 +45,7 @@ Consider using statistical tests (e.g., ANOVA or t-tests) to validate separation
 Use `.value_counts()` or bar plots on the target column.  
 If one class dominates, consider techniques like class weights or stratified sampling.
 
-✏️ *
-class
-1    210
-0    100
-
-The class is imbalanced with the count favoring the abnormal class. 
-*
+✏️ *Your answer here...*
 
 ---
 

@@ -46,7 +46,12 @@ Use this file to answer the key reflection questions for each phase of the proje
     Use `.value_counts()` or bar plots on the target column.  
     If one class dominates, consider techniques like class weights or stratified sampling.
 
-    ✏️ *Your answer here...*
+    ✏️ 
+
+    class 0 count is 100
+    class 1 count is 210
+
+    The class is imbalanced with the count favoring the abnormal class. 
 
 ---
 
