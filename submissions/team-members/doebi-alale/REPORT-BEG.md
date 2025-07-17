@@ -102,14 +102,41 @@ P-value = 0.00019: Still significant (p < 0.05), but weaker than the others.
 ---
 
 #### 🔑 Question 2:
-    Before building any model, what patterns or class imbalances did you observe in the target variable? Will this affect your modeling choices?
+Before building any model, what patterns or class imbalances did you observe in the target variable? Will this affect your modeling choices?
 
-    ✏️ Answer:
+✏️ Answer:
 
-    class 0 count is 100
-    class 1 count is 210
+| class | count |
+|-------|-------|
+| 1     | 210   |
+| 0     | 100   |
+Total samples: 310
 
-    The class is imbalanced with the count favoring the abnormal class. 
+So, the target variable is imbalanced, with roughly:
+32% Normal (Class 0)
+68% Abnormal (Class 1)
+
+An imbalanced dataset like this can lead to a biased models, especially when using models that try to maximize overall accuracy. If we do not choose our model wisely, we will have a dumb model that always predicts class 1 (Abnormal):
+
+Recommendation:
+
+1. Evaluation Metrics Beyond Accuracy
+Use metrics like:
+Precision, Recall, F1-score
+Confusion matrix
+ROC-AUC
+
+2. Stratified Splits
+Use StratifiedKFold or train_test_split(..., stratify=y) to maintain class proportions during training/testing.
+
+3. Resampling Techniques
+Oversample minority class (e.g. SMOTE)
+Undersample majority class
+Or use a balanced-class model (some classifiers like RandomForestClassifier and XGBoost can handle this with a class_weight='balanced' or scale_pos_weight parameter).
+
+4. Algorithm Choice
+Tree-based models (Random Forest, XGBoost) are more robust to imbalance.
+Logistic regression or SVM may need class weights.
 
 ---
 
