@@ -40,65 +40,7 @@ Use this file to answer the key reflection questions for each phase of the proje
 
     'dataset.groupby('class').mean()' allowed me to compare the average values of each biomechanical feature across the spinal condition classes (normal vs. abnormal). Features with large differences between groups hinted at a strong relationship with the condition.
 
-        <div>
-    <style scoped>
-        .dataframe tbody tr th:only-of-type {
-            vertical-align: middle;
-        }
-
-        .dataframe tbody tr th {
-            vertical-align: top;
-        }
-
-        .dataframe thead th {
-            text-align: right;
-        }
-    </style>
-    <table border="1" class="dataframe">
-    <thead>
-        <tr style="text-align: right;">
-        <th></th>
-        <th>pelvic_incidence</th>
-        <th>pelvic_tilt</th>
-        <th>lumbar_lordosis_angle</th>
-        <th>sacral_slope</th>
-        <th>pelvic_radius</th>
-        <th>degree_spondylolisthesis</th>
-        </tr>
-        <tr>
-        <th>class</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-        <th>0</th>
-        <td>51.685244</td>
-        <td>12.821414</td>
-        <td>43.542605</td>
-        <td>38.86383</td>
-        <td>123.890834</td>
-        <td>2.186572</td>
-        </tr>
-        <tr>
-        <th>1</th>
-        <td>64.692562</td>
-        <td>19.791111</td>
-        <td>55.925370</td>
-        <td>44.90145</td>
-        <td>115.077713</td>
-        <td>37.777705</td>
-        </tr>
-    </tbody>
-    </table>
-    </div>
-
-    
+    ![alt text](image.png)
 
 ---
 
