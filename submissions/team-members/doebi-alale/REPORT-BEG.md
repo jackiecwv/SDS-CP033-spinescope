@@ -157,22 +157,23 @@ Several biomechanical features in the dataset appear skewed and/or contain outli
 To address these:
 - I used boxplots and histograms to visually confirm skewness and outliers.
 - For highly skewed features (especially **`degree_spondylolisthesis`**), I applied a log-transform to reduce skewness and the impact of extreme values.
-- Outliers were further assessed using the IQR method, and extreme cases were either capped or flagged for further review.
-- All numerical features were standardized (z-score) before modeling to ensure comparability and reduce the influence of outliers, especially for algorithms sensitive to feature scale.
-
-These steps helped improve model robustness and performance.
+These step helped improve model robustness and performance.
 
 ---
 
 #### 🔑 Question 4:
-    **What scaling method did you apply to your numerical features, and why was it necessary (or not) for the algorithms you plan to use?**  
+**What scaling method did you apply to your numerical features, and why was it necessary (or not) for the algorithms you plan to use?**  
 
-    💡 **Hint:**  
-    Logistic regression and distance-based models require scaling.  
-    Tree-based models do not.  
-    Use `StandardScaler` or `MinMaxScaler` as needed. Justify your choice.
+✏️ **answer:**
 
-    ✏️ *Your answer here...*
+For scaling, I applied the **StandardScaler** to all numerical features. This method standardizes features by removing the mean and scaling to unit variance (z-score normalization).
+
+**Reasoning:**
+- **Logistic regression** and **distance-based models** (like k-NN, SVM) are sensitive to feature scales, so standardization is necessary to ensure all features contribute equally to the model.
+- **Tree-based models** (Random Forest, Gradient Boosting) do not require scaling, but for consistency and to enable fair comparison across different algorithms, I standardized the features for all models.
+- Standardization also helps with convergence speed and stability for models that use gradient descent.
+
+
 
 ---
 
