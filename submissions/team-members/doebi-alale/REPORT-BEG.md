@@ -42,11 +42,7 @@ Use this file to answer the key reflection questions for each phase of the proje
 #### 🔑 Question 2:
     **Before building any model, what patterns or class imbalances did you observe in the target variable? Will this affect your modeling choices?**  
 
-    💡 **Hint:**  
-    Use `.value_counts()` or bar plots on the target column.  
-    If one class dominates, consider techniques like class weights or stratified sampling.
-
-    ✏️ 
+##### ✏️ Answer 2:  
 
     class 0 count is 100
     class 1 count is 210
