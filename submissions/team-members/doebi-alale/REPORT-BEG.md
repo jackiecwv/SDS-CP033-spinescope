@@ -28,11 +28,7 @@ Use this file to answer the key reflection questions for each phase of the proje
 ### 🔍 Week 1: Feature Engineering & Data Preprocessing
 
 #### 🔑 Question 1:
-    **Which biomechanical features show the strongest relationship with the target (spinal condition), and how did you determine this?**
-
-    💡 **Hint:**  
-    Use `.groupby(target).mean()`, `.corr()`, and plots like `boxplot` or `violinplot` to inspect feature separation by class.  
-    Consider using statistical tests (e.g., ANOVA or t-tests) to validate separation.
+Which biomechanical features show the strongest relationship with the target (spinal condition), and how did you determine this?
 
     ✏️ Answer:
 
@@ -45,7 +41,6 @@ Use this file to answer the key reflection questions for each phase of the proje
 | 0     | 51.685244        | 12.821414   | 43.542605              | 38.86383     | 123.890834    | 2.186572                  |
 | 1     | 64.692562        | 19.791111   | 55.925370              | 44.90145     | 115.077713    | 37.777705                 |
 
-![alt text](image-1.png)
 
     pelvic tilt and lumbar lordosis angle showed noticeable differences in their means between normal and abnormal groups.
 ---
