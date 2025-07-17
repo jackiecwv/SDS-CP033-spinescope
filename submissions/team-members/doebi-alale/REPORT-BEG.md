@@ -47,7 +47,7 @@ Use this file to answer the key reflection questions for each phase of the proje
 
 ![alt text](image-1.png)
 
-
+    pelvic tilt and lumbar lordosis angle showed noticeable differences in their means between normal and abnormal groups.
 ---
 
 #### 🔑 Question 2:
