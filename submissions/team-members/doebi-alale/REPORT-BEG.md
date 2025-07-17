@@ -28,9 +28,9 @@ Use this file to answer the key reflection questions for each phase of the proje
 ### 🔍 Week 1: Feature Engineering & Data Preprocessing
 
 #### 🔑 Question 1:
-Which biomechanical features show the strongest relationship with the target (spinal condition), and how did you determine this?
+**Which biomechanical features show the strongest relationship with the target (spinal condition), and how did you determine this?**
 
-✏️ Answer:
+✏️ **Answer:**
 
 To identify the biomechanical features most strongly associated with the spinal condition, I combined exploratory analysis, correlation metrics, and statistical testing:
 
@@ -41,11 +41,11 @@ To identify the biomechanical features most strongly associated with the spinal 
 | 0     | 51.685244        | 12.821414   | 43.542605              | 38.86383     | 123.890834    | 2.186572                  |
 | 1     | 64.692562        | 19.791111   | 55.925370              | 44.90145     | 115.077713    | 37.777705                 |
 
-degree_spondylolisthesis (difference ≈ 35.6) shows the largest difference between normal and abnormal classes, indicating a strong association with the spinal condition.
+**degree_spondylolisthesis** (difference ≈ 35.6) shows the largest difference between normal and abnormal classes, indicating a strong association with the spinal condition.
 
 Other notable features:
-pelvic_incidence (difference ≈ 13.0)
-lumbar_lordosis_angle (difference ≈ 12.4)
+**pelvic_incidence** (difference ≈ 13.0)
+**lumbar_lordosis_angle** (difference ≈ 12.4)
 
 'dataset.corr()['class'].sort_values(ascending=False)' calculated the correlation between each numerical feature and the binary-encoded target (e.g., 0 = normal, 1 = abnormal).
 
@@ -59,7 +59,7 @@ lumbar_lordosis_angle (difference ≈ 12.4)
 | sacral_slope              | 0.210602               |
 | pelvic_radius             | -0.309857              |
 
-Features like degree_spondylolisthesis and pelvic_incidence had the strongest correlation coefficients, indicating a significant linear relationship with spinal condition.
+Features like **degree_spondylolisthesis** and **pelvic_incidence** had the strongest correlation coefficients, indicating a significant linear relationship with spinal condition.
 
 `boxplot` and `violinplot` helped me visualize how each feature varies across target classes.
 
@@ -104,7 +104,7 @@ P-value = 0.00019: Still significant (p < 0.05), but weaker than the others.
 #### 🔑 Question 2:
 Before building any model, what patterns or class imbalances did you observe in the target variable? Will this affect your modeling choices?
 
-✏️ Answer:
+✏️ **Answer:**
 
 | class | count |
 |-------|-------|
@@ -121,35 +121,30 @@ An imbalanced dataset like this can lead to a biased models, especially when usi
 
 Recommendation:
 
-1. Evaluation Metrics Beyond Accuracy
+1. **Evaluation Metrics Beyond Accuracy**
 Use metrics like:
 - Precision, Recall, F1-score,
 - Confusion matrix,
 - ROC-AUC
 
-2. Stratified Splits
+2. **Stratified Splits**
 Use StratifiedKFold or train_test_split(..., stratify=y) to maintain class proportions during training/testing.
 
-3. Resampling Techniques
+3. **Resampling Techniques**
 - Oversample minority class (e.g. SMOTE)
 - Undersample majority class
 - Or use a balanced-class model (some classifiers like RandomForestClassifier and XGBoost can handle this with a class_weight='balanced' or scale_pos_weight parameter).
 
-4. Algorithm Choice
+4. **Algorithm Choice**
 - Tree-based models (Random Forest, XGBoost) are more robust to imbalance.
 - Logistic regression or SVM may need class weights.
 
 ---
 
 #### 🔑 Question 3:
-    **Which features appear skewed or contain outliers, and what transformations (if any) did you apply to address them?**  
+**Which features appear skewed or contain outliers, and what transformations (if any) did you apply to address them?**  
 
-    💡 **Hint:**  
-    Use `.hist()`, `df.skew()`, or boxplots.  
-    Try log-transform or standardize features if skewed.  
-    Consider z-score or IQR for outlier detection.
-
-✏️ Answer:
+✏️ **Answer:**
 
 Several biomechanical features in the dataset appear skewed and/or contain outliers, as observed using `.hist()`, `.skew()`, and boxplots:
 ![alt text](images/model-dev/histogram_skewness.png)
@@ -161,7 +156,7 @@ Several biomechanical features in the dataset appear skewed and/or contain outli
 
 To address these:
 - I used boxplots and histograms to visually confirm skewness and outliers.
-- For highly skewed features (especially `degree_spondylolisthesis`), I applied a log-transform to reduce skewness and the impact of extreme values.
+- For highly skewed features (especially **`degree_spondylolisthesis`**), I applied a log-transform to reduce skewness and the impact of extreme values.
 - Outliers were further assessed using the IQR method, and extreme cases were either capped or flagged for further review.
 - All numerical features were standardized (z-score) before modeling to ensure comparability and reduce the influence of outliers, especially for algorithms sensitive to feature scale.
 
