@@ -40,7 +40,12 @@ Use this file to answer the key reflection questions for each phase of the proje
 
     'dataset.groupby('class').mean()' allowed me to compare the average values of each biomechanical feature across the spinal condition classes (normal vs. abnormal). Features with large differences between groups hinted at a strong relationship with the condition.
 
-    [alt text](image.png)
+    | class | pelvic_incidence | pelvic_tilt | lumbar_lordosis_angle  | sacral_slope | pelvic_radius | degree_spondylolisthesis  |
+    |-------|------------------|-------------|------------------------|--------------|---------------|---------------------------|
+    | 0     | 51.685244        | 12.821414   | 43.542605              | 38.86383     | 123.890834    | 2.186572                  |
+    | 1     | 64.692562        | 19.791111   | 55.925370              | 44.90145     | 115.077713    | 37.777705                 |
+
+
 
 ---
 
