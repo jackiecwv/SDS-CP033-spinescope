@@ -64,15 +64,41 @@ Features like degree_spondylolisthesis and pelvic_incidence had the strongest co
 `boxplot` and `violinplot` helped me visualize how each feature varies across target classes.
 
 ![alt text](images/model-dev/boxplot.png)
+
 ![alt text](images/model-dev/violinplot.png)
 
+Again, features like degree_spondylolisthesis and pelvic_incidence had the strongest difference.
 
+Statistical Testing (t-tests) helped me to confirm that the observed differences were statistically significant. These t-tests tell you which features are statistically different between classes, making them good candidates for modeling or further analysis
 
-Statistical Testing (t-tests) helped me to confirm that the observed differences were statistically significant.
+| Feature                       | T-Statistic | P-Value     | Interpretation                  |
+| ----------------------------- | ----------- | ----------- | ------------------------------- |
+| **degree\_spondylolisthesis** | **-8.69**   | **2.2e-16** | 🔥 **Very strongly associated** |
+| **pelvic\_radius**            | **+5.72**   | **2.5e-08** | ✅ Strongly associated          |
+| **sacral\_slope**             | **-3.78**   | **0.00019** | ⚠️ Moderately associated        |
 
+✅ Interpretation by Feature:
+🔥 1. degree_spondylolisthesis
+T-statistic = -8.69: Large difference in means between class 0 and 1.
 
+P-value = 2.2e-16: Extremely small — this is not due to chance.
 
-pelvic tilt and lumbar lordosis angle showed noticeable differences in their means between normal and abnormal groups.
+✅ Most strongly associated with spinal condition.
+
+✅ 2. pelvic_radius
+T-statistic = +5.72: Clear difference between class groups.
+
+P-value = 2.5e-08: Very small — statistically significant.
+
+✅ Strong association with spinal condition.
+
+⚠️ 3. sacral_slope
+T-statistic = -3.78: Moderate difference between groups.
+
+P-value = 0.00019: Still significant (p < 0.05), but weaker than the others.
+
+⚠️ Moderate association with spinal condition.
+
 ---
 
 #### 🔑 Question 2:
