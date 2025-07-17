@@ -41,9 +41,31 @@ To identify the biomechanical features most strongly associated with the spinal 
 | 0     | 51.685244        | 12.821414   | 43.542605              | 38.86383     | 123.890834    | 2.186572                  |
 | 1     | 64.692562        | 19.791111   | 55.925370              | 44.90145     | 115.077713    | 37.777705                 |
 
+degree_spondylolisthesis (difference ≈ 35.6) shows the largest difference between normal and abnormal classes, indicating a strong association with the spinal condition.
+
+Other notable features:
+pelvic_incidence (difference ≈ 13.0)
+lumbar_lordosis_angle (difference ≈ 12.4)
+
 'dataset.corr()['class'].sort_values(ascending=False)' calculated the correlation between each numerical feature and the binary-encoded target (e.g., 0 = normal, 1 = abnormal).
 
-`boxplot` or `violinplot` helped me visualize how each feature varies across target classes.
+| Feature                   | Correlation with Class |
+|---------------------------|------------------------|
+| class                     | 1.000000               |
+| degree_spondylolisthesis  | 0.443687               |
+| pelvic_incidence          | 0.353336               |
+| pelvic_tilt               | 0.326063               |
+| lumbar_lordosis_angle     | 0.312484               |
+| sacral_slope              | 0.210602               |
+| pelvic_radius             | -0.309857              |
+
+Features like degree_spondylolisthesis and pelvic_incidence had the strongest correlation coefficients, indicating a significant linear relationship with spinal condition.
+
+`boxplot` and `violinplot` helped me visualize how each feature varies across target classes.
+
+![alt text](model-dev/boxplot.png)
+
+
 
 Statistical Testing (t-tests) helped me to confirm that the observed differences were statistically significant.
 
