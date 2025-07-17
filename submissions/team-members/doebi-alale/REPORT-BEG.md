@@ -30,11 +30,18 @@ Use this file to answer the key reflection questions for each phase of the proje
 #### 🔑 Question 1:
 Which biomechanical features show the strongest relationship with the target (spinal condition), and how did you determine this?
 
-    ✏️ Answer:
+✏️ Answer:
 
     To identify the biomechanical features most strongly associated with the spinal condition, I combined exploratory analysis, correlation metrics, and statistical testing:
 
     'dataset.groupby('class').mean()' allowed me to compare the average values of each biomechanical feature across the spinal condition classes (normal vs. abnormal). Features with large differences between groups hinted at a strong relationship with the condition.
+
+    'dataset.corr()['class'].sort_values(ascending=False)' calculated the correlation between each numerical feature and the binary-encoded target (e.g., 0 = normal, 1 = abnormal).
+
+    `boxplot` or `violinplot` helped me visualize how each feature varies across target classes.
+
+     Statistical Testing (t-tests) helped me to confirm that the observed differences were statistically significant.
+
 
 | class | pelvic_incidence | pelvic_tilt | lumbar_lordosis_angle  | sacral_slope | pelvic_radius | degree_spondylolisthesis  |
 |-------|------------------|-------------|------------------------|--------------|---------------|---------------------------|
