@@ -36,19 +36,20 @@ To identify the biomechanical features most strongly associated with the spinal 
 
 'dataset.groupby('class').mean()' allowed me to compare the average values of each biomechanical feature across the spinal condition classes (normal vs. abnormal). Features with large differences between groups hinted at a strong relationship with the condition.
 
+| class | pelvic_incidence | pelvic_tilt | lumbar_lordosis_angle  | sacral_slope | pelvic_radius | degree_spondylolisthesis  |
+|-------|------------------|-------------|------------------------|--------------|---------------|---------------------------|
+| 0     | 51.685244        | 12.821414   | 43.542605              | 38.86383     | 123.890834    | 2.186572                  |
+| 1     | 64.692562        | 19.791111   | 55.925370              | 44.90145     | 115.077713    | 37.777705                 |
+
 'dataset.corr()['class'].sort_values(ascending=False)' calculated the correlation between each numerical feature and the binary-encoded target (e.g., 0 = normal, 1 = abnormal).
 
 `boxplot` or `violinplot` helped me visualize how each feature varies across target classes.
 
 Statistical Testing (t-tests) helped me to confirm that the observed differences were statistically significant.
 
-| class | pelvic_incidence | pelvic_tilt | lumbar_lordosis_angle  | sacral_slope | pelvic_radius | degree_spondylolisthesis  |
-|-------|------------------|-------------|------------------------|--------------|---------------|---------------------------|
-| 0     | 51.685244        | 12.821414   | 43.542605              | 38.86383     | 123.890834    | 2.186572                  |
-| 1     | 64.692562        | 19.791111   | 55.925370              | 44.90145     | 115.077713    | 37.777705                 |
 
 
-    pelvic tilt and lumbar lordosis angle showed noticeable differences in their means between normal and abnormal groups.
+pelvic tilt and lumbar lordosis angle showed noticeable differences in their means between normal and abnormal groups.
 ---
 
 #### 🔑 Question 2:
