@@ -45,7 +45,7 @@ Use this file to answer the key reflection questions for each phase of the proje
 | 0     | 51.685244        | 12.821414   | 43.542605              | 38.86383     | 123.890834    | 2.186572                  |
 | 1     | 64.692562        | 19.791111   | 55.925370              | 44.90145     | 115.077713    | 37.777705                 |
 
-
+![alt text](image-1.png)
 
 
 ---
