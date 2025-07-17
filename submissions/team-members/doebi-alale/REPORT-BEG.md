@@ -149,7 +149,23 @@ Use StratifiedKFold or train_test_split(..., stratify=y) to maintain class propo
     Try log-transform or standardize features if skewed.  
     Consider z-score or IQR for outlier detection.
 
-    ✏️ *Your answer here...*
+✏️ Answer:
+
+Several biomechanical features in the dataset appear skewed and/or contain outliers, as observed using `.hist()`, `.skew()`, and boxplots:
+![alt text](images/model-dev/histogram_skewness.png)
+![alt text](images/model-dev/skewness_degree.png)
+
+- **degree_spondylolisthesis** is highly right-skewed, with some extreme outlier values.
+- **pelvic_tilt** and **lumbar_lordosis_angle** also show moderate skewness and potential outliers.
+- **pelvic_incidence**, **sacral_slope**, and **pelvic_radius** are closer to normal but still show some skew and outliers.
+
+To address these:
+- I used boxplots and histograms to visually confirm skewness and outliers.
+- For highly skewed features (especially `degree_spondylolisthesis`), I applied a log-transform to reduce skewness and the impact of extreme values.
+- Outliers were further assessed using the IQR method, and extreme cases were either capped or flagged for further review.
+- All numerical features were standardized (z-score) before modeling to ensure comparability and reduce the influence of outliers, especially for algorithms sensitive to feature scale.
+
+These steps helped improve model robustness and performance.
 
 ---
 
