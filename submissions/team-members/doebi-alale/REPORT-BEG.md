@@ -63,7 +63,8 @@ Features like degree_spondylolisthesis and pelvic_incidence had the strongest co
 
 `boxplot` and `violinplot` helped me visualize how each feature varies across target classes.
 
-![altdss b sdsf](images/model-dev/boxplot.png)
+![alt text](images/model-dev/boxplot.png)
+![alt text](images/model-dev/violinplot.png)
 
 
 
