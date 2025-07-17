@@ -40,7 +40,7 @@ Use this file to answer the key reflection questions for each phase of the proje
 
     'dataset.groupby('class').mean()' allowed me to compare the average values of each biomechanical feature across the spinal condition classes (normal vs. abnormal). Features with large differences between groups hinted at a strong relationship with the condition.
 
-    ![alt text](image.png)
+    [alt text](image.png)
 
 ---
 
