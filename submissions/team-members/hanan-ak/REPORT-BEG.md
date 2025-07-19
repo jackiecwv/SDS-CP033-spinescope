@@ -35,6 +35,7 @@ Use `.groupby(target).mean()`, `.corr()`, and plots like `boxplot` or `violinplo
 Consider using statistical tests (e.g., ANOVA or t-tests) to validate separation.
 
 based on the boxplot degree_spondylolisthesis and sacral_slope  have  the strongest relationship with the target, and this was also supported by the ANOVA test where we got p-value of 0. and according to the ANOVA TEST any p-value less than 0.05 is considered to have a strong relationship with the target.
+
 ![Screenshot](box-plot.png)
 
 ---
@@ -48,6 +49,7 @@ If one class dominates, consider techniques like class weights or stratified sam
 
 
 As the screenshot shows, the dataset is highly imbalanced, with the majority of the data labeled as abnormal. This means a model could achieve high accuracy simply by predicting the majority class most of the time.
+
 ![Screenshot](class-dist.png)
 
 
@@ -66,6 +68,7 @@ Consider z-score or IQR for outlier detection.
 
 the histogram graph shows that degree_spondylolisthesis has a very high skewness value (4.318), indicating a strongly right-skewed distribution.
 pelvic_incidence, pelvic_tilt, lumbar_lordosis_angle, and sacral_slope show moderate positive skewness (values between 0.5 and 0.8), suggesting their distributions are also skewed to the right
+
 ![Screenshot](skew.png)
 
 The Z-score shows that degree_spondylolisthesis and sacral_slope have high values (above 3), indicating the presence of outliers. This observation is also confirmed by the boxplot.
