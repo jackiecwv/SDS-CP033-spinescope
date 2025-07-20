@@ -116,16 +116,19 @@ class ModelDevelopmentPipeline:
         """Load and prepare the dataset"""
         print("Loading and preparing data...")
         
-        # Download dataset
-        path = kagglehub.dataset_download("uciml/biomechanical-features-of-orthopedic-patients")
-        self.df = pd.read_csv(os.path.join(path, 'column_3C_weka.csv'))
-        
-        # Create binary classification target
-        self.df['binary_class'] = self.df['class'].replace({
-            'Hernia': 'Abnormal',
-            'Spondylolisthesis': 'Abnormal',
-            'Normal': 'Normal'
-        })
+        ## Download dataset
+        #path = kagglehub.dataset_download("uciml/biomechanical-features-of-orthopedic-patients")
+        #self.df = pd.read_csv(os.path.join(path, 'column_3C_weka.csv'))
+        #
+        ## Create binary classification target
+        #self.df['binary_class'] = self.df['class'].replace({
+        #    'Hernia': 'Abnormal',
+        #    'Spondylolisthesis': 'Abnormal',
+        #    'Normal': 'Normal'
+        #})
+
+        self.df = pd.read_csv('column_3C_processed.csv')
+
         
         print(f"Dataset shape: {self.df.shape}")
         print(f"Target distribution:\n{self.df['binary_class'].value_counts()}")

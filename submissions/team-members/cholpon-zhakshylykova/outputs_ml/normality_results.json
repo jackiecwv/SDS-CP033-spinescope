@@ -1,22 +1,17 @@
 {
-  "pelvic_incidence": {
-    "statistic": 0.9660855769961243,
-    "p_value": 0.00017710938599069617,
-    "is_normal": false
-  },
   "pelvic_tilt": {
     "statistic": 0.9600152717206224,
     "p_value": 3.915851796192064e-05,
     "is_normal": false
   },
-  "lumbar_lordosis_angle": {
-    "statistic": 0.9764953046797752,
-    "p_value": 0.0031518288801627736,
-    "is_normal": false
-  },
   "sacral_slope": {
     "statistic": 0.9357843478837393,
     "p_value": 2.3828942253453003e-07,
+    "is_normal": false
+  },
+  "lumbar_lordosis_angle": {
+    "statistic": 0.9764953046797752,
+    "p_value": 0.0031518288801627736,
     "is_normal": false
   },
   "pelvic_radius": {
@@ -27,6 +22,11 @@
   "degree_spondylolisthesis": {
     "statistic": 0.6177110568357224,
     "p_value": 3.58787571145343e-20,
+    "is_normal": false
+  },
+  "pi_ss_ratio": {
+    "statistic": 0.89516413355632,
+    "p_value": 3.6574886485083e-10,
     "is_normal": false
   }
 }

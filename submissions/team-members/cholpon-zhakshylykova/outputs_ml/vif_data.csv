@@ -1,7 +1,7 @@
 Feature,VIF
-pelvic_incidence,inf
-pelvic_tilt,inf
-lumbar_lordosis_angle,18.638790416875217
-sacral_slope,inf
-pelvic_radius,11.960540873685114
-degree_spondylolisthesis,2.1347676526193906
+pelvic_tilt,15.938483816424947
+sacral_slope,18.65256370114687
+lumbar_lordosis_angle,19.03637413784368
+pelvic_radius,56.36574723517401
+degree_spondylolisthesis,2.1330121854589517
+pi_ss_ratio,71.69710660069379
