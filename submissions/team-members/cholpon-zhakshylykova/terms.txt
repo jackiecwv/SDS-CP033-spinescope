@@ -1,0 +1,96 @@
+### Here you will find all the anatomical and clinical terms existing in the data degree_spondylolisthesis
+
+
+Here are clear, concise definitions for each of these biomechanical terms related to spinal conditions:
+
+### **1. Pelvic Incidence (PI):**
+
+* **Definition:** The pelvic incidence is a morphological parameter representing the angle between a line perpendicular to the midpoint of the sacral plate and a line drawn from this midpoint to the center of the femoral heads.
+* **Clinical Significance:** Reflects pelvic morphology; remains constant after skeletal maturity and influences spinal alignment.
+
+---
+
+### **2. Pelvic Tilt (PT):**
+
+* **Definition:** Pelvic tilt is the angle between the vertical line and the line joining the midpoint of the sacral plate to the center of the femoral heads.
+* **Clinical Significance:** Indicates the pelvis orientation and compensatory mechanisms for maintaining spinal balance.
+
+---
+
+### **3. Lumbar Lordosis Angle:**
+
+* **Definition:** The lumbar lordosis angle measures the inward curvature (lordosis) of the lumbar spine, typically assessed as the angle formed between the superior endplate of the first lumbar vertebra (L1) and the superior endplate of the sacrum (S1).
+* **Clinical Significance:** Helps evaluate the extent of spinal curvature and is important for diagnosing spinal abnormalities and planning treatments.
+
+---
+
+### **4. Sacral Slope (SS):**
+
+* **Definition:** Sacral slope is defined as the angle between the superior endplate of the sacrum and a horizontal line.
+* **Clinical Significance:** Influences spinal curvature and is closely linked with pelvic incidence and pelvic tilt, thus important in spinal biomechanics assessments.
+
+---
+
+### **5. Pelvic Radius:**
+
+* **Definition:** Pelvic radius refers to the radius of the pelvic curvature, measured from the hip axis (femoral heads) to the posterior-superior corner of the sacral endplate.
+* **Clinical Significance:** Reflects pelvic shape; it can impact spinal biomechanics and alignment.
+
+---
+
+### **6. Degree of Spondylolisthesis:**
+
+* **Definition:** The degree of spondylolisthesis measures the percentage displacement or forward slippage of a vertebra (usually lower lumbar) relative to the vertebra below it.
+* **Clinical Significance:** Critical for diagnosing and grading spondylolisthesis, a condition causing lower back pain and instability, and planning interventions or surgical treatments.
+
+Here are clear definitions and clinical context for **Hernia** and **Spondylolisthesis**:
+
+---
+
+## 🟢 **Hernia**
+
+* **Definition:**
+
+  * A hernia occurs when an internal organ or tissue protrudes through a weakened area or tear in surrounding muscle or connective tissue, often resulting in a noticeable bulge.
+
+* **Common Types:**
+
+  * **Inguinal Hernia:** occurs in the groin area.
+  * **Umbilical Hernia:** around the belly button.
+  * **Hiatal Hernia:** stomach pushes upward through the diaphragm.
+  * **Disc Hernia (Herniated Disc):** spinal disc nucleus pushes through a tear in the disc’s outer layer, causing nerve compression.
+
+* **Clinical Significance:**
+
+  * Hernias can lead to pain, discomfort, or serious complications if untreated, such as strangulation or compromised blood supply.
+
+---
+
+## 🔴 **Spondylolisthesis**
+
+* **Definition:**
+
+  * Spondylolisthesis is a spinal condition characterized by the forward displacement (slippage) of one vertebra over another, typically occurring in the lower lumbar spine.
+
+* **Common Causes:**
+
+  * Congenital defects, degenerative diseases, traumatic injuries, repetitive stress, or fractures (such as spondylolysis).
+
+* **Clinical Significance:**
+
+  * Can lead to spinal instability, nerve compression, back pain, numbness, tingling sensations, and difficulty in mobility.
+
+* **Grading:**
+
+  * Often measured by the degree of vertebral slippage:
+
+    * **Grade I:** 0–25% slippage
+    * **Grade II:** 26–50% slippage
+    * **Grade III:** 51–75% slippage
+    * **Grade IV:** 76–100% slippage
+    * **Grade V:** Vertebra completely slips off (spondyloptosis).
+
+
+These biomechanical terms collectively provide a comprehensive understanding of spinal alignment and help clinicians diagnose, classify, and manage spinal disorders effectively.
+#  A nice picture showing some of the used anatomical terms is shown here: 
+https://www.researchgate.net/figure/Sagittal-pelvic-parameters-based-on-standing-radiograph-The-pelvic-incidence-PI-is_fig1_5251672
