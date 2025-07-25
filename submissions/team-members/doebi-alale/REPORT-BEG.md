@@ -25,7 +25,7 @@ Use this file to answer the key reflection questions for each phase of the proje
 
 ---
 
-### 🔍 Week 1: Feature Engineering & Data Preprocessing
+### 🔍 Week 2: Feature Engineering & Data Preprocessing
 
 #### 🔑 Question 1:
 **Which biomechanical features show the strongest relationship with the target (spinal condition), and how did you determine this?**
@@ -188,7 +188,7 @@ For scaling, I applied the **StandardScaler** to all numerical features. This me
 
 ---
 
-### 📆 Week 2: Model Development & Experimentation
+### 📆 Week 3: Model Development & Experimentation
 
 #### 🔑 Question 1:
 
@@ -202,7 +202,7 @@ For scaling, I applied the **StandardScaler** to all numerical features. This me
 
 ---
 
-### 📆 Week 3: Model Tuning
+### 📆 Week 4: Model Tuning
 
 #### 🔑 Question 1:
 
