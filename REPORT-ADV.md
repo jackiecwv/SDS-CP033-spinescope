@@ -5,7 +5,7 @@ Use this file to answer the key reflection questions for each phase of the proje
 
 ---
 
-## ✅ Phase 1: Setup & Exploratory Data Analysis (EDA)
+## ✅ Week 1: Setup & Exploratory Data Analysis (EDA)
 
 > Answer the EDA questions provided in the project materials here. Focus on data quality, trends, anomalies, and relationships.
 
@@ -19,13 +19,7 @@ Use this file to answer the key reflection questions for each phase of the proje
 
 ---
 
-## ✅ Phase 2: Model Development
-
-> This phase spans 3 weeks. Answer each set of questions weekly as you build, train, evaluate, and improve your models.
-
----
-
-### 📆 Week 1: Feature Engineering & Data Preprocessing
+## ✅ Week 2: Feature Engineering & Data Preprocessing
 
 #### 🔑 Question 1:
 **Which categorical features are high-cardinality, and how will you encode them for use with embedding layers?**  
@@ -99,7 +93,74 @@ Look for imbalanced class distributions and think about resampling, class weight
 
 ---
 
-### 📆 Week 2: Model Development & Experimentation
+### ✅ Week 3: Model Development & Experimentation
+
+### 🔑 Question 1:
+**What neural network architecture did you implement (input shape, number of hidden layers, activation functions, etc.), and what guided your design choices?**  
+🎯 *Purpose: Tests ability to structure an FFNN for classification and explain architectural decisions.*
+
+💡 **Hint:**  
+Describe your model layers: e.g., `[Input → Dense(64) → ReLU → Dropout → Dense(32) → ReLU → Output(sigmoid)]`.  
+Justify the number of layers/units based on dataset size and complexity.  
+Explain why ReLU and sigmoid are appropriate.
+
+✏️ *Your answer here...*
+
+---
+
+### 🔑 Question 2:
+**What metrics did you track during training and evaluation (e.g., accuracy, precision, recall, F1-score, AUC), and how did your model perform on the validation/test set?**  
+🎯 *Purpose: Tests metric understanding for classification and ability to interpret model quality.*
+
+💡 **Hint:**  
+Log and compare metrics across epochs using validation data.  
+Plot confusion matrix and/or ROC curve.  
+Explain where the model performs well and where it struggles (e.g., false positives/negatives).
+
+✏️ *Your answer here...*
+
+---
+
+### 🔑 Question 3:
+**How did the training and validation loss curves evolve during training, and what do they tell you about your model's generalization?**  
+🎯 *Purpose: Tests understanding of overfitting/underfitting using learning curves.*
+
+💡 **Hint:**  
+Include training plots of loss and accuracy.  
+Overfitting → training loss drops, validation loss increases.  
+Underfitting → both remain high.  
+Mention any regularization techniques used (dropout, early stopping).
+
+✏️ *Your answer here...*
+
+---
+
+### 🔑 Question 4:
+**How does your neural network’s performance compare to a traditional baseline (e.g., Logistic Regression or Random Forest), and what insights can you draw from this comparison?**  
+🎯 *Purpose: Encourages comparative thinking and understanding model trade-offs.*
+
+💡 **Hint:**  
+Train a classical ML model and compare F1, AUC, and confusion matrix.  
+Was the neural net better? If so, why (e.g., captured interactions)?  
+If not, consider whether your DL model is under-tuned or overfitting.
+
+✏️ *Your answer here...*
+
+---
+
+### 🔑 Question 5:
+**What did you log with MLflow (e.g., model configs, metrics, training duration), and how did this help you improve your modeling workflow?**  
+🎯 *Purpose: Tests reproducibility and tracking practice in a deep learning workflow.*
+
+💡 **Hint:**  
+Log architecture details (e.g., layer sizes, dropout rate, learning rate), metrics per epoch, and confusion matrix screenshots.  
+Explain how you used logs to choose the best model or compare runs.
+
+✏️ *Your answer here...*
+
+---
+
+## ✅ Week 4: Model Selection & Hyperparameter Tuning
 
 ### 🔑 Question 1:
 
@@ -113,21 +174,7 @@ Look for imbalanced class distributions and think about resampling, class weight
 
 ---
 
-### 📆 Week 3: Model Tuning
-
-### 🔑 Question 1:
-
-### 🔑 Question 2:
-
-### 🔑 Question 3:
-
-### 🔑 Question 4:
-
-### 🔑 Question 5:
-
----
-
-## ✅ Phase 3: Model Deployment
+## ✅ Week 5: Model Deployment
 
 > Document your approach to building and deploying the Streamlit app, including design decisions, deployment steps, and challenges.
 
