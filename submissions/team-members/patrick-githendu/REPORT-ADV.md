@@ -130,16 +130,83 @@ I did not drop any features. In deep learning I learnt that neural networks are 
 ### 📆 Week 2: Model Development & Experimentation
 
 ### 🔑 Question 1:
+### What neural network architecture did you implement (input shape, number of hidden layers, activation functions, etc.), and what guided your design choices?
 
-### 🔑 Question 2:
+[Input → Dense(6) → ReLU → Dropout → Dense(36) (4 Hidden Layers) → ReLU → Output(softmax)]. Use of softmax as we have For multiclass classification (3 classes)
+Use loss='sparse_categorical_crossentropy' (if your labels are integers, as with LabelEncoder).
+Change your output layer to units=3 and activation='softmax'.
 
-### 🔑 Question 3:
+### 🔑 Question 2: What metrics did you track during training and evaluation (e.g., accuracy, precision, recall, F1-score, AUC), and how did your model perform on the validation/test set?
+The model’s accuracy and confusion matrix were tracked. For deeper insight, add precision, recall, and F1-score. The confusion matrix shows which classes are most often confused. means:
+
+All 11 Hernia samples were predicted as Spondylolisthesis.
+All 20 Normal samples were predicted as Spondylolisthesis.
+All 31 Spondylolisthesis samples were correctly predicted.
+Accuracy: 0.5 means the model got 50% of the test samples correct (all Spondylolisthesis), but failed to predict Hernia or Normal at all.
+
+Summary:
+The model is only predicting the Spondylolisthesis class for every sample, ignoring the other classes. This is a sign of poor model performance and likely class imbalance.
+
+further: ALso tracked precision, recall, and F1-score using classification_report from sklearn.metrics.
+These metrics show that the model is only predicting the "Spondylolisthesis" class for all test samples:
+
+Precision, recall, and F1-score for Hernia and Normal are 0.00: The model did not correctly predict any samples for these classes.
+Recall for Spondylolisthesis is 1.00: All actual Spondylolisthesis samples were predicted as Spondylolisthesis.
+Precision for Spondylolisthesis is 0.50: Only half of the predicted Spondylolisthesis samples were actually correct (the rest should have been Hernia or Normal).
+Accuracy is 0.50: The model got 50% of the test samples correct, but only for one class.
+Macro and weighted averages are low: This reflects poor performance across all classes except Spondylolisthesis.
+Interpretation:
+The model is suffering from severe class imbalance or poor generalization. It fails to identify Hernia and Normal cases, predicting only Spondylolisthesis. This means the model is not useful for distinguishing between all classes and needs improvement (e.g., better balancing, tuning, or feature engineering).
+### 🔑 Question 3: How did the training and validation loss curves evolve during training, and what do they tell you about your model's generalization? 🎯 Purpose: Tests understanding of overfitting/underfitting using learning curves.
+During training, the **training loss** steadily decreased, indicating that the model was learning to fit the training data. However, the **validation loss** remained flat or even increased after a few epochs. This pattern suggests that the model was **overfitting**: it learned the training data well but failed to generalize to unseen data.
+
+- If the validation loss is much higher than the training loss, it means the model is memorizing the training set and not learning patterns that generalize.
+- If both losses decrease together, the model is generalizing well.
+- In this case, the gap between training and validation loss, combined with poor test metrics (accuracy, precision, recall), confirms that the model does **not generalize well** and struggles to predict minority classes.
+
+**Conclusion:**  
+The loss curves indicate overfitting and poor generalization. To improve, consider regularization, dropout, better class balancing (e.g., SMOTE), or tuning the model architecture.
 
 ### 🔑 Question 4:
 
-### 🔑 Question 5:
+### 🔑 Question 5: What did you log with MLflow (e.g., model configs, metrics, training duration), and how did this help you improve your modeling workflow? 🎯 Purpose: Tests reproducibility and tracking practice in a deep learning workflow.
+With MLflow, I logged the following:
+After adding MLflow logging to the code, the following were tracked:
 
+- **Model configurations**: architecture details (number of layers, activation functions, optimizer, loss function, batch size, epochs).
+- **Metrics**: training and validation accuracy, loss, precision, recall, F1-score (from the last epoch).
+- **Training duration**: total time taken for each run (automatically tracked by MLflow).
+- **Artifacts**: trained model files, plots of loss/accuracy curves, confusion matrix images, and classification report JSON files.
+#### Ml flow plot
+When the confusion matrix plot shows most predictions at 1.5 to 2.5 on the x-axis (Predicted), it means that almost all test samples were classified as the class with index 2 (likely "Spondylolisthesis").
+
+Interpretation:
+
+The x-axis represents predicted class labels (e.g., 0 = Hernia, 1 = Normal, 2 = Spondylolisthesis).
+If the color intensity is highest between 1.5 and 2.5, it means the model predicted class 2 for nearly every sample.
+This confirms the model is not distinguishing between classes and is only predicting one class, matching your earlier metrics and confusion matrix.
+Summary:
+The plot visually confirms severe class imbalance or poor generalization: the model predicts only "Spondylolisthesis" for all inputs.
+
+**How this helped:**
+- Enabled easy comparison of different experiments and hyperparameters.
+- Made results reproducible and traceable.
+- Helped identify which configurations led to better generalization and performance.
+- Facilitated rollback to previous best models and streamlined collaboration.
+
+Overall, MLflow improved experiment tracking, reproducibility, and model selection in the workflow.
 ---
+#### NB: a second test Input 12 units, 2 hidden layers with 64 dense produced worse results
+If the confusion matrix plot shows most predictions at 0.5 to 1.5 on the x-axis (Predicted), it means the model is predicting class with index 1 (likely "Normal") for nearly every test sample.
+
+Interpretation:
+
+The x-axis represents predicted class labels (0 = Hernia, 1 = Normal, 2 = Spondylolisthesis).
+High color intensity between 0.5 and 1.5 means most predictions are for class 1.
+This indicates the model is only predicting "Normal" for all inputs, ignoring the other classes.
+Summary:
+Just like predicting only class 2, this shows poor generalization and class imbalance, but now the model is biased toward "Normal" instead of "Spondylolisthesis".
+
 
 ### 📆 Week 3: Model Tuning
 
