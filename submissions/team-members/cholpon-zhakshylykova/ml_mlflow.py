@@ -27,7 +27,6 @@ import mlflow.sklearn
 from mlflow.models.signature import infer_signature
 import warnings
 warnings.filterwarnings("ignore")
-import kagglehub
 from datetime import datetime
 import json
 import pickle
@@ -37,7 +36,7 @@ from sklearn.model_selection import learning_curve
 from imblearn.over_sampling import SMOTE
 from imblearn.under_sampling import RandomUnderSampler
 from imblearn.combine import SMOTEENN
-from sklearn.preprocessing import PowerTransformer, RobustScaler
+from sklearn.preprocessing import PowerTransformer, StandardScaler
 from sklearn.feature_selection import SelectKBest, f_classif
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.stats.stattools import durbin_watson
@@ -83,7 +82,7 @@ class ModelDevelopmentPipeline:
         self.y_val = None
         self.y_test = None
         self.scaler = None
-        self.robust_scaler = None
+        self.standard_scaler = None
         self.power_transformer = None
         self.label_encoder = None
         self.feature_names = None
@@ -116,16 +115,6 @@ class ModelDevelopmentPipeline:
         """Load and prepare the dataset"""
         print("Loading and preparing data...")
         
-        ## Download dataset
-        #path = kagglehub.dataset_download("uciml/biomechanical-features-of-orthopedic-patients")
-        #self.df = pd.read_csv(os.path.join(path, 'column_3C_weka.csv'))
-        #
-        ## Create binary classification target
-        #self.df['binary_class'] = self.df['class'].replace({
-        #    'Hernia': 'Abnormal',
-        #    'Spondylolisthesis': 'Abnormal',
-        #    'Normal': 'Normal'
-        #})
 
         self.df = pd.read_csv('column_3C_processed.csv')
 
@@ -222,56 +211,63 @@ class ModelDevelopmentPipeline:
         with open(outlier_counts_path, "w") as f:
             json.dump(outlier_counts, f, indent=2)
 
-        return assumptions_results    
+        return assumptions_results   
+     
     def apply_transformations(self, X_train, X_val, X_test, for_linear_models=False):
         """Apply transformations to meet linear model assumptions"""
         print("Applying data transformations...")
-        
+
         X_train_transformed = X_train.copy()
         X_val_transformed = X_val.copy()
         X_test_transformed = X_test.copy()
-        
+
+        # Apply power transformation to degree_spondylolisthesis if present
+        if 'degree_spondylolisthesis' in X_train_transformed.columns:
+            print("  Applying power transformation to degree_spondylolisthesis...")
+
+            # Use Yeo-Johnson which handles negative values, zero, and positive values
+            self.degree_power_transformer = PowerTransformer(method='yeo-johnson', standardize=False)
+
+            # Extract the column for transformation
+            train_col = X_train_transformed[['degree_spondylolisthesis']]
+            val_col = X_val_transformed[['degree_spondylolisthesis']]
+            test_col = X_test_transformed[['degree_spondylolisthesis']]
+
+            # Fit on training data and transform all sets
+            transformed_train = self.degree_power_transformer.fit_transform(train_col)
+            transformed_val = self.degree_power_transformer.transform(val_col)
+            transformed_test = self.degree_power_transformer.transform(test_col)
+
+            # Update the DataFrames
+            X_train_transformed['degree_spondylolisthesis'] = transformed_train.flatten()
+            X_val_transformed['degree_spondylolisthesis'] = transformed_val.flatten()
+            X_test_transformed['degree_spondylolisthesis'] = transformed_test.flatten()
+
+            print(f"    Power transformation applied (lambda: {self.degree_power_transformer.lambdas_[0]:.4f})")
+        else:
+            print("  Warning: degree_spondylolisthesis column not found in dataset.")
+
         if for_linear_models:
-            # 1. Apply power transformation for normality
-            if self.config.POWER_TRANSFORM:
-                print("  Applying power transformation...")
-                self.power_transformer = PowerTransformer(method='yeo-johnson', standardize=False)
-                X_train_transformed = pd.DataFrame(
-                    self.power_transformer.fit_transform(X_train_transformed),
-                    columns=X_train_transformed.columns,
-                    index=X_train_transformed.index
-                )
-                X_val_transformed = pd.DataFrame(
-                    self.power_transformer.transform(X_val_transformed),
-                    columns=X_val_transformed.columns,
-                    index=X_val_transformed.index
-                )
-                X_test_transformed = pd.DataFrame(
-                    self.power_transformer.transform(X_test_transformed),
-                    columns=X_test_transformed.columns,
-                    index=X_test_transformed.index
-                )
-            
-            # 2. Use robust scaling instead of standard scaling
-            print("  Applying robust scaling...")
-            self.robust_scaler = RobustScaler()
+            # Apply standard scaling to ALL columns (including degree_spondylolisthesis)
+            print("  Applying standard scaling to all columns...")
+            self.standard_scaler = StandardScaler()
             X_train_transformed = pd.DataFrame(
-                self.robust_scaler.fit_transform(X_train_transformed),
+                self.standard_scaler.fit_transform(X_train_transformed),
                 columns=X_train_transformed.columns,
                 index=X_train_transformed.index
             )
             X_val_transformed = pd.DataFrame(
-                self.robust_scaler.transform(X_val_transformed),
+                self.standard_scaler.transform(X_val_transformed),
                 columns=X_val_transformed.columns,
                 index=X_val_transformed.index
             )
             X_test_transformed = pd.DataFrame(
-                self.robust_scaler.transform(X_test_transformed),
+                self.standard_scaler.transform(X_test_transformed),
                 columns=X_test_transformed.columns,
                 index=X_test_transformed.index
             )
-            
-            # 3. Feature selection to address multicollinearity
+
+            # Feature selection to address multicollinearity
             print("  Applying feature selection...")
             # Use SelectKBest with f_classif to select most informative features
             k_best = min(len(X_train_transformed.columns) - 1, 4)  # Select top 4 features
@@ -279,21 +275,21 @@ class ModelDevelopmentPipeline:
             X_train_transformed = selector.fit_transform(X_train_transformed, self.y_train)
             X_val_transformed = selector.transform(X_val_transformed)
             X_test_transformed = selector.transform(X_test_transformed)
-            
+
             # Update feature names
             self.selected_features = [self.feature_names[i] for i in selector.get_support(indices=True)]
             print(f"    Selected features: {self.selected_features}")
-        
+
         else:
-            # Standard scaling for non-linear models
-            print("  Applying standard scaling...")
+            # Standard scaling for non-linear models (ALL columns)
+            print("  Applying standard scaling to all columns...")
             self.scaler = StandardScaler()
             X_train_transformed = self.scaler.fit_transform(X_train_transformed)
             X_val_transformed = self.scaler.transform(X_val_transformed)
             X_test_transformed = self.scaler.transform(X_test_transformed)
-        
+
         return X_train_transformed, X_val_transformed, X_test_transformed
-    
+     
     def handle_class_imbalance(self, X_train, y_train):
         """Handle class imbalance using various techniques"""
         print(f"Handling class imbalance using {self.config.IMBALANCE_STRATEGY}...")

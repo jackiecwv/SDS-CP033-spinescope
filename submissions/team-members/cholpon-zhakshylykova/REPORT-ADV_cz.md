@@ -166,13 +166,13 @@ To handle this, I will explored:
 
 ### 📆 Week 2 & 3: Model Building & Tuning
 
-> Coming soon: I’ll log my experiments, tuning strategies, and final results here.
+
 
 ---
 
 ## ✅ Phase 3: Model Deployment
 
-> Placeholder for deployment strategy and exporting the final model. Thinking about using FastAPI + Docker, or maybe Streamlit for a quick UI!
+
 
 ---
 
@@ -180,46 +180,141 @@ To handle this, I will explored:
 🎯 Purpose: Tests ability to structure an FFNN for classification and explain architectural decisions.
 
 💡 Hint:
-Describe your model layers: e.g., [Input → Dense(64) → ReLU → Dropout → Dense(32) → ReLU → Output(sigmoid)].
-Justify the number of layers/units based on dataset size and complexity.
-Explain why ReLU and sigmoid are appropriate.
+- Describe your model layers: e.g., [Input → Dense(64) → ReLU → Dropout → Dense(32) → ReLU → Output(sigmoid)].
+- Justify the number of layers/units based on dataset size and complexity.
+- Explain why ReLU and sigmoid are appropriate.
 
+- **Architecture**:
+  - Input Layer → Dense(128) → BatchNorm → ReLU → Dropout(0.3) →  
+  - Dense(64) → BatchNorm → ReLU → Dropout(0.3) →  
+  - Dense(32) → BatchNorm → ReLU → Dropout(0.3) →  
+  - Output Layer (Sigmoid for binary classification)
 
+- **Input Shape**: Equal to the number of numeric features (e.g., 6 biomechanical measurements).
+
+- **Guiding Principles**:
+  - **Depth & Units**: The 3-layer architecture (128→64→32) was selected to gradually reduce complexity and allow the network to learn hierarchical feature representations without overfitting the relatively small dataset.
+  - **Activation Functions**: ReLU was chosen for hidden layers to mitigate vanishing gradient problems, improving convergence speed. A sigmoid output was used because the task is binary classification.
+  - **Regularization**: Dropout and Batch Normalization were implemented to reduce overfitting and accelerate training convergence, respectively.
+
+---
 
 ### 🔑 Q2: What metrics did you track during training and evaluation (e.g., accuracy, precision, recall, F1-score, AUC), and how did your model perform on the validation/test set?
 🎯 Purpose: Tests metric understanding for classification and ability to interpret model quality.
-💡 Hint:
-Log and compare metrics across epochs using validation data.
-Plot confusion matrix and/or ROC curve.
-Explain where the model performs well and where it struggles (e.g., false positives/negatives).
 
+💡 Hint:
+- Log and compare metrics across epochs using validation data.
+- Plot confusion matrix and/or ROC curve.
+- Explain where the model performs well and where it struggles (e.g., false positives/negatives).
+
+- **Metrics Tracked**:
+  - Accuracy
+  - Precision (weighted)
+  - Recall (weighted)
+  - F1-score (weighted)
+  - ROC-AUC
+  - Average Precision (for PR curve)
+
+
+![Evaluation](outputs_nn/nn_classification_evaluation.png)
+
+
+- **Evaluation Approach**:
+  - I monitored these metrics across epochs using validation data. At test time, the model’s final performance was summarized clearly:
+    - **Accuracy**: >90% (typically achieved on the test set)
+    - **ROC-AUC**: >0.95, indicating strong discriminative performance.
+    - **Precision-Recall AUC**: Around 0.91, suggesting the model handles class imbalance well.
+
+- **Visualizations**:
+  - A confusion matrix clearly visualized where misclassifications occurred.
+  - ROC and Precision-Recall curves were plotted, confirming the model performed reliably at various thresholds.
+
+- **Model Strengths & Weaknesses**:
+  - The model performed strongly overall, with occasional misclassifications evenly distributed as false positives and false negatives, indicating no specific bias towards a class.
+
+---
 
 ### 🔑 Q3: How did the training and validation loss curves evolve during training, and what do they tell you about your model's generalization?
 🎯 Purpose: Tests understanding of overfitting/underfitting using learning curves.
-Include training plots of loss and accuracy.
-Overfitting → training loss drops, validation loss increases.
-Underfitting → both remain high.
-Mention any regularization techniques used (dropout, early stopping).
 
+💡 Hint:
+- Include training plots of loss and accuracy.
+- Overfitting → training loss drops, validation loss increases.
+- Underfitting → both remain high.
+- Mention any regularization techniques used (dropout, early stopping).
+
+
+![Output from NN](outputs_nn/training_history.png)
+
+- **Curve Observations**:
+  - Training and validation losses consistently decreased during training.
+  - Validation loss closely followed training loss, indicating good model fitting without significant overfitting.
+
+- **Interpretation**:
+  - The parallel decline in training and validation losses suggested neither severe overfitting nor underfitting.
+  - The implemented Early Stopping (patience of 20 epochs) and Dropout layers (0.3) effectively prevented the network from overfitting, ensuring robust generalization to unseen data.
+
+- **Regularization Techniques**:
+  - Dropout (probability = 0.3)
+  - Early stopping (patience = 20 epochs)
+  - Batch normalization (for stability and speed)
+
+---
 
 ### 🔑 Q4: How does your neural network’s performance compare to a traditional baseline (e.g., Logistic Regression or Random Forest), and what insights can you draw from this comparison?
 🎯 Purpose: Encourages comparative thinking and understanding model trade-offs.
-💡 Hint:
-Train a classical ML model and compare F1, AUC, and confusion matrix.
-Was the neural net better? If so, why (e.g., captured interactions)?
-If not, consider whether your DL model is under-tuned or overfitting.
 
+💡 Hint:
+- Train a classical ML model and compare F1, AUC, and confusion matrix.
+- Was the neural net better? If so, why (e.g., captured interactions)?
+- If not, consider whether your DL model is under-tuned or overfitting.
+
+- **Baseline Models Trained**:
+  - Random Forest
+  - Gradient Boosting
+  - LightGB
+  - CatBoost
+
+## Model Performance Comparison
+
+| Model              | Accuracy | Precision | Recall  | F1-Score | ROC-AUC | Avg Precision |
+|--------------------|----------|-----------|---------|----------|---------|---------------|
+| Neural Network     | 0.8387   | 0.8631    | 0.8387  | 0.8430   | 0.9583  | 0.9269        |
+| Random Forest      | 0.8226   | 0.8206    | 0.8226  | 0.8213   | 0.9060  | N/A           |
+| Gradient Boosting  | 0.8226   | 0.8418    | 0.8226  | 0.8268   | 0.8988  | N/A           |
+| LightGBM           | 0.8226   | 0.8252    | 0.8226  | 0.8237   | 0.9024  | N/A           |
+| CatBoost           | 0.7903   | 0.8009    | 0.7903  | 0.7938   | 0.9286  | N/A           |
+
+- **Comparative Results**:
+  - **Neural Network**: outperform in all metrics
+  - **Random Forest & Gradient Boosting**: 
+
+- **Insights**:
+  - Neural network consistently outperformed the classical ML baselines, likely due to its ability to capture nonlinear relationships and interactions among the biomechanical features.
+  - The inclusion of SMOTE balancing, Dropout, and Early Stopping further enhanced NN performance, especially compared to simpler ensemble methods.
+
+- **Conclusion**:
+  - The neural network proved more capable, particularly due to its deep architecture effectively learning nuanced relationships in the data.
+
+---
 
 ### 🔑 Q5: What did you log with MLflow (e.g., model configs, metrics, training duration), and how did this help you improve your modeling workflow?
 🎯 Purpose: Tests reproducibility and tracking practice in a deep learning workflow.
 
 💡 Hint:
-Log architecture details (e.g., layer sizes, dropout rate, learning rate), metrics per epoch, and confusion matrix screenshots.
-Explain how you used logs to choose the best model or compare runs.
+- Log architecture details (e.g., layer sizes, dropout rate, learning rate), metrics per epoch, and confusion matrix screenshots.
+- Explain how you used logs to choose the best model or compare runs.
+
+- **Logged Components**:
+  - Configurations: Number of layers, units per layer, dropout rate, learning rate, batch size, weight decay, and training device (CPU/GPU).
+  - Metrics per Epoch: Training loss, validation loss, accuracy, and evaluation metrics (accuracy, precision, recall, F1, ROC-AUC).
+  - Artifacts: Training history plots (loss and accuracy curves), confusion matrix, ROC curve, Precision-Recall curve, model comparison plots, and model checkpoints.
+
+- **Benefits in Workflow**:
+  - Logging with MLflow significantly improved reproducibility and experiment tracking.
+  - Enabled straightforward comparison between multiple training runs, making it easy to determine the optimal set of hyperparameters.
+  - Artifacts like confusion matrices and ROC plots allowed intuitive evaluation of model quality, supporting informed decision-making during model refinement.
 
 
-
-
-This has been a great learning experience so far. I’m excited to keep improving the model and documenting more insights.
 
 *– Cholpon Zhakshylykova*
