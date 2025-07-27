@@ -1,3 +1,8 @@
 .venv
 mlruns
 mlflow.db
+mlruns_nn
+catboost_info
+search_analysis.py
+__pycache__
+
