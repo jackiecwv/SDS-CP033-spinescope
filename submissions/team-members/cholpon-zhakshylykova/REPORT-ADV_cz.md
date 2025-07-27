@@ -1,120 +1,158 @@
-📄 SpineScope – Project Report - 🔴 Advanced Track
-Welcome to your personal project report!
-This report answers key reflection questions for each phase of the project. It is designed to help you think like a data scientist, guide AI tools more effectively, and prepare for real-world job interviews.
+# 📄 SpineScope – Project Report  
+**Track:** 🔴 Advanced | **Role:** Aspiring Data Scientist  
 
-✅ Phase 1: Setup & Exploratory Data Analysis (EDA)
-Answer the EDA questions provided in the project materials here. Focus on data quality, trends, anomalies, and relationships.
+Welcome to your personal project report! This document reflects your end-to-end process through each phase of the SpineScope challenge. It’s structured to build your problem-solving mindset, improve how you guide AI tools, and prepare you for real-world data science interviews.
 
-🔑 Question 1: Which features are most strongly correlated with spinal abnormalities?
-Feature Interactions Analysis
-The following features are most strongly correlated with spinal abnormalities based on statistical analysis:
+---
 
-Feature	F-Statistic	P-Value	Effect Size	Significant
-pelvic_incidence	98.54	0.0	0.243	✅ True
-pelvic_tilt	21.30	0.0	0.065	✅ True
-lumbar_lordosis_angle	114.98	0.0	0.272	✅ True
-sacral_slope	89.64	0.0	0.226	✅ True
-pelvic_radius	16.87	0.0	0.052	✅ True
-degree_spondylolisthesis	119.12	0.0	0.280	✅ True
-🔑 Question 2: Are any features linearly dependent on others (e.g., sacral slope and pelvic incidence)?
-Highly Correlated Pairs (|r| > 0.7):
-The following feature pairs exhibit strong linear dependence:
+## ✅ Phase 1: Setup & Exploratory Data Analysis (EDA)
 
-Feature Pair	Correlation (r)
-pelvic_incidence ↔ lumbar_lordosis_angle	0.717
-pelvic_incidence ↔ sacral_slope	0.815
-🔑 Question 3: Do biomechanical measurements cluster differently for normal vs. abnormal cases?
-Observation: There is no pure cluster separation between normal and abnormal cases.
-PCA Analysis: Partial overlap exists between clusters.
-t-SNE Visualization: Clusters are not fully distinct but show some separability.
-🔑 Question 4: Are there multicollinearity issues that impact modeling?
-⚠️ Features with High VIF (>10) Indicating Multicollinearity:
-The following features exhibit multicollinearity:
+This phase focuses on understanding the data, evaluating quality, and identifying patterns or issues relevant to spinal abnormalities.
 
-Feature	VIF
-pelvic_incidence	∞
-pelvic_tilt	∞
-lumbar_lordosis_angle	18.94
-sacral_slope	∞
-pelvic_radius	12.28
-✅ Phase 2: Model Development
-This phase spans 3 weeks. Answer each set of questions weekly as you build, train, evaluate, and improve your models.
+### 🔑 Q1: Which features are most strongly correlated with spinal abnormalities?
 
-📆 Week 1: Feature Engineering & Data Preprocessing
-🔑 Question 1: Which categorical features are high-cardinality, and how will you encode them for use with embedding layers?
-Answer:
+| Feature                    | F-Statistic | P-Value | Effect Size | Significant |
+|----------------------------|-------------|---------|-------------|-------------|
+| `pelvic_incidence`         | 98.54       | 0.0     | 0.243       | ✅ Yes       |
+| `pelvic_tilt`              | 21.30       | 0.0     | 0.065       | ✅ Yes       |
+| `lumbar_lordosis_angle`    | 114.98      | 0.0     | 0.272       | ✅ Yes       |
+| `sacral_slope`             | 89.64       | 0.0     | 0.226       | ✅ Yes       |
+| `pelvic_radius`            | 16.87       | 0.0     | 0.052       | ✅ Yes       |
+| `degree_spondylolisthesis` | 119.12      | 0.0     | 0.280       | ✅ Yes       |
 
-Feature: class
-Values: 'Normal', 'Hernia', 'Spondylolisthesis'
-Cardinality: Low (3 unique values).
-Encoding: One-hot encoding or integer mapping (e.g., LabelEncoder) is sufficient. Embedding layers are not required.
-🔑 Question 2: Which biomechanical features are likely to have the most predictive power for classifying spinal conditions, and how did you determine that?
-Answer:
-The following features are most predictive based on boxplots, violin plots, and feature importance analysis:
+---
 
-Feature	Predictive Power (Visual Justification)
-degree_spondylolisthesis	Very strong separation, especially for Spondylolisthesis, which has much higher values.
-pelvic_incidence	Clear difference, especially elevated in Spondylolisthesis.
-pelvic_tilt	Distinct distributions; higher in Spondylolisthesis, moderate in Hernia.
-sacral_slope	Moderate separation; some overlap but still useful.
-lumbar_lordosis_angle	Varies across classes; some predictive value but more overlap.
-pelvic_radius	Least predictive; overlapping distributions among all classes.
-🔑 Question 3: What numerical features in the dataset needed to be scaled before being input into a neural network, and what scaling method did you choose?
-Answer:
+### 🔑 Q2: Are any features linearly dependent on others?
 
-Scenario	Recommended Scaler
-Values are roughly Gaussian	StandardScaler
-Values are bounded (e.g., 0 to 1)	MinMaxScaler
-Highly skewed or exponential features	Log-transform, then scale
-Distribution Analysis:
+**Highly Correlated Pairs** (|r| > 0.7):
 
-Degree of Spondylolisthesis has the highest skewness and kurtosis.
-Action Taken: Log-transform this feature.
-All other features were scaled using StandardScaler.
-🔑 Question 4: Did you create any new features based on domain knowledge or feature interactions? If yes, what are they and why might they help the model better predict spinal conditions?
-Answer:
+| Feature Pair                               | Correlation (r) |
+|--------------------------------------------|------------------|
+| `pelvic_incidence` ↔ `lumbar_lordosis_angle` | 0.717            |
+| `pelvic_incidence` ↔ `sacral_slope`          | 0.815            |
 
-Feature Created: pi_ss_ratio
-Formula: pelvic_incidence / sacral_slope
-Purpose: Captures the relationship between structure (pelvic incidence) and posture (sacral slope).
-Why Useful:
-A high ratio may indicate compensatory mechanisms for spinal misalignment.
-A low ratio suggests normal biomechanics.
-🔑 Question 5: Which features, if any, did you choose to drop or simplify before modeling, and what was your justification?
-Answer:
+---
 
-Dropped Feature: pelvic_incidence
-Reason: Strongly correlated with sacral_slope and pelvic_tilt.
-Action Taken: Replaced with pi_ss_ratio to reduce redundancy and multicollinearity.
-🔑 Question 6: After preprocessing, what does your final input schema look like (i.e., how many numerical and categorical features)? Are there class imbalance or sparsity issues to be aware of?
-Answer:
+### 🔑 Q3: Do biomechanical features cluster by class?
 
-Final Input Schema:
+- **PCA:** Some cluster separability, but partial overlap.  
+- **t-SNE:** Slight class-specific patterns, but not fully distinct.  
+- **Conclusion:** No pure clustering; abnormal cases intermingle with normal.
 
-Numerical Features:
-pelvic_tilt
-sacral_slope
-lumbar_lordosis_angle
-pelvic_radius
-degree_spondylolisthesis
-pi_ss_ratio
-Categorical Feature:
-class/binary_class (target variable)
-Class Imbalance:
+---
 
-Class Distribution:
-Spondylolisthesis: 150 (48.4%)
-Normal: 100 (32.3%)
-Hernia: 60 (19.4%)
-Imbalance Ratio: 2.50
-Proposed Solutions:
+### 🔑 Q4: Are there multicollinearity issues?
 
-Resampling Methods:
-Oversampling (e.g., SMOTE) or undersampling.
-Class Weights:
-Assign higher weights to the minority class during training.
-Loss Function Adjustments:
-Use Focal Loss to focus on hard-to-classify samples.
-📆 Week 2: Model Development & Experimentation
-📆 Week 3: Model Tuning
-✅ Phase 3: Model Deployment
+**Features with High VIF (>10):**
+
+| Feature                 | VIF     |
+|------------------------|---------|
+| `pelvic_incidence`     | ∞       |
+| `pelvic_tilt`          | ∞       |
+| `lumbar_lordosis_angle`| 18.94   |
+| `sacral_slope`         | ∞       |
+| `pelvic_radius`        | 12.28   |
+
+🛠️ **Action Taken:** Dropped or reengineered features (see Phase 2) to mitigate multicollinearity.
+
+---
+
+## ✅ Phase 2: Model Development
+
+### 📆 Week 1: Feature Engineering & Preprocessing
+
+---
+
+### 🔑 Q1: How did you handle categorical features?
+
+- **Feature:** `class`  
+- **Cardinality:** Low (3 values: Normal, Hernia, Spondylolisthesis)  
+- **Encoding:** One-hot or Label Encoding. No embeddings needed.
+
+---
+
+### 🔑 Q2: Most predictive biomechanical features?
+
+| Feature                    | Predictive Power (Visual Justification)              |
+|----------------------------|-----------------------------------------------------|
+| `degree_spondylolisthesis` | Strong separation for Spondylolisthesis             |
+| `pelvic_incidence`         | Elevated in Spondylolisthesis                       |
+| `pelvic_tilt`              | Higher in Spondylolisthesis, moderate in Hernia     |
+| `sacral_slope`             | Moderate separation                                 |
+| `lumbar_lordosis_angle`    | Some overlap, still useful                          |
+| `pelvic_radius`            | Least predictive, heavily overlapping               |
+
+---
+
+### 🔑 Q3: Scaling strategy for numerical features?
+
+| Scenario                                  | Scaler Used      |
+|-------------------------------------------|------------------|
+| Roughly Gaussian                          | `StandardScaler` |
+| Bounded (e.g., [0, 1])                    | `MinMaxScaler`   |
+| Highly skewed or exponential              | Log-transform    |
+
+- `degree_spondylolisthesis`: Log-transformed due to high skewness.  
+- All other features: Standardized.
+
+---
+
+### 🔑 Q4: Were any new features created?
+
+✅ **Yes**  
+- **Feature:** `pi_ss_ratio`  
+- **Formula:** `pelvic_incidence / sacral_slope`  
+- **Rationale:** Captures structural-to-postural relationship. A high value may indicate spinal compensation mechanisms.
+
+---
+
+### 🔑 Q5: Did you drop or simplify features?
+
+- **Dropped:** `pelvic_incidence`  
+- **Reason:** High multicollinearity with other features.  
+- **Replacement:** Used `pi_ss_ratio` to preserve meaningful info with reduced redundancy.
+
+---
+
+### 🔑 Q6: Final input schema & class balance?
+
+**Input Features:**
+
+- **Numerical (6):**  
+  `pelvic_tilt`, `sacral_slope`, `lumbar_lordosis_angle`,  
+  `pelvic_radius`, `degree_spondylolisthesis`, `pi_ss_ratio`
+
+- **Target:** `class` or `binary_class`
+
+**Class Imbalance:**
+
+| Class             | Count | %     |
+|-------------------|-------|-------|
+| Spondylolisthesis | 150   | 48.4% |
+| Normal            | 100   | 32.3% |
+| Hernia            | 60    | 19.4% |
+
+- **Imbalance Ratio:** 2.5  
+
+**Mitigation Strategies:**
+- Oversampling (e.g., SMOTE)  
+- Class weighting  
+- Loss function adjustment (e.g., Focal Loss)
+
+---
+
+### 📆 Week 2: Model Building & Experimentation
+
+> *To be completed – document training progress, architecture choices, and evaluation metrics.*
+
+---
+
+### 📆 Week 3: Model Tuning & Finalization
+
+> *To be completed – log hyperparameter tuning, cross-validation results, and final metrics.*
+
+---
+
+## ✅ Phase 3: Model Deployment
+
+> *Placeholder for deployment strategy, model export, and integration plan.*
