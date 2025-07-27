@@ -158,9 +158,11 @@ Check for highly correlated or constant features using `.corr()` and `.nunique()
 Avoid overfitting by removing redundant signals.  
 Be cautious about leaking target-related info if any engineered features are overly specific.
 
-✏️ pelvic_incidence is strongly linearly dependent on: sacral_slope and pelvic_tilt
-- pelvic_incidence ≈ sacral_slope + pelvic_tilt
-- including all three can cause redundancy and multicollinearity, which is harmful in linear models and adds noise in deep learning.
+✏️ **Answer:**  
+- `pelvic_incidence` is strongly linearly dependent on `sacral_slope` and `pelvic_tilt`.  
+  - Approximation: `pelvic_incidence ≈ sacral_slope + pelvic_tilt`.  
+  - Including all three features can cause redundancy and multicollinearity, which is harmful in linear models and adds noise in deep learning.  
+- To address this, `pelvic_incidence` was dropped, and the `pi_ss_ratio` feature was created to capture the relationship between `pelvic_incidence` and `sacral_slope`.
 
 ---
 
@@ -172,17 +174,30 @@ Use `.shape`, `.dtypes`, and `.value_counts()` on the target.
 Check if certain features have many near-zero or rare values.  
 Look for imbalanced class distributions and think about resampling, class weights, or focal loss.
 
-✏️ 	pelvic_tilt	sacral_slope	lumbar_lordosis_angle	pelvic_radius	degree_spondylolisthesis	pi_ss_ratio	class/binary_class
-- 5 numeric features, 1 categorical feature (target)
-- IMBALANCE: 
-Class Distribution:
---------------------
-Spondylolisthesis:  150 ( 48.4%)
-Normal         :  100 ( 32.3%)
-Hernia         :   60 ( 19.4%)
+✏️ **Answer:**  
+- **Final Input Schema:**  
+  - Numerical Features:  
+    - `pelvic_tilt`  
+    - `sacral_slope`  
+    - `lumbar_lordosis_angle`  
+    - `pelvic_radius`  
+    - `degree_spondylolisthesis`  
+    - `pi_ss_ratio`  
+  - Categorical Feature:  
+    - `class/binary_class` (target)
 
-Class Imbalance Analysis:
-Imbalance Ratio: 2.50
+- **Class Imbalance:**  
+  - **Class Distribution:**  
+    - Spondylolisthesis: 150 (48.4%)  
+    - Normal: 100 (32.3%)  
+    - Hernia: 60 (19.4%)  
+  - **Imbalance Ratio:** 2.50  
+
+- **Analysis:**  
+  - The dataset shows significant class imbalance, with the "Hernia" class being underrepresented.  
+  - To address this, techniques such as resampling, class weights, or focal loss can be applied during model training.
+
+---
 
 
 ---
