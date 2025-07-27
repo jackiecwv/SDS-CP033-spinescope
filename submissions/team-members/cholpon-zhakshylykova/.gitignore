@@ -5,4 +5,10 @@ mlruns_nn
 catboost_info
 search_analysis.py
 __pycache__
+research_analysis.py
+research_analysis_report.md
+README_neural_network.md
+NEURAL_NETWORK_RESULTS.md
+ML_IMPROVEMENTS_SUMMARRY.md
+
 
