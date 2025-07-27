@@ -191,14 +191,86 @@ For scaling, I applied the **StandardScaler** to all numerical features. This me
 ### 📆 Week 3: Model Development & Experimentation
 
 #### 🔑 Question 1:
+**Which models did you train for predicting spinal conditions, and what were your reasons for choosing them?**  
+🎯 *Purpose: Tests model selection reasoning and algorithm familiarity.*
+
+I used Logistic Regression, Random Forest, and XGBoost. But I got more accurary from XGBoost with an CV accuracy score of 0.8806451612903226. I chose these models becasue we have a classification issue and need a classification model.
+
+##### Create a pipeline: scaling + model
+pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('model', XGBClassifier())
+    # ('model', LogisticRegression())
+    # ('model', RandomForestClassifier(n_estimators=100, random_state=42))
+])
+
+##### Use cross-validation (StratifiedKFold for classification)
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+
+##### Evaluate using cross_val_score
+scores = cross_val_score(pipeline, X_sds, y, cv=cv, scoring='accuracy')
+
+print("Cross-validation accuracy scores:", scores)
+print("Average CV accuracy:", scores.mean())
+
+---
 
 #### 🔑 Question 2:
+**What evaluation metrics did you use to assess your models, and how did each model perform?**  
+🎯 *Purpose: Tests metric literacy and performance analysis.*
+ 
+I used accuracy, precision, recall, F1-score, confusion matrix.   
+
+LogisticRegression
+![alt text](image-4.png)
+
+XGBClassifier
+![alt text](image-5.png)
+
+RandomForestClassifier
+![alt text](image-3.png)
+
+XGBoost has the highest CV accuracy score
+---
 
 #### 🔑 Question 3:
+**Do any of your models show signs of overfitting or underfitting? How did you identify this, and what might be the cause?**  
+🎯 *Purpose: Tests generalization understanding and diagnostic skills.*
+
+💡 **Hint:**  
+Compare training vs. test scores.
+Visualize learning curves or residual plots.
+Overfitting: great performance on training, poor on test.
+Underfitting: poor performance on both.
+Suggest potential remedies.
+
+✏️ *Your answer here...*
+
+---
 
 #### 🔑 Question 4:
+**Which features contributed the most to your model's predictions, and do the results align with your domain expectations?**  
+🎯 *Purpose: Tests model explainability and domain connection.*
+
+💡 **Hint:**  
+Use `.coef_` for Logistic Regression or `.feature_importances_` for tree models.
+Plot the top features.
+Do the top features (e.g., pelvic tilt, lumbar lordosis angle) make clinical sense?
+
+✏️ *Your answer here...*
+
+---
 
 #### 🔑 Question 5:
+**How did you use MLflow to track your model experiments, and what comparisons did it help you make more easily?**  
+🎯 *Purpose: Tests reproducibility and experiment tracking best practices.*
+
+💡 **Hint:**  
+Log model name, hyperparameters, and evaluation metrics.
+Include screenshots or links to MLflow runs.
+Explain how MLflow helped you select your best model or debug issues.
+
+✏️ *Your answer here...*
 
 ---
 
