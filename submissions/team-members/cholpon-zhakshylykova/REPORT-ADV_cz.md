@@ -317,4 +317,4 @@ To handle this, I will explored:
 
 
 
-*– Cholpon Zhakshylykova*
+*– ----- Cholpon Zhakshylykova*
