@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/jacki.JACKIESLAPTOP/Documents/SDS-CP033-spinescope/submissions/team-members/jackie-vescio/mlruns/455409542527648322/9434a23e9c34463c9170bd9767a53d0c/artifacts
+end_time: 1754230632556
+entry_point_name: ''
+experiment_id: '455409542527648322'
+lifecycle_stage: active
+run_id: 9434a23e9c34463c9170bd9767a53d0c
+run_name: Tuned XGBoost Model
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1754230628723
+status: 3
+tags: []
+user_id: jacki

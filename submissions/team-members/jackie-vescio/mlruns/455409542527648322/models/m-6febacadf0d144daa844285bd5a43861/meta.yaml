@@ -1,0 +1,10 @@
+artifact_location: file:///c:/Users/jacki.JACKIESLAPTOP/Documents/SDS-CP033-spinescope/submissions/team-members/jackie-vescio/mlruns/455409542527648322/models/m-6febacadf0d144daa844285bd5a43861/artifacts
+creation_timestamp: 1754200716703
+experiment_id: '455409542527648322'
+last_updated_timestamp: 1754200722913
+model_id: m-6febacadf0d144daa844285bd5a43861
+model_type: null
+name: xgb_model
+source_run_id: 81fa4a8358264ad3bdbad22963ea3446
+status: 2
+status_message: null
