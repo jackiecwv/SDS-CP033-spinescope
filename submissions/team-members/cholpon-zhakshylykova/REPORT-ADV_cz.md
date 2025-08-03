@@ -185,15 +185,15 @@ To handle this, I will explored:
 - Explain why ReLU and sigmoid are appropriate.
 
 - **Architecture**:
-  - Input Layer → Dense(128) → BatchNorm → ReLU → Dropout(0.3) →  
-  - Dense(64) → BatchNorm → ReLU → Dropout(0.3) →  
+  - Input Layer → Dense(64) → BatchNorm → ReLU → Dropout(0.3) →  
   - Dense(32) → BatchNorm → ReLU → Dropout(0.3) →  
+  - Dense(16) → BatchNorm → ReLU → Dropout(0.3) →  
   - Output Layer (Sigmoid for binary classification)
 
 - **Input Shape**: Equal to the number of numeric features (e.g., 6 biomechanical measurements).
 
 - **Guiding Principles**:
-  - **Depth & Units**: The 3-layer architecture (128→64→32) was selected to gradually reduce complexity and allow the network to learn hierarchical feature representations without overfitting the relatively small dataset.
+  - **Depth & Units**: The 3-layer architecture (64→32->16) was selected to gradually reduce complexity and allow the network to learn hierarchical feature representations without overfitting the relatively small dataset.
   - **Activation Functions**: ReLU was chosen for hidden layers to mitigate vanishing gradient problems, improving convergence speed. A sigmoid output was used because the task is binary classification.
   - **Regularization**: Dropout and Batch Normalization were implemented to reduce overfitting and accelerate training convergence, respectively.
 
@@ -208,12 +208,11 @@ To handle this, I will explored:
 - Explain where the model performs well and where it struggles (e.g., false positives/negatives).
 
 - **Metrics Tracked**:
-  - Accuracy
-  - Precision (weighted)
-  - Recall (weighted)
-  - F1-score (weighted)
-  - ROC-AUC
-  - Average Precision (for PR curve)
+- Accuracy: Overall correctness of the model (correct predictions / total predictions).
+- Precision: How many predicted positives are actually correct (TP / (TP + FP)).
+- Recall: How many actual positives were correctly identified (TP / (TP + FN)).
+- F1-score: Harmonic mean of precision and recall — balances the two.
+- ROC-AUC: Measures the model’s ability to distinguish between classes — higher is better (1 = perfect).
 
 
 ![Evaluation](outputs_nn/nn_classification_evaluation.png)
@@ -221,9 +220,8 @@ To handle this, I will explored:
 
 - **Evaluation Approach**:
   - I monitored these metrics across epochs using validation data. At test time, the model’s final performance was summarized clearly:
-    - **Accuracy**: >90% (typically achieved on the test set)
-    - **ROC-AUC**: >0.95, indicating strong discriminative performance.
-    - **Precision-Recall AUC**: Around 0.91, suggesting the model handles class imbalance well.
+    - **Accuracy**: >85% (typically achieved on the test set)
+    - **ROC-AUC**: >0.96, indicating strong discriminative performance.
 
 - **Visualizations**:
   - A confusion matrix clearly visualized where misclassifications occurred.
@@ -277,13 +275,14 @@ To handle this, I will explored:
 
 ## Model Performance Comparison
 
-| Model              | Accuracy | Precision | Recall  | F1-Score | ROC-AUC | Avg Precision |
-|--------------------|----------|-----------|---------|----------|---------|---------------|
-| Neural Network     | 0.8387   | 0.8631    | 0.8387  | 0.8430   | 0.9583  | 0.9269        |
-| Random Forest      | 0.8226   | 0.8206    | 0.8226  | 0.8213   | 0.9060  | N/A           |
-| Gradient Boosting  | 0.8226   | 0.8418    | 0.8226  | 0.8268   | 0.8988  | N/A           |
-| LightGBM           | 0.8226   | 0.8252    | 0.8226  | 0.8237   | 0.9024  | N/A           |
-| CatBoost           | 0.7903   | 0.8009    | 0.7903  | 0.7938   | 0.9286  | N/A           |
+| Model              | Accuracy | Precision | Recall  | F1-Score | ROC-AUC 
+|--------------------|----------|-----------|---------|----------|---------|
+| Neural Network     | 0.86     | 0.87      | 0.86    | 0.86     | 0.96    | 
+| Random Forest      | 0.77     | 0.78      | 0.8226  | 0.77     | 0.78    | 
+| Gradient Boosting  | 0.82     | 0.84      | 0.82    | 0.83     | 0.90    |
+| LightGBM           | 0.82     | 0.83      | 0.82    | 0.82     | 0.90    |
+| CatBoost           | 0.79     | 0.80      | 0.79    | 0.79     | 0.91    |
+| Logistic Regression| 0.84     | 0.85      | 0.84    | 0.84     | 0.92    |
 
 - **Comparative Results**:
   - **Neural Network**: outperform in all metrics
@@ -318,3 +317,4 @@ To handle this, I will explored:
 
 
 *– ----- Cholpon Zhakshylykova*
+

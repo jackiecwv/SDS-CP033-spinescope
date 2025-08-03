@@ -3,6 +3,6 @@
   "sacral_slope": 4,
   "lumbar_lordosis_angle": 0,
   "pelvic_radius": 10,
-  "degree_spondylolisthesis": 6,
-  "pi_ss_ratio": 11
+  "pi_ss_ratio": 11,
+  "degree_spondylolisthesis_PowerTransformer": 3
 }
