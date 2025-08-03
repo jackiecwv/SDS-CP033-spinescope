@@ -185,15 +185,15 @@ To handle this, I will explored:
 - Explain why ReLU and sigmoid are appropriate.
 
 - **Architecture**:
-  - Input Layer → Dense(128) → BatchNorm → ReLU → Dropout(0.3) →  
-  - Dense(64) → BatchNorm → ReLU → Dropout(0.3) →  
+  - Input Layer → Dense(64) → BatchNorm → ReLU → Dropout(0.3) →  
   - Dense(32) → BatchNorm → ReLU → Dropout(0.3) →  
+  - Dense(16) → BatchNorm → ReLU → Dropout(0.3) →  
   - Output Layer (Sigmoid for binary classification)
 
 - **Input Shape**: Equal to the number of numeric features (e.g., 6 biomechanical measurements).
 
 - **Guiding Principles**:
-  - **Depth & Units**: The 3-layer architecture (128→64→32) was selected to gradually reduce complexity and allow the network to learn hierarchical feature representations without overfitting the relatively small dataset.
+  - **Depth & Units**: The 3-layer architecture (64→32->16) was selected to gradually reduce complexity and allow the network to learn hierarchical feature representations without overfitting the relatively small dataset.
   - **Activation Functions**: ReLU was chosen for hidden layers to mitigate vanishing gradient problems, improving convergence speed. A sigmoid output was used because the task is binary classification.
   - **Regularization**: Dropout and Batch Normalization were implemented to reduce overfitting and accelerate training convergence, respectively.
 
