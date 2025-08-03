@@ -19,14 +19,14 @@
     "p_value": 0.005511484344187811,
     "is_normal": false
   },
-  "degree_spondylolisthesis": {
-    "statistic": 0.6177110568357224,
-    "p_value": 3.58787571145343e-20,
-    "is_normal": false
-  },
   "pi_ss_ratio": {
     "statistic": 0.89516413355632,
     "p_value": 3.6574886485083e-10,
+    "is_normal": false
+  },
+  "degree_spondylolisthesis_PowerTransformer": {
+    "statistic": 0.9593241095951692,
+    "p_value": 3.320707045059536e-05,
     "is_normal": false
   }
 }
