@@ -150,30 +150,114 @@ Explain how MLflow helped you select your best model or debug issues.
 ## ✅ Week 4: Model Selection & Hyperparameter Tuning
 
 ### 🔑 Question 1:
+**How did you select your final model, and what criteria did you use to compare different algorithms?**  
+
+💡 **Hint:**  
+Discuss how you compared models (e.g., validation scores, cross-validation, interpretability, speed).  
+Explain why you chose your final model for deployment.
+
+✏️ *Your answer here...*
+
+---
 
 ### 🔑 Question 2:
+**What hyperparameters did you tune for your best-performing model, and how did you search for the optimal values?**  
+
+💡 **Hint:**  
+List the key hyperparameters (e.g., number of trees, max depth, learning rate).  
+Describe your tuning method (e.g., GridSearchCV, RandomizedSearchCV, manual tuning).
+
+✏️ *Your answer here...*
+
+---
 
 ### 🔑 Question 3:
+**How did hyperparameter tuning affect your model’s performance?**  
+
+💡 **Hint:**  
+Compare metrics before and after tuning.  
+Show a table or plot if possible.  
+Discuss any trade-offs (e.g., accuracy vs. overfitting).
+
+✏️ *Your answer here...*
+
+---
 
 ### 🔑 Question 4:
+**Did you use cross-validation or other techniques to ensure your results are robust?**  
+
+💡 **Hint:**  
+Explain your validation strategy (e.g., k-fold, stratified split).  
+Discuss why this is important for model selection.
+
+✏️ *Your answer here...*
+
+---
 
 ### 🔑 Question 5:
+**What challenges did you encounter during model selection or tuning, and how did you address them?**  
+
+💡 **Hint:**  
+Mention issues like overfitting, long training times, or inconsistent results.  
+Describe any solutions or adjustments you made.
+
+✏️ *Your answer here...*
 
 ---
 
 ## ✅ Week 5: Model Deployment
 
-> Document your approach to building and deploying the Streamlit app, including design decisions, deployment steps, and challenges.
-
 ### 🔑 Question 1:
+**How did you design the user interface of your Streamlit app to make it intuitive for users?**  
+
+💡 **Hint:**  
+Describe the layout, input fields, and any visualizations you included.  
+Explain how you made the app user-friendly.
+
+✏️ *Your answer here...*
+
+---
 
 ### 🔑 Question 2:
+**What steps did you take to integrate your trained model into the Streamlit app?**  
+
+💡 **Hint:**  
+Explain how you loaded the model, handled user input, and generated predictions.  
+Mention any preprocessing applied to user data.
+
+✏️ *Your answer here...*
+
+---
 
 ### 🔑 Question 3:
+**How did you ensure your app works correctly and handles invalid or unexpected user input?**  
+
+💡 **Hint:**  
+Discuss input validation, error handling, and testing strategies.
+
+✏️ *Your answer here...*
+
+---
 
 ### 🔑 Question 4:
+**Describe the process you followed to deploy your Streamlit app online. What platform did you use, and what challenges did you face?**  
+
+💡 **Hint:**  
+List deployment steps (e.g., requirements.txt, Streamlit Community Cloud).  
+Mention any issues and how you resolved them.
+
+✏️ *Your answer here...*
+
+---
 
 ### 🔑 Question 5:
+**How does your deployed app help users understand the model’s predictions? Did you include any explanations or visual feedback?**  
+
+💡 **Hint:**  
+Describe any feature importance plots, confidence scores, or explanations you provided.  
+Explain why this is important for user trust.
+
+✏️ *Your answer here...*
 
 ---
 
