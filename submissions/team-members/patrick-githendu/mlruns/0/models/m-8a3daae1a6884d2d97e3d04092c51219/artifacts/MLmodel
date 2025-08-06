@@ -1,0 +1,22 @@
+artifact_path: file:///c:/Users/patri/OneDrive/Documents/SuperdataS/SDS-CP033-spinescope/submissions/team-members/patrick-githendu/mlruns/0/models/m-8a3daae1a6884d2d97e3d04092c51219/artifacts
+flavors:
+  python_function:
+    data: data
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.tensorflow
+    python_version: 3.10.11
+  tensorflow:
+    code: null
+    data: data
+    keras_version: 2.19.0
+    model_type: keras
+    save_format: tf
+mlflow_version: 3.1.4
+model_id: m-8a3daae1a6884d2d97e3d04092c51219
+model_size_bytes: 37775
+model_uuid: m-8a3daae1a6884d2d97e3d04092c51219
+prompts: null
+run_id: 97801a1fe9954fc9a7289e3e734dcf70
+utc_time_created: '2025-08-01 16:23:22.213664'
