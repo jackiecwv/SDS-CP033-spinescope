@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/jacki.JACKIESLAPTOP/Documents/SDS-CP033-spinescope/submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/mlruns/0/cf4f119e7b93490fae60c64778fbe429/artifacts
+end_time: 1755448023049
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: cf4f119e7b93490fae60c64778fbe429
+run_name: XGBoost_Baseline
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1755448018282
+status: 3
+tags: []
+user_id: jacki

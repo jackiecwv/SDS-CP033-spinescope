@@ -1,0 +1,10 @@
+artifact_location: file:///c:/Users/jacki.JACKIESLAPTOP/Documents/SDS-CP033-spinescope/submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/mlruns/0/models/m-8bcb6df61cfc4aa0802e2d7d7f1f271d/artifacts
+creation_timestamp: 1755273386493
+experiment_id: '0'
+last_updated_timestamp: 1755273393502
+model_id: m-8bcb6df61cfc4aa0802e2d7d7f1f271d
+model_type: null
+name: model
+source_run_id: f52a2fa94e194402a41dbfda3fb01c57
+status: 2
+status_message: null

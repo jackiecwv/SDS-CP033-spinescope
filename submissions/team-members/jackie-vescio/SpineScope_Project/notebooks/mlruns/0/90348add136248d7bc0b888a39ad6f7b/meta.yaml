@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/jacki.JACKIESLAPTOP/Documents/SDS-CP033-spinescope/submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/mlruns/0/90348add136248d7bc0b888a39ad6f7b/artifacts
+end_time: 1755446046001
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 90348add136248d7bc0b888a39ad6f7b
+run_name: XGBoost_Tuned_Pipeline
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1755446041837
+status: 3
+tags: []
+user_id: jacki

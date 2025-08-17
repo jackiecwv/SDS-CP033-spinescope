@@ -1,0 +1,10 @@
+artifact_location: file:///c:/Users/jacki.JACKIESLAPTOP/Documents/SDS-CP033-spinescope/submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/mlruns/0/models/m-14976416777d4cec83a86a79dc7e9748/artifacts
+creation_timestamp: 1755271908326
+experiment_id: '0'
+last_updated_timestamp: 1755271914251
+model_id: m-14976416777d4cec83a86a79dc7e9748
+model_type: null
+name: logreg_baseline
+source_run_id: 71e6635cd08e4af58eef4878c3203395
+status: 2
+status_message: null

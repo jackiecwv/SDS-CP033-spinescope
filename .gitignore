@@ -1,10 +1,6 @@
-# Include any files you want to ignore (do not want to push to GitHub)
-.ipynb_checkpoints
-.DS_Store
-.env
+submissions/team-members/jackie-vescio/SpineScope_Project/.venv/
+**/__pycache__/
+**/.ipynb_checkpoints/
+submissions/team-members/jackie-vescio/mlruns/
+submissions/team-members/jackie-vescio/catboost_info/
 
-# virtual environments
-venv/
-.venv/
-env/
-ENV/

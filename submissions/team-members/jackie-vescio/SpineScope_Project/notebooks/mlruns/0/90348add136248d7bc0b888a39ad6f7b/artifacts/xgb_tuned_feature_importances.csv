@@ -1,0 +1,11 @@
+Feature,Importance
+degree_spondylolisthesis,0.24302147
+degree_spondylolisthesis_log,0.14944175
+pelvic_radius_log,0.10335996
+pelvic_radius,0.100546226
+pelvic_incidence_minus_pelvic_tilt,0.08691387
+sacral_slope,0.07938962
+sacral_slope_divided_by_pelvic_incidence,0.075602986
+lumbar_lordosis_angle,0.069125116
+pelvic_tilt,0.054409314
+pelvic_incidence,0.038189754

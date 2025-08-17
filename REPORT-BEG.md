@@ -5,7 +5,7 @@ Use this file to answer the key reflection questions for each phase of the proje
 
 ---
 
-## ✅ Phase 1: Setup & Exploratory Data Analysis (EDA)
+## ✅ Week 1: Setup & Exploratory Data Analysis (EDA)
 
 > Answer the EDA questions provided in the project materials here. Focus on data quality, trends, anomalies, and relationships.
 
@@ -19,15 +19,9 @@ Use this file to answer the key reflection questions for each phase of the proje
 
 ---
 
-## ✅ Phase 2: Model Development
+## ✅ Week 2: Feature Engineering & Data Preprocessing
 
-> This phase spans 3 weeks. Answer each set of questions weekly as you build, train, evaluate, and improve your models.
-
----
-
-### 🔍 Week 1: Feature Engineering & Data Preprocessing
-
-#### 🔑 Question 1:
+### 🔑 Question 1:
 **Which biomechanical features show the strongest relationship with the target (spinal condition), and how did you determine this?**
 
 💡 **Hint:**  
@@ -38,7 +32,7 @@ Consider using statistical tests (e.g., ANOVA or t-tests) to validate separation
 
 ---
 
-#### 🔑 Question 2:
+### 🔑 Question 2:
 **Before building any model, what patterns or class imbalances did you observe in the target variable? Will this affect your modeling choices?**  
 
 💡 **Hint:**  
@@ -49,7 +43,7 @@ If one class dominates, consider techniques like class weights or stratified sam
 
 ---
 
-#### 🔑 Question 3:
+### 🔑 Question 3:
 **Which features appear skewed or contain outliers, and what transformations (if any) did you apply to address them?**  
 
 💡 **Hint:**  
@@ -61,7 +55,7 @@ Consider z-score or IQR for outlier detection.
 
 ---
 
-#### 🔑 Question 4:
+### 🔑 Question 4:
 **What scaling method did you apply to your numerical features, and why was it necessary (or not) for the algorithms you plan to use?**  
 
 💡 **Hint:**  
@@ -73,7 +67,7 @@ Use `StandardScaler` or `MinMaxScaler` as needed. Justify your choice.
 
 ---
 
-#### 🔑 Question 5:
+### 🔑 Question 5:
 **Did you create any new features that might help distinguish between different spinal conditions? If yes, what are they and what was the reasoning behind them?**  
 
 💡 **Hint:**  
@@ -84,10 +78,76 @@ Use domain insight or trial-and-error to create potentially useful features.
 
 ---
 
+## ✅ Week 3: Model Development & Experimentation
+
+### 🔑 Question 1:
+**Which models did you train for predicting spinal conditions, and what were your reasons for choosing them?**  
+🎯 *Purpose: Tests model selection reasoning and algorithm familiarity.*
+
+💡 **Hint:**  
+Discuss models like Logistic Regression, Random Forest, and XGBoost.  
+Explain how each model fits the structure of your data and whether your task is classification (e.g., Normal vs Abnormal) or regression (if predicting continuous values).  
+Include code snippets showing model training.
+
+✏️ *Your answer here...*
 
 ---
 
-### 📆 Week 2: Model Development & Experimentation
+### 🔑 Question 2:
+**What evaluation metrics did you use to assess your models, and how did each model perform?**  
+🎯 *Purpose: Tests metric literacy and performance analysis.*
+
+💡 **Hint:**  
+For classification: accuracy, precision, recall, F1-score, confusion matrix.   
+Present results as a table or bar plot.  
+Comment on which model had the best generalization on the test set.
+
+✏️ *Your answer here...*
+
+---
+
+### 🔑 Question 3:
+**Do any of your models show signs of overfitting or underfitting? How did you identify this, and what might be the cause?**  
+🎯 *Purpose: Tests generalization understanding and diagnostic skills.*
+
+💡 **Hint:**  
+Compare training vs. test scores.
+Visualize learning curves or residual plots.
+Overfitting: great performance on training, poor on test.
+Underfitting: poor performance on both.
+Suggest potential remedies.
+
+✏️ *Your answer here...*
+
+---
+
+### 🔑 Question 4:
+**Which features contributed the most to your model's predictions, and do the results align with your domain expectations?**  
+🎯 *Purpose: Tests model explainability and domain connection.*
+
+💡 **Hint:**  
+Use `.coef_` for Logistic Regression or `.feature_importances_` for tree models.
+Plot the top features.
+Do the top features (e.g., pelvic tilt, lumbar lordosis angle) make clinical sense?
+
+✏️ *Your answer here...*
+
+---
+
+### 🔑 Question 5:
+**How did you use MLflow to track your model experiments, and what comparisons did it help you make more easily?**  
+🎯 *Purpose: Tests reproducibility and experiment tracking best practices.*
+
+💡 **Hint:**  
+Log model name, hyperparameters, and evaluation metrics.
+Include screenshots or links to MLflow runs.
+Explain how MLflow helped you select your best model or debug issues.
+
+✏️ *Your answer here...*
+
+---
+
+## ✅ Week 4: Model Selection & Hyperparameter Tuning
 
 ### 🔑 Question 1:
 
@@ -101,21 +161,7 @@ Use domain insight or trial-and-error to create potentially useful features.
 
 ---
 
-### 📆 Week 3: Model Tuning
-
-### 🔑 Question 1:
-
-### 🔑 Question 2:
-
-### 🔑 Question 3:
-
-### 🔑 Question 4:
-
-### 🔑 Question 5:
-
----
-
-## ✅ Phase 3: Model Deployment
+## ✅ Week 5: Model Deployment
 
 > Document your approach to building and deploying the Streamlit app, including design decisions, deployment steps, and challenges.
 
