@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/jacki.JACKIESLAPTOP/Documents/SDS-CP033-spinescope/submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/mlruns/0/05251ac2e75846a2b2909062a394d0ee/artifacts
+end_time: 1755301428140
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 05251ac2e75846a2b2909062a394d0ee
+run_name: LogReg_Baseline_Untuned
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1755301415781
+status: 3
+tags: []
+user_id: jacki

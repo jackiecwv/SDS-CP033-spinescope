@@ -1,0 +1,10 @@
+artifact_location: file:///c:/Users/jacki.JACKIESLAPTOP/Documents/SDS-CP033-spinescope/submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/mlruns/0/models/m-ce899c171f874ed2857d0cbd220f7bb4/artifacts
+creation_timestamp: 1755271918634
+experiment_id: '0'
+last_updated_timestamp: 1755271922361
+model_id: m-ce899c171f874ed2857d0cbd220f7bb4
+model_type: null
+name: logreg_tuned_pipeline
+source_run_id: 146113c976c04484a43194e9abc018f7
+status: 2
+status_message: null

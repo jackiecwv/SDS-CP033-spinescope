@@ -1,0 +1,10 @@
+artifact_location: file:///c:/Users/jacki.JACKIESLAPTOP/Documents/SDS-CP033-spinescope/submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/mlruns/0/models/m-0b6a29cd35a84b9cb79ff0acee675814/artifacts
+creation_timestamp: 1755181585117
+experiment_id: '0'
+last_updated_timestamp: 1755181588750
+model_id: m-0b6a29cd35a84b9cb79ff0acee675814
+model_type: null
+name: rf_tuned_pipeline
+source_run_id: a530646ef5ee4ce2a719c33168011ee8
+status: 2
+status_message: null

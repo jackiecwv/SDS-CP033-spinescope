@@ -1,0 +1,39 @@
+artifact_path: file:///c:/Users/jacki.JACKIESLAPTOP/Documents/SDS-CP033-spinescope/submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/mlruns/0/models/m-14976416777d4cec83a86a79dc7e9748/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.3
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.5.1
+is_signature_from_type_hint: false
+mlflow_version: 3.1.4
+model_id: m-14976416777d4cec83a86a79dc7e9748
+model_size_bytes: 2843
+model_uuid: m-14976416777d4cec83a86a79dc7e9748
+prompts: null
+run_id: 71e6635cd08e4af58eef4878c3203395
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "pelvic_incidence", "required": true}, {"type":
+    "double", "name": "pelvic_tilt", "required": true}, {"type": "double", "name":
+    "lumbar_lordosis_angle", "required": true}, {"type": "double", "name": "sacral_slope",
+    "required": true}, {"type": "double", "name": "pelvic_radius", "required": true},
+    {"type": "double", "name": "degree_spondylolisthesis", "required": true}, {"type":
+    "double", "name": "pelvic_incidence_minus_pelvic_tilt", "required": true}, {"type":
+    "double", "name": "sacral_slope_divided_by_pelvic_incidence", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "object", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-08-15 15:31:48.387662'

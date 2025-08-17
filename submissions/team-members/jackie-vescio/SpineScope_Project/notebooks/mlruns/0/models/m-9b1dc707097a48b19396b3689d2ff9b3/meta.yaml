@@ -1,0 +1,10 @@
+artifact_location: file:///c:/Users/jacki.JACKIESLAPTOP/Documents/SDS-CP033-spinescope/submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/mlruns/0/models/m-9b1dc707097a48b19396b3689d2ff9b3/artifacts
+creation_timestamp: 1755181573537
+experiment_id: '0'
+last_updated_timestamp: 1755181577027
+model_id: m-9b1dc707097a48b19396b3689d2ff9b3
+model_type: null
+name: rf_baseline_pipeline
+source_run_id: 5f25dbd1ab824feeb2cd96255c5366fa
+status: 2
+status_message: null

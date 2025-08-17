@@ -1,0 +1,22 @@
+artifact_path: file:///c:/Users/jacki.JACKIESLAPTOP/Documents/SDS-CP033-spinescope/submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/mlruns/0/models/m-50618cfde165427a990969dca234da0f/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.3
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.5.1
+mlflow_version: 3.1.4
+model_id: m-50618cfde165427a990969dca234da0f
+model_size_bytes: 111360
+model_uuid: m-50618cfde165427a990969dca234da0f
+prompts: null
+run_id: a0d8d33e930043faa8eabba64b7526e8
+utc_time_created: '2025-08-17 15:52:09.768589'
