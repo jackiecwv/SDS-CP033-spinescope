@@ -5,6 +5,11 @@ submissions/team-members/jackie-vescio/mlruns/
 submissions/team-members/jackie-vescio/catboost_info/
 
 # --- Jackie: ignore notebook-generated artifacts ---
-submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/*.png
+# Ignore any .csv or .png files created inside notebooks
 submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/*.csv
+submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/*.png
 
+# (Optional safety net) Ignore other common exports
+submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/*.xlsx
+submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/*.json
+submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/*.html
