@@ -4,3 +4,7 @@ submissions/team-members/jackie-vescio/SpineScope_Project/.venv/
 submissions/team-members/jackie-vescio/mlruns/
 submissions/team-members/jackie-vescio/catboost_info/
 
+# --- Jackie: ignore notebook-generated artifacts ---
+submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/*.png
+submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/*.csv
+
