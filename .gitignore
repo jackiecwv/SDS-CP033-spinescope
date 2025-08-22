@@ -1,6 +1,26 @@
+# venvs (root or nested)
+.venv/
+venv/
 submissions/team-members/jackie-vescio/SpineScope_Project/.venv/
+
+# Python + Jupyter caches
 **/__pycache__/
 **/.ipynb_checkpoints/
+
+# Jackie-specific: keep the repo clean of local artifacts
 submissions/team-members/jackie-vescio/mlruns/
 submissions/team-members/jackie-vescio/catboost_info/
+submissions/team-members/jackie-vescio/images/
+submissions/team-members/jackie-vescio/*.png
+submissions/team-members/jackie-vescio/*.csv
 
+# Project notebook artifacts
+submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/catboost_info/
+submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/*.png
+submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/*.csv
+submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/*.xlsx
+submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/*.json
+submissions/team-members/jackie-vescio/SpineScope_Project/notebooks/*.html
+
+# IMPORTANT: ignore MLflow runs inside the project too (app falls back to snapshots)
+submissions/team-members/jackie-vescio/SpineScope_Project/mlruns/

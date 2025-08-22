@@ -163,14 +163,62 @@ Explain how you used logs to choose the best model or compare runs.
 ## ✅ Week 4: Model Selection & Hyperparameter Tuning
 
 ### 🔑 Question 1:
+**What strategies did you use to select your final neural network architecture, and how did you compare different model variants?**  
+
+💡 **Hint:**  
+Discuss how you experimented with different numbers of layers, units, activation functions, or regularization.  
+Explain what criteria (e.g., validation loss, accuracy, overfitting signs) guided your choices.
+
+✏️ *Your answer here...*
+
+---
+
 
 ### 🔑 Question 2:
+**Which hyperparameters did you tune for your neural network, and what search methods did you use to find optimal values?**  
+
+💡 **Hint:**  
+List key hyperparameters (e.g., learning rate, batch size, dropout rate, optimizer).  
+Describe your tuning approach (manual, grid search, random search, or using tools like Optuna).
+
+✏️ *Your answer here...*
+
+---
+
 
 ### 🔑 Question 3:
+**How did hyperparameter tuning affect your model’s performance and generalization?**  
+
+💡 **Hint:**  
+Compare metrics before and after tuning.  
+Show training/validation curves or tables if possible.  
+Discuss any trade-offs (e.g., speed vs. accuracy, overfitting vs. underfitting).
+
+✏️ *Your answer here...*
+
+---
+
 
 ### 🔑 Question 4:
+**What validation strategies did you use to ensure robust model selection?**  
+
+💡 **Hint:**  
+Describe your use of validation splits, k-fold cross-validation, or stratified sampling.  
+Explain why these strategies are important for deep learning models.
+
+✏️ *Your answer here...*
+
+---
+
 
 ### 🔑 Question 5:
+**What challenges did you encounter during model selection or hyperparameter tuning, and how did you address them?**  
+
+💡 **Hint:**  
+Mention issues like unstable training, long runtimes, or convergence problems.  
+Describe any solutions (e.g., early stopping, learning rate schedules, batch normalization).
+
+✏️ *Your answer here...*
 
 ---
 
@@ -179,16 +227,63 @@ Explain how you used logs to choose the best model or compare runs.
 > Document your approach to building and deploying the Streamlit app, including design decisions, deployment steps, and challenges.
 
 ### 🔑 Question 1:
+**How did you design the user interface of your Streamlit app to support both prediction and model explainability?**  
 
-### 🔑 Question 2:
+💡 **Hint:**  
+Describe the layout, input fields, and how you present both predictions and SHAP (or other explainability) plots.  
+Explain how you made the app accessible and informative for users.
 
-### 🔑 Question 3:
-
-### 🔑 Question 4:
-
-### 🔑 Question 5:
+✏️ *Your answer here...*
 
 ---
+
+
+### 🔑 Question 2:
+**What steps did you take to integrate your trained deep learning model and explainability tools into the Streamlit app?**  
+
+💡 **Hint:**  
+Explain how you loaded the model, handled user input, generated predictions, and computed SHAP or Integrated Gradients explanations.  
+Mention any preprocessing applied to user data.
+
+✏️ *Your answer here...*
+
+---
+
+
+### 🔑 Question 3:
+**How did you ensure your app works correctly and robustly, especially with unexpected or invalid user input?**  
+
+💡 **Hint:**  
+Discuss input validation, error handling, and any testing strategies you used.
+
+✏️ *Your answer here...*
+
+---
+
+
+### 🔑 Question 4:
+**Describe the process you followed to deploy your Streamlit app online. What platform did you use, and what challenges did you face?**  
+
+💡 **Hint:**  
+List deployment steps (e.g., requirements.txt, Streamlit Community Cloud, Hugging Face Spaces).  
+Mention any issues and how you resolved them.
+
+✏️ *Your answer here...*
+
+---
+
+
+### 🔑 Question 5:
+**How does your deployed app help users understand the model’s predictions? What explainability features did you include, and why are they important?**  
+
+💡 **Hint:**  
+Describe any SHAP plots, feature importance charts, or confidence scores you provided.  
+Explain how these features build user trust and support clinical interpretation.---
+
+✏️ *Your answer here...*
+
+---
+
 
 ## ✨ Final Reflections
 

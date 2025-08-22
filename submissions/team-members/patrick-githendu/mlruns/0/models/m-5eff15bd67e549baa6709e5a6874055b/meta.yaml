@@ -1,0 +1,10 @@
+artifact_location: file:///c:/Users/patri/OneDrive/Documents/SuperdataS/SDS-CP033-spinescope/submissions/team-members/patrick-githendu/mlruns/0/models/m-5eff15bd67e549baa6709e5a6874055b/artifacts
+creation_timestamp: 1754064030499
+experiment_id: '0'
+last_updated_timestamp: 1754064040203
+model_id: m-5eff15bd67e549baa6709e5a6874055b
+model_type: null
+name: model
+source_run_id: 20ccd2dcb59d4db4b9b74a20e774952f
+status: 2
+status_message: null
